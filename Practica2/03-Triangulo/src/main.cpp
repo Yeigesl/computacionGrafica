@@ -22,7 +22,8 @@ const GLchar* fragmentShaderSource = "#version 330 core\n"
 "out vec4 color;\n"
 "void main()\n"
 "{\n"
-"color = vec4(0.3f, 0.6f, 0.9f, 1.0f);\n"
+//cambio color 
+"color = vec4(0.1f, 0.0f, 0.0f, 1.0f);\n"
 "}\n\0";
 
 GLuint VBO, VAO;
@@ -96,10 +97,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 
 	glViewport(0, 0, screenWidth, screenHeight);
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	glClearColor(0.0f, 0.05f, 0.5f, 0.5f);
 
 	// Build and compile our shader program
 	// Vertex shader
+	//id inicia en cero y es emtero sin signo
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
@@ -137,8 +139,12 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	}
 
 	// Vertex data
-	GLfloat vertices[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f };
-
+	// los vertices se agrupan de tres en tres , donde cada conjunto de vertices corresponde a un vertice 
+	//en el arreglo  anterior se tienen  3 vertices  4 bytes por cada flotante
+	// puede o  no tener la f ya que automáticamnete hace el casteo.
+	GLfloat vertices[] = { -1.0f, -1.0f, 0.0f, 0.5f, -0.5f, 0.0f,0.5f, 0.5f,0.0f,
+	0.5,0.5,0.0,-0.5,0.5,0.0,-0.5,-1.0,1.0};
+	//el bufffer permitirá almacenar esos vertices 
 	// Create Buffers and attributes vertex.
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -146,8 +152,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	//static_draw indica que los       datos se mantendrán en memoria 
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
+		//elsizeof regresaría un valor de 36 bytes
 		(GLvoid*)0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -232,12 +240,11 @@ void applicationLoop() {
 	while (psi) {
 		psi = processInput(true);
 		glClear(GL_COLOR_BUFFER_BIT);
-
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		// Draw our first triangle
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(window);

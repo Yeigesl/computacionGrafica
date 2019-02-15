@@ -13,7 +13,8 @@
 
 // Shaders code
 const GLchar* vertexShaderSource = { "#version 400\n"
-
+//este shader recibe ´posicion y color 
+// location corresponde  a la posiscion y el uno elcolor los cuales deben ser igaules a los    de glVertexAttribPointer
 "layout(location=0) in vec3 position;\n"
 "layout(location=1) in vec3 color;\n"
 "out vec3 ourColor;\n"
@@ -22,6 +23,7 @@ const GLchar* vertexShaderSource = { "#version 400\n"
 "{\n"
 "  gl_Position = vec4(position, 1.0);\n"
 "  ourColor = color;\n"
+// lo asig na como variable de salida para que pueda tomar ese color 
 "}\n" };
 const GLchar* fragmentShaderSource = { "#version 400\n"
 
@@ -32,10 +34,11 @@ const GLchar* fragmentShaderSource = { "#version 400\n"
 "{\n"
 "  out_Color = vec4(ourColor, 1.0);\n"
 "}\n" };
+bool render= true;
 
-GLuint VBO, VAO;
+GLuint VBO, VAO,VBO2,VAO2;
 GLint vertexShader, fragmentShader, shaderProgram;
-
+//tendra estructura y color 
 typedef struct {
 	float XYZ[3];
 	float RGB[3];
@@ -64,7 +67,7 @@ bool processInput(bool continueApplication = true);
 
 // Implementacion de todas las funciones.
 void init(int width, int height, std::string strTitle, bool bFullScreen) {
-	
+
 	if (!glfwInit()) {
 		std::cerr << "Failed to initialize GLFW" << std::endl;
 		exit(-1);
@@ -149,7 +152,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog
 			<< std::endl;
 	}
-
+	// a  cada vertice se le asocia un color correspondinete 
 	Vertex vertices[] =
 	{
 		{ {-0.5f, -0.5f, 0.0f } ,{ 1.0f, 0.0f, 0.0f } },
@@ -157,14 +160,26 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		{ { 0.0f,  0.5f, 0.0f } ,{ 0.0f, 0.0f, 1.0f } }
 	};
 
+
+
+	Vertex vertices2[] =
+	{
+		{ { 0.0f, 0.0f, 0.0f } ,{ 1.0f, 0.0f, 0.0f } },
+	{ {1.0f, 0.0f, 0.0f } ,{ 1.0f, 0.0f, 0.0f } },
+	{ {1.0f, 1.0f, 0.0f } ,{ 1.0f, 0.0f, 0.0f } }
+	};
+//PRIMER TRIANGULO
+
+//buffer size tendr{a tamaño de 18*4 que son todas las triadas de vertices
 	const size_t bufferSize = sizeof(vertices);
+	//tam del primer arreglo es 6*4 las primeras 2 triadas 
 	const size_t vertexSize = sizeof(vertices[0]);
+	// tam 3*4 corresponde al primer triada 
 	const size_t rgbOffset = sizeof(vertices[0].XYZ);
 
 	std::cout << "Buffer Size:" << bufferSize << std::endl;
 	std::cout << "Vertex Size:" << vertexSize << std::endl;
 	std::cout << "Buffer size:" << rgbOffset << std::endl;
-
 	glGenBuffers(1, &VBO);
 
 	glGenVertexArrays(1, &VAO);
@@ -174,8 +189,42 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	glBufferData(GL_ARRAY_BUFFER, bufferSize, vertices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize, 0);
+	//Para le segundo se tendráun desplazamiento de 3*4 bytes para el siguiente vertice 
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, vertexSize,
 		(GLvoid*)rgbOffset);
+
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+
+//segundo triangulo
+	//buffer size tendr{a tamaño de 18*4 que son todas las triadas de vertices
+	const size_t bufferSize2 = sizeof(vertices2);
+	//tam del primer arreglo es 6*4 las primeras 2 triadas 
+	const size_t vertexSize2 = sizeof(vertices2[0]);
+	// tam 3*4 corresponde al primer triada 
+	const size_t rgbOffset2 = sizeof(vertices2[0].XYZ);
+
+	std::cout << "Buffer Size:" << bufferSize2 << std::endl;
+	std::cout << "Vertex Size:" << vertexSize2 << std::endl;
+	std::cout << "Buffer size:" << rgbOffset2 << std::endl;
+	//esto es para el primer triangulo 
+
+	glGenBuffers(1, &VBO2);
+
+	glGenVertexArrays(1, &VAO2);
+	glBindVertexArray(VAO2);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+	glBufferData(GL_ARRAY_BUFFER, bufferSize2, vertices2, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize2, 0);
+	//Para le segundo se tendráun desplazamiento de 3*4 bytes para el siguiente vertice 
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, vertexSize2,
+		(GLvoid*)rgbOffset2);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
@@ -221,8 +270,14 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	if (action == GLFW_PRESS) {
 		switch (key) {
 		case GLFW_KEY_ESCAPE:
-			exitApp = true;
+				exitApp = true;
+		case GLFW_KEY_S:
+			render = true;
 			break;
+		case GLFW_KEY_F:
+			render = false;
+			break;
+
 		}
 	}
 }
@@ -267,8 +322,16 @@ void applicationLoop() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		
 		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		if (render) {
+			glBindVertexArray(VAO);
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+		}
+		else
+		{
+			glBindVertexArray(VAO2);
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		}
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(window);

@@ -20,6 +20,8 @@ bool exitApp = false;
 int lastMousePosX;
 int lastMousePosY;
 
+//NEW
+bool isBlue = true;
 double deltaTime;
 
 // Se definen todos las funciones.
@@ -63,7 +65,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(0);
-
+	//Esta parte es para indicarle que funciones se van a ejecutar cuando suceda un evento 
+	//por lo que glfw sirve para eventos y modificar la ventana 
 	glfwSetWindowSizeCallback(window, reshapeCallback);
 	glfwSetKeyCallback(window, keyCallback);
 	glfwSetCursorPosCallback(window, mouseCallback);
@@ -92,23 +95,34 @@ void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes) {
 	screenHeight = heightRes;
 	glViewport(0, 0, widthRes, heightRes);
 }
-
+//teclado 
+//ventana donde sucede el evento tecla y accion
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 	if (action == GLFW_PRESS) {
 		switch (key) {
+			//con glfw indica que fue la tecla scape
 		case GLFW_KEY_ESCAPE:
 			exitApp = true;
 			break;
+		//NEW
+		case GLFW_KEY_B:
+			isBlue = true;
+			break;
+		case GLFW_KEY_R:
+			isBlue = false;
+			break;
 		}
+
 	}
 }
-
+//poscion del mouse y ventane en la que sucedió el vento 
 void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
 	lastMousePosX = xpos;
 	lastMousePosY = ypos;
 }
 
 void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod) {
+	//Los estados son GLFW_PRESS, GLFW_REPETE=  MANTUVO PRESIONADO Y GLFW_RELEASE= SE SOLTO Y ES TANTO PARA TECLADO COMO MOUSSE
 	if (state == GLFW_PRESS) {
 		switch (button) {
 		case GLFW_MOUSE_BUTTON_RIGHT:
@@ -134,11 +148,17 @@ bool processInput(bool continueApplication){
 	return continueApplication;
 }
 
+// Permite hacer el loop
 void applicationLoop() {
 	bool psi = true;
 	while (psi) {
 		psi = processInput(true);
+		//NEW
 		glClear(GL_COLOR_BUFFER_BIT);
+		if (isBlue)
+			glClearColor(0.0, 0.0, 1.0, 1.0);
+		else
+			glClearColor(1.0, 0.0, 0.0, 1.0);
 		glfwSwapBuffers(window);
 	}
 }
