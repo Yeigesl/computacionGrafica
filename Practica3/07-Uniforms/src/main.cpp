@@ -222,16 +222,26 @@ void applicationLoop() {
 		shader.turnOn();
 
 		// Update the uniform color
+
 		GLfloat timeValue = TimeManager::Instance().GetTime() - lastTime;
 		GLfloat greenValue = (sin(timeValue) / 2);
 		GLfloat redValue = (cos(timeValue) / 2);
 		GLfloat blueValue = (sin(timeValue) / 2);
+		//El metodo getUniformlOCATION RETORNA EL ID DE LA VARIABLE DE NOMBRE 
+		//GLOBAL COLOR y esta declara en  en el resource files  en uniform.fs 
 		GLint vertexColorLocation = shader.getUniformLocation("globalColor");
-		glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
-
+		//una vez obtenido el id de la variable hay que enviarle el valor
+		//que deseamos  que tome la variable globalColor
+		// al ser un vec4 enviamos 4 valores
+		//Los metodos de tipo glUniform * pueden ser flotantes, enteros, matrices, etc, 
+		glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0);
+		// Si se quiere que solo cambie una componente 
+		//glUniform4f(vertexColorLocation,1.0,greenValue,1.0,1.0);
 		glBindVertexArray(VAO);
 		// This is for the render with index element
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		// el sigueinte metodo recebe id de la variable , segido de los 4 valores flotantes qye corresponden a colores 
+		
 		glBindVertexArray(0);
 
 		shader.turnOff();

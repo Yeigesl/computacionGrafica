@@ -94,8 +94,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		std::cerr << "Failed to initialize glew" << std::endl;
 		exit(-1);
 	}
-
-	glViewport(0, 0, screenWidth, screenHeight);
+	// se dfine que parte de la venta se va a usar 
+	//parametros :inicial en x, inical en y , ancho y alto de la zona    de dibujo 
+	//glViewport(0, 0, screenWidth, screenHeight);
+	//si se quiere usar solo una region se divide entre dos
+	glViewport(0, 0, screenWidth/2, screenHeight/2);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	glEnable(GL_DEPTH_TEST);
@@ -251,8 +254,16 @@ void applicationLoop() {
 		GLint projLoc = shader.getUniformLocation("projection");
 
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -7.0f));
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 
-			(float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+		//glm::mat4 projection = glm::perspective(glm::radians(45.0f), 
+			//(float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+		//glmmat4 crea matriz de 4*4
+		//crea una mmatriz ortogonal 
+		//parametros  plano izquierdo, plano derecho
+		//plano abajo , plano arriba  cercano y lejano
+		//glm::mat4 projection = glm::ortho(-2.0, 2.0, -2.0, 2.0, 0.01, 100, 0);
+		// crea una matriz en perpectiva glm:frustrum 
+		//glm::mat4 projection = glm::frustum(-.02, .02, -0.2,0.01,100.0 );
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f),(float)(screenWidth/screenHeight),0.01f,100.0f);
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
