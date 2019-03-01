@@ -19,10 +19,6 @@
     <ClInclude Include="src\Headers\Shader.h" />
     <ClInclude Include="src\Headers\TimeManager.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Shaders\sistemasCoordenadas.fs" />
-    <None Include="..\..\Shaders\sistemasCoordenadas.vs" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{40050654-71b0-47ee-b429-51a369d9f50d}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
