@@ -20,6 +20,7 @@
 Sphere sphere(10, 10,1.0f);
 //el cilindro tiene como parametros cortes verticales y horizontales y radio de la  tapa 
 Cylinder cylinder(5, 20, 0.2, 0.5);
+//caja 
 Box box;
 
 //GLM include
@@ -189,7 +190,6 @@ bool processInput(bool continueApplication) {
 void applicationLoop() {
 	bool psi = true;
 	double lastTime = TimeManager::Instance().GetTime();
-
 	while (psi) {
 		psi = processInput(true);
 		
@@ -199,20 +199,18 @@ void applicationLoop() {
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
 			(float)screenWidth / screenWidth, 0.01f, 100.0f);
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -8.0f));
-
 		//setea la matriz de proyeccion
 		sphere.setProjectionMatrix(projection);
 		//setea la matriz de vista 
 		sphere.setViewMatrix(view);
 		//colocamos el objeto en la posición deseada
-		sphere.setPosition(glm::vec3(2.0f, 2.0f, -2.0f));
+		sphere.setPosition(glm::vec3(-1.5f, -1.5f, 2.0f));
 		//se setea la escala  y tamaño del objeto 
-		sphere.setScale(glm::vec3(0.1, 0.1, 0.1));
+		sphere.setScale(glm::vec3(0.5, 0.5, 0.5));
 		//se habilita que no sea solido  el  objeto
-		//sphere.enableWireMode();
+		sphere.enableWireMode();
 		//se renderiza el objeto 
 		sphere.render();
-
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.setPosition(glm::vec3(3.0f, 3.0f, -1.0f));
@@ -223,7 +221,7 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.setPosition(glm::vec3(0.0f, 0.0f, 1.0f));
-		box.setScale(glm::vec3(1.0, 1.0, 1.0));
+		box.setScale(glm::vec3(2.0, 2.0, 2.0));
 		//box.enableWireMode();
 		box.render();
 
