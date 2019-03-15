@@ -20,7 +20,9 @@ public:
 	glm::mat4 getViewMatrix() {
 		return glm::lookAt(position, position + front, up);
 	}
-
+	//lokAt crea un sistema de referencia con jes perpendiculares 
+	//up vec camara
+	//refresa una matriz de 4*4
 	void setPosition(glm::vec3 position) {
 		this->position = position;
 	}
