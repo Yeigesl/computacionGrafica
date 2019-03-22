@@ -1,0 +1,6 @@
+﻿  main.cpp
+c:\users\yareli\source\repos\computaciongrafica\practica4\11-transformacionesfiguras\src\main.cpp(2): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Shader.cpp
+c:\users\yareli\source\repos\computaciongrafica\practica4\11-transformacionesfiguras\src\headers\shader.h(6): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  TimeManager.cpp
+  Generando código...
