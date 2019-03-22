@@ -46,7 +46,8 @@ int lastMousePosX,offsetx;
 int lastMousePosY,offsety;
 
 //variables para movimiento
-float rot1=0.0f, rot2=0.0f, rot3 = 0.0f;
+float rot1=0.0f, rot2=0.0f, rot3 = 0.0f,rot4 = 0.0f,rot5 = 0.0f,
+rot6=0.0f,rot7=0.0f, rot8 = 0.0f, rot9 = 0.0f;
 
 double deltaTime;
 
@@ -213,6 +214,19 @@ bool processInput(bool continueApplication) {
 		rot2 += 0.01;
 	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 		rot3 += 0.01;
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+		rot4 += 0.01;
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+		rot5 += 0.01;
+	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
+		rot6 += 0.01;
+	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
+		rot7 += 0.01;
+	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
+		rot8 += 0.01;
+	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS)
+		rot9 += 0.01;
+
 
 	offsetx = 0;
 	offsety = 0;
@@ -253,22 +267,60 @@ void applicationLoop() {
 		matrixs6 = glm::rotate(matrixs6, rot1, glm::vec3(0.0f, 0.0f, 1.0f));
 		matrixs6 = glm::rotate(matrixs6, rot2, glm::vec3(0.0f, 1.0f, 0.0f));
 		matrixs6 = glm::rotate(matrixs6, rot3, glm::vec3(1.0f, 0.0f, 0.0f));
+
+
 		glm::mat4 matrix7 = glm::translate(matrixs6, glm::vec3(0.25f, 0.0f, 0.0f));
 
 		glm::mat4 matrixs7 = glm::translate(matrix7, glm::vec3(0.3f, 0.0f, 0.0f));
 		matrixs7 = glm::scale(matrixs7, glm::vec3(0.1f, 0.1f, 0.1f));
 
-
-		
-		
-		
-		//matrix7 = glm::translate(matrix7, glm::vec3(0.25f, 0.0f, 0.0f));
-		matrix7 = glm::rotate(matrix7,1.5708f ,glm::vec3(0.0f,0.0f,1.0f));
-		matrix7 = glm::scale(matrix7, glm::vec3(0.15f, 0.5f, 0.15f));
-
-
+	
+		//agregamos movimientos
+		matrixs7 = glm::rotate(matrixs7, rot4, glm::vec3(1.0f, .0f, .0f));
+		matrixs7 = glm::rotate(matrixs7, rot5, glm::vec3(0.0f, 1.0f, 0.0f));
+		matrixs7 = glm::rotate(matrixs7, rot6, glm::vec3(0.0f, 0.0f, 1.0f));
 	
 
+		glm::mat4 matrix8 = glm::translate(matrixs7, glm::vec3(2.3f, 0.0f, 0.0f));
+		
+		
+		glm::mat4 matrixs8 = glm::translate(matrix8, glm::vec3(2.5f, 0.0f, 0.0f));
+		matrixs8 = glm::rotate(matrixs8, rot7, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixs8 = glm::rotate(matrixs8, rot8, glm::vec3(0.0f, 1.0f, 0.0f));
+		matrixs8 = glm::rotate(matrixs8, rot9, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	
+		glm::mat4 matrix9 = glm::translate(matrixs8, glm::vec3(2.0f, 0.0f, 0.0f));
+
+		matrix9 = glm::rotate(matrix9, 1.5708f, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrix9 = glm::scale(matrix9, glm::vec3(1.3f, 2.8f, 1.5f));
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.enableWireMode();
+		cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
+		cylinder.render(matrix9);
+
+
+		matrixs8 = glm::scale(matrixs8, glm::vec3(1.0f, 1.0f,1.0f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.enableWireMode();
+		sphere.render(matrixs8);
+		
+
+		
+		
+		matrix8 = glm::rotate(matrix8, 1.5708f, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrix8 = glm::scale(matrix8, glm::vec3(1.5f, 4.0f, 1.5f));
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.enableWireMode();
+		cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
+		cylinder.render(matrix8);
+		
+	
+		matrix7 = glm::rotate(matrix7,1.5708f ,glm::vec3(0.0f,0.0f,1.0f));
+		matrix7 = glm::scale(matrix7, glm::vec3(0.15f, 0.5f, 0.15f));
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.enableWireMode();
