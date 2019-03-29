@@ -1,12 +1,18 @@
+
+// Permite realizar el modelado geométrico de la esfera 
+
+
 #include "Headers/Sphere.h"
 
 Sphere::Sphere(int slices, int stacks, float ratio) {
 	vertexArray.resize(((slices + 1) * (stacks + 1)));
 	index.resize((slices * stacks + slices) * 6);
+	//cortes verticales
 	for (int i = 0; i <= stacks; ++i) {
 		float V = i / (float)stacks;
 		float phi = V * M_PI;
 
+		//Cortes horizontales
 		for (int j = 0; j <= slices; ++j) {
 			float U = j / (float)slices;
 			float theta = U * M_PI * 2.0;
@@ -14,9 +20,10 @@ Sphere::Sphere(int slices, int stacks, float ratio) {
 			float X = cos(theta) * sin(phi);
 			float Y = cos(phi);
 			float Z = sin(theta) * sin(phi);
+			//los sig. parámetros los recibe el shader
 			vertexArray[i * (slices + 1) + j].m_pos = ratio * glm::vec3(X, Y, Z);
 			vertexArray[i * (slices + 1) + j].m_color = glm::vec4();
-			vertexArray[i * (slices + 1) + j].m_tex = glm::vec2(U, V);
+			vertexArray[i * (slices + 1) + j].m_tex = glm::vec2(U, V);  //
 			vertexArray[i * (slices + 1) + j].m_normal = glm::vec3(X, Y, Z);
 		}
 	}
