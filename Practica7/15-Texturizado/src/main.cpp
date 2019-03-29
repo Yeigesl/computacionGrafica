@@ -23,7 +23,7 @@
 #include "Headers/FirstPersonCamera.h"
 //Texture includes
 //Descomentar
-//#include "Headers/Texture.h"
+#include "Headers/Texture.h"
 
 std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 
@@ -35,9 +35,10 @@ Box box;
 
 Shader shader;
 //Descomentar
-//Shader shaderTexture;
+Shader shaderTexture;
 
 GLuint textureID1;
+GLuint textureID2;
 
 int screenWidth;
 int screenHeight;
@@ -114,7 +115,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	shader.initialize("../../Shaders/transformaciones.vs", "../../Shaders/transformaciones.fs");
 	//Descomentar
-	//shaderTexture.initialize("../../Shaders/texturizado.vs", "../../Shaders/texturizado.fs");
+	shaderTexture.initialize("../../Shaders/texturizado.vs", "../../Shaders/texturizado.fs");
 
 	sphere.init();
 	sphere.setShader(&shader);
@@ -122,12 +123,12 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	sphere2.init();
 	//Cambiar el objetos shader
-	sphere2.setShader(&shader);
+	sphere2.setShader(&shaderTexture);
 	sphere2.setColor(glm::vec3(0.3, 0.3, 1.0));
-	sphere2.scaleUVS(glm::vec2(2.0f, 2.0f));
+	sphere2.scaleUVS(glm::vec2(3.0f, 3.0f)); // indica el   numero de  veces que queramos que se repita 
 
 	cylinder.init();
-	cylinder.setShader(&shader);
+	cylinder.setShader(&shaderTexture);
 	cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 
 	cylinder2.init();
@@ -135,33 +136,72 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cylinder2.setColor(glm::vec3(0.2, 0.7, 0.3));
 
 	box.init();
-	box.setShader(&shader);
+	box.setShader(&shaderTexture);
 	box.setColor(glm::vec3(0.2, 0.8, 0.4));
 
 	camera->setPosition(glm::vec3(0.0f, 0.0f, 0.4f));
 
 	// Descomentar
-	/*
+	
 	int imageWidth, imageHeight;
-	Texture texture1("../../Textures/goku.png");
-	FIBITMAP* bitmap = texture1.loadImage();
-	unsigned char * data = texture1.convertToData(bitmap, imageWidth, imageHeight);
-	glGenTextures(1, &textureID1);
+	Texture texture1("../../Textures/texturaLadrillos.jpg"); //manejamos dos  rutas antes donde esta el proyecto 
+	FIBITMAP* bitmap = texture1.loadImage(); //cargamos bits en areglo bidimensional, cada uno con 4 bytes (V,A,R,ALFA)
+	unsigned char * data = texture1.convertToData(bitmap, imageWidth, imageHeight); //convierte en arreglo unidimensional 
+	glGenTextures(1, &textureID1); //1=no de textura y pasamos referencia para modificar el valor 
 	glBindTexture(GL_TEXTURE_2D, textureID1);
 	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//Se enlaza el tipo de textura al ID texture ID1(Texture 2D)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	//  s->eje x
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);  //t->eje y 
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //iNTERPOLACION ->FILTRO gAUSSIANO ,PERMITE SUAVIZAR IMAGEN->MEJOR CALIDAD
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	if (data){
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexImage2D(GL_TEXTURE_2D, //tipo de textura en dos dimensiones
+			0, //niveles de los MIPMAPS(niveles de textura  en casos de alejamiento -ajusta y no s egastan recursos)
+			GL_RGBA,//formato intern BUFFER 
+			imageWidth, //ancho
+			imageHeight,//alto
+			0, //borde de la imagen
+			GL_BGRA, //formato de la libreria (Azul,Verde,Rojo, Alfa)
+			GL_UNSIGNED_BYTE, //tipo de dato 
+			data); //tranferimos a la memoria, datos de la imagen 
+		glGenerateMipmap(GL_TEXTURE_2D); //indica a OpenGL que se encargue de generar los MINMAPS
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture1.freeImage(bitmap);
-	*/
+
+
+	//segunda texura
+
+	Texture texture2("../../Textures/goku.png"); //manejamos dos  rutas antes donde esta el proyecto 
+	FIBITMAP* bitmap2 = texture2.loadImage(false); //cargamos bits en areglo bidimensional, cada uno con 4 bytes (V,A,R,ALFA)
+	unsigned char * data2 = texture2.convertToData(bitmap2, imageWidth, imageHeight); //convierte en arreglo unidimensional 
+	glGenTextures(1, &textureID2); //1=no de textura y pasamos referencia para modificar el valor 
+	glBindTexture(GL_TEXTURE_2D, textureID2);
+	// set the texture wrapping parameters
+	//Se enlaza el tipo de textura al ID texture ID1(Texture 2D)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	//  s->eje x
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);  //t->eje y 
+																			// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //iNTERPOLACION ->FILTRO gAUSSIANO ,PERMITE SUAVIZAR IMAGEN->MEJOR CALIDAD
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data2) {
+		glTexImage2D(GL_TEXTURE_2D, //tipo de textura en dos dimensiones
+			0, //niveles de los MIPMAPS(niveles de textura  en casos de alejamiento -ajusta y no s egastan recursos)
+			GL_RGBA,//formato intern BUFFER 
+			imageWidth, //ancho
+			imageHeight,//alto
+			0, //borde de la imagen
+			GL_BGRA, //formato de la libreria (Azul,Verde,Rojo, Alfa)
+			GL_UNSIGNED_BYTE, //tipo de dato 
+			data2); //tranferimos a la memoria, datos de la imagen 
+		glGenerateMipmap(GL_TEXTURE_2D); //indica a OpenGL que se encargue de generar los MINMAPS
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture2.freeImage(bitmap2);
 
 }
 
@@ -255,16 +295,28 @@ void applicationLoop() {
 		// matrix de vista
 		glm::mat4 view = camera->getViewMatrix();
 
-		//Descomentar
-		//glBindTexture(GL_TEXTURE_2D, textureID1);
+		//Se ha descomentado sig. linea
+		glBindTexture(GL_TEXTURE_2D, textureID1); //Enlazamos la textura que deseamos utilizar
 		sphere2.setProjectionMatrix(projection);
 		sphere2.setViewMatrix(view);
-		sphere2.enableWireMode();
+		//sphere2.enableWireMode(); // ya no sale en tipo malla 
 		sphere2.setPosition(glm::vec3(0.0, 0.0, -4.0));
 		sphere2.render();
-		//Descomentar
-		//glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_2D, textureID2);
+		box.setProjectionMatrix(projection);
+		box.setViewMatrix(view);
+		box.setPosition(glm::vec3(2.0f, 0.0f, -3.0f));
+		box.render();
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.setPosition(glm::vec3(-2.0f, 0.0f, -3.0f));
+		cylinder.render(0,cylinder.getSlices()*cylinder.getStacks()*2*3);// renderizado para  rezalizar el contorno del cilindro  , deja sin tapas
+		glBindTexture(GL_TEXTURE_2D, textureID1); // textura de ladrillos 
+		cylinder.render( cylinder.getSlices()*cylinder.getStacks() * 2 * 3,cylinder.getSlices()*3); // tapa superior 
+		cylinder.render(cylinder.getSlices()*cylinder.getStacks() * 2 * 3+cylinder.getSlices() * 3,cylinder.getSlices()*3); // tapa inferior 
 
+		//Se ha descomenatdo 
+		glBindTexture(GL_TEXTURE_2D, 0); //No utilizamos nunguna textura 
 		glfwSwapBuffers(window);
 	}
 }
