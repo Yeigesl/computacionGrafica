@@ -50,7 +50,7 @@ FIBITMAP* Texture::loadImage(bool flip) {
 			exit(-1);
 		}
 	}
-	// Si es valida la imagen y puede ser leeido, se carga la imagen en un bitap
+	// Si es valida la imagen y puede ser leeido, se carga la imagen en un bitmap
 	FIBITMAP* bitmap = FreeImage_Load(format, filename);
 	//FreeImage_FlipVertical(bitmap); // Invierte las coordenadas 
 
@@ -153,7 +153,7 @@ bool Texture::load() {
 	// Se envian los datos de la textura
 	glTexImage2D(GL_TEXTURE_2D, // Tipo de textura
 			0, // Niveles del Mipmap
-			GL_RGBA, //Formato intero, RGBA
+			GL_RGBA, //Formato interno, RGBA
 			imageWidth, // Ancho de la textura
 			imageHeight, // Ancho de la textura
 			0, // Borde de la textura

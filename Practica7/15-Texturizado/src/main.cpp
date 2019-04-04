@@ -30,15 +30,19 @@ std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 Sphere sphere(20, 20);
 Sphere sphere2(20, 20);
 Cylinder cylinder(20, 20, 0.5, 0.5);
-Cylinder cylinder2(20, 20, 0.5, 0.5);
+Cylinder cylinder2(20, 20, 1, 1);
 Box box;
 
 Shader shader;
 //Descomentar
 Shader shaderTexture;
 
-GLuint textureID1;
-GLuint textureID2;
+
+GLuint textureID1; //textura ladrillos 
+GLuint textureID2; // textura goku
+GLuint textureID3; // textura contorno lata
+GLuint textureID4; //textura tapa superior
+GLuint textureID5; // textura tapa inferior 
 
 int screenWidth;
 int screenHeight;
@@ -129,7 +133,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	cylinder.init();
 	cylinder.setShader(&shaderTexture);
-	cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
+	cylinder.setColor(glm::vec3(0.8, 0.7, 1.0));
 
 	cylinder2.init();
 	cylinder2.setShader(&shader);
@@ -203,6 +207,101 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		std::cout << "Failed to load texture" << std::endl;
 	texture2.freeImage(bitmap2);
 
+
+	//tercera texura
+
+	Texture texture3("../../Textures/contorno.jpg"); //manejamos dos  rutas antes donde esta el proyecto 
+	FIBITMAP* bitmap3 = texture3.loadImage(false); //cargamos bits en areglo bidimensional, cada uno con 4 bytes (V,A,R,ALFA)
+	unsigned char * data3 = texture3.convertToData(bitmap3, imageWidth, imageHeight); //convierte en arreglo unidimensional 
+	glGenTextures(1, &textureID3); //1=no de textura y pasamos referencia para modificar el valor 
+	glBindTexture(GL_TEXTURE_2D, textureID3);
+	// set the texture wrapping parameters
+	//Se enlaza el tipo de textura al ID texture ID1(Texture 2D)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	//  s->eje x
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  //t->eje y 
+																			// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //iNTERPOLACION ->FILTRO gAUSSIANO ,PERMITE SUAVIZAR IMAGEN->MEJOR CALIDAD
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data3) {
+		glTexImage2D(GL_TEXTURE_2D, //tipo de textura en dos dimensiones
+			0, //niveles de los MIPMAPS(niveles de textura  en casos de alejamiento -ajusta y no s egastan recursos)
+			GL_RGBA,//formato intern BUFFER 
+			imageWidth, //ancho
+			imageHeight,//alto
+			0, //borde de la imagen
+			GL_BGRA, //formato de la libreria (Azul,Verde,Rojo, Alfa)
+			GL_UNSIGNED_BYTE, //tipo de dato 
+			data3); //tranferimos a la memoria, datos de la imagen 
+		glGenerateMipmap(GL_TEXTURE_2D); //indica a OpenGL que se encargue de generar los MINMAPS
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture3.freeImage(bitmap3);
+
+
+	//cuarta texura
+
+	Texture texture4("../../Textures/cocaTapSup.jpg"); //manejamos dos  rutas antes donde esta el proyecto 
+	FIBITMAP* bitmap4 = texture4.loadImage(false); //cargamos bits en areglo bidimensional, cada uno con 4 bytes (V,A,R,ALFA)
+	unsigned char * data4 = texture4.convertToData(bitmap4, imageWidth, imageHeight); //convierte en arreglo unidimensional 
+	glGenTextures(1, &textureID4); //1=no de textura y pasamos referencia para modificar el valor 
+	glBindTexture(GL_TEXTURE_2D, textureID4);
+	// set the texture wrapping parameters
+	//Se enlaza el tipo de textura al ID texture ID1(Texture 2D)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	//  s->eje x
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);  //t->eje y 
+																			// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //iNTERPOLACION ->FILTRO gAUSSIANO ,PERMITE SUAVIZAR IMAGEN->MEJOR CALIDAD
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data4) {
+		glTexImage2D(GL_TEXTURE_2D, //tipo de textura en dos dimensiones
+			0, //niveles de los MIPMAPS(niveles de textura  en casos de alejamiento -ajusta y no s egastan recursos)
+			GL_RGBA,//formato intern BUFFER 
+			imageWidth, //ancho
+			imageHeight,//alto
+			0, //borde de la imagen
+			GL_BGRA, //formato de la libreria (Azul,Verde,Rojo, Alfa)
+			GL_UNSIGNED_BYTE, //tipo de dato 
+			data4); //tranferimos a la memoria, datos de la imagen 
+		glGenerateMipmap(GL_TEXTURE_2D); //indica a OpenGL que se encargue de generar los MINMAPS
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture3.freeImage(bitmap4);
+
+	
+	//quinta textura
+	Texture texture5("../../Textures/cocaTapInf.jpg"); //manejamos dos  rutas antes donde esta el proyecto 
+	FIBITMAP* bitmap5 = texture5.loadImage(false); //cargamos bits en areglo bidimensional, cada uno con 4 bytes (V,A,R,ALFA)
+	unsigned char * data5 = texture5.convertToData(bitmap5, imageWidth, imageHeight); //convierte en arreglo unidimensional 
+	glGenTextures(1, &textureID5); //1=no de textura y pasamos referencia para modificar el valor 
+	glBindTexture(GL_TEXTURE_2D, textureID5);
+	// set the texture wrapping parameters
+	//Se enlaza el tipo de textura al ID texture ID1(Texture 2D)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);	//  s->eje x
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);  //t->eje y 
+																			// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //iNTERPOLACION ->FILTRO gAUSSIANO ,PERMITE SUAVIZAR IMAGEN->MEJOR CALIDAD
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data5) {
+		glTexImage2D(GL_TEXTURE_2D, //tipo de textura en dos dimensiones
+			0, //niveles de los MIPMAPS(niveles de textura  en casos de alejamiento -ajusta y no s egastan recursos)
+			GL_RGBA,//formato intern BUFFER 
+			imageWidth, //ancho
+			imageHeight,//alto
+			0, //borde de la imagen
+			GL_BGRA, //formato de la libreria (Azul,Verde,Rojo, Alfa)
+			GL_UNSIGNED_BYTE, //tipo de dato 
+			data5); //tranferimos a la memoria, datos de la imagen 
+		glGenerateMipmap(GL_TEXTURE_2D); //indica a OpenGL que se encargue de generar los MINMAPS
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture3.freeImage(bitmap5);
+
+
+
+
 }
 
 void destroyWindow() {
@@ -260,7 +359,6 @@ void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod) {
 		}
 	}
 }
-
 bool processInput(bool continueApplication) {
 	if (exitApp || glfwWindowShouldClose(window) != 0) {
 		return false;
@@ -302,17 +400,23 @@ void applicationLoop() {
 		//sphere2.enableWireMode(); // ya no sale en tipo malla 
 		sphere2.setPosition(glm::vec3(0.0, 0.0, -4.0));
 		sphere2.render();
+
+
+
 		glBindTexture(GL_TEXTURE_2D, textureID2);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.setPosition(glm::vec3(2.0f, 0.0f, -3.0f));
 		box.render();
+
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.setPosition(glm::vec3(-2.0f, 0.0f, -3.0f));
+		glBindTexture(GL_TEXTURE_2D, textureID3); // textura contorno coca 
 		cylinder.render(0,cylinder.getSlices()*cylinder.getStacks()*2*3);// renderizado para  rezalizar el contorno del cilindro  , deja sin tapas
-		glBindTexture(GL_TEXTURE_2D, textureID1); // textura de ladrillos 
+		glBindTexture(GL_TEXTURE_2D, textureID4); // textura  tapa superior
 		cylinder.render( cylinder.getSlices()*cylinder.getStacks() * 2 * 3,cylinder.getSlices()*3); // tapa superior 
+		glBindTexture(GL_TEXTURE_2D, textureID5); // textura  tapa inferior
 		cylinder.render(cylinder.getSlices()*cylinder.getStacks() * 2 * 3+cylinder.getSlices() * 3,cylinder.getSlices()*3); // tapa inferior 
 
 		//Se ha descomenatdo 
