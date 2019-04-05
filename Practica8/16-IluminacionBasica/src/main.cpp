@@ -258,10 +258,25 @@ void applicationLoop() {
 		if (angle > 2 * M_PI)
 			angle = 0.0;
 		else
-			angle += 0.001;
+			angle += 0.0001;
 
 		glm::mat4 lightModelmatrix = glm::rotate(cubeModelMatrix, angle, glm::vec3(0.0f, 1.0f, 0.0f));
 		lightModelmatrix = glm::translate(lightModelmatrix, glm::vec3(0.0f, 0.0f, -ratio));
+
+		//COMPONENTE AMBIENTAL
+		iluminacionShader.turnOn();
+		//los tres flotantes son los valores que quiero enviar a la componente ambiental, diminuimos 
+		//  el valor para hacer más obscuro 
+		glUniform3f(iluminacionShader.getUniformLocation("light.ambient"), 0.2, 0.2, 0.2);
+		glUniform3f(iluminacionShader.getUniformLocation("light.diffuse"), 0.7, 0.2, 0.3);
+		glUniform3f(iluminacionShader.getUniformLocation("light.specular"), 0.1, 0.4, 0.6);
+		glUniform3fv(iluminacionShader.getUniformLocation("light.position"),1,glm::value_ptr
+			(glm::vec3(lightModelmatrix*glm::vec4(0.0,0.0,0.0,1.0))));
+		glUniform3fv(iluminacionShader.getUniformLocation("viewPos"), 1, glm::value_ptr
+			(camera->getPosition()));
+
+
+		iluminacionShader.turnOff();
 
 		sphere.setProjectionMatrix(projection);
 		sphere.setViewMatrix(view);
