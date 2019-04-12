@@ -264,16 +264,17 @@ void applicationLoop() {
 		lightModelmatrix = glm::translate(lightModelmatrix, glm::vec3(0.0f, 0.0f, -ratio));
 
 		iluminacionShader.turnOn();
-		glUniform3fv(iluminacionShader.getUniformLocation("light.position"), 1, glm::value_ptr(glm::vec3(lightModelmatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f))));
+		glUniform3fv(iluminacionShader.getUniformLocation("light.position"), 1, glm::value_ptr(glm::vec3(lightModelmatrix
+			* glm::vec4(0.0f, 0.0f, 0.0f, 1.0f))));
 		glUniform3f(iluminacionShader.getUniformLocation("light.ambient"), 0.3, 0.3, 0.3);
 		glUniform3f(iluminacionShader.getUniformLocation("light.diffuse"), 0.4, 0.4, 0.4);
 		glUniform3f(iluminacionShader.getUniformLocation("light.specular"), 0.5, 0.3, 0.2);
 
 
-		glUniform3f(iluminacionShader.getUniformLocation("material.ambient"), 0.24725, 0.1995, 0.0745);
-		glUniform3f(iluminacionShader.getUniformLocation("material.diffuse"), 0.75164, 0.60648, 0.22648);
-		glUniform3f(iluminacionShader.getUniformLocation("material.specular"), 0.628281, 0.555802, 0.366065);
-		glUniform1f(iluminacionShader.getUniformLocation("material.shininess"),51.2);
+		glUniform3f(iluminacionShader.getUniformLocation("material.ambient"), 0.1745f, 0.01175f, 0.01175f);
+		glUniform3f(iluminacionShader.getUniformLocation("material.diffuse"), 0.61424f, 0.04136f, 0.04136f);
+		glUniform3f(iluminacionShader.getUniformLocation("material.specular"), 0.727811f, 0.626959f, 0.626959f);
+		glUniform1f(iluminacionShader.getUniformLocation("material.shininess"), 76.8f);
 		glUniform3fv(iluminacionShader.getUniformLocation("viewPos"), 1, glm::value_ptr(camera->getPosition()));
 		iluminacionShader.turnOff();
 
