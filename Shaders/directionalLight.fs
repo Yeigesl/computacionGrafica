@@ -1,6 +1,6 @@
 #version 330 core
 struct Light {    
-    vec3 direction;
+    vec3 direction; //recibe la dirección por lo que no se requiere calculo
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
