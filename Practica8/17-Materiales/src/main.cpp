@@ -270,7 +270,7 @@ void applicationLoop() {
 		glUniform3f(iluminacionShader.getUniformLocation("light.diffuse"), 0.4, 0.4, 0.4);
 		glUniform3f(iluminacionShader.getUniformLocation("light.specular"), 0.5, 0.3, 0.2);
 
-
+		//rubí
 		glUniform3f(iluminacionShader.getUniformLocation("material.ambient"), 0.1745f, 0.01175f, 0.01175f);
 		glUniform3f(iluminacionShader.getUniformLocation("material.diffuse"), 0.61424f, 0.04136f, 0.04136f);
 		glUniform3f(iluminacionShader.getUniformLocation("material.specular"), 0.727811f, 0.626959f, 0.626959f);
