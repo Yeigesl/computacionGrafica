@@ -51,7 +51,8 @@ textureID9, textureID10,textureID11, textureID12,
 textureID13, textureID14, textureID15, 
 textureID16, textureID17, textureID18, 
 textureID19, textureID20, textureID21,
-textureID22, textureID23, textureID24, textureCubeTexture;
+textureID22, textureID23, textureID24,
+textureID25, textureID26, textureCubeTexture;
 GLuint cubeTextureID;
 
 GLenum types[6] = {
@@ -666,6 +667,52 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		std::cout << "Failed to load texture" << std::endl;
 	texture.freeImage(bitmap);
 
+	//textura VENTANA 
+	texture = Texture("../../Textures/ventana.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID25);
+	glBindTexture(GL_TEXTURE_2D, textureID25);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+
+	//textura fachada
+	texture = Texture("../../Textures/fachada.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID26);
+	glBindTexture(GL_TEXTURE_2D, textureID26);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+
+
+
 
 	glGenTextures(1, &cubeTextureID);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubeTextureID);
@@ -848,14 +895,26 @@ void applicationLoop() {
 		box.setPosition(glm::vec3(15.0, 0.0, -3.0));
 		box.setScale(glm::vec3(60.0, 30.0, 2.0));
 		box.render();
+
+
+
+		/// PARED FRONTAL ----------------------------
+
 		//pared 1 posterior 
-		glBindTexture(GL_TEXTURE_2D, textureID24);
+		glBindTexture(GL_TEXTURE_2D, textureID26);
 		box.setShader(&shaderSpotLight);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.setPosition(glm::vec3(15.0, 0.0, 25.0));
 		box.setScale(glm::vec3(60.0, 30.0, 2.0));
 		box.render();
+
+
+
+
+
+
+
 
 
 
@@ -1218,7 +1277,7 @@ void applicationLoop() {
 		cylinder3.setScale(glm::vec3(3.0, 3.0, 3.0));
 		cylinder3.render();
 
-		//----------------------BAÑO
+	
 		//----- teclado computadora
 		glBindTexture(GL_TEXTURE_2D, textureID22);
 		box2.setShader(&shaderSpotLight);
