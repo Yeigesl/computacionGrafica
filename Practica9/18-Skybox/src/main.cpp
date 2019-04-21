@@ -870,15 +870,15 @@ void applicationLoop() {
 		cylinder.render(cylinder.getSlices() * cylinder.getStacks() * 2 * 3, cylinder.getSlices() * 3, cubeModelMatrix);
 		glBindTexture(GL_TEXTURE_2D, textureID3);
 		cylinder.render(cylinder.getSlices() * cylinder.getStacks() * 2 * 3 + cylinder.getSlices() * 3, cylinder.getSlices() * 3, cubeModelMatrix);
-		
+		/*
 		
 		glBindTexture(GL_TEXTURE_2D, textureID2);
 		sphere2.setShader(&shaderSpotLight);
 		sphere2.setProjectionMatrix(projection);
 		sphere2.setViewMatrix(view);
-		sphere2.setPosition(glm::vec3(0.0, 0.0, 0.0));
-		sphere2.setScale(glm::vec3(1.0, 1.0, 1.0));
-		sphere2.render();
+		sphere2.setPosition(glm::vec3(-15.0, 4.0, 2.0));
+		sphere2.setScale(glm::vec3(10.0, 10.0, 10.0));
+		sphere2.render();*/
 		//cilindro
 		glBindTexture(GL_TEXTURE_2D, textureID3);
 		cylinder2.setShader(&shaderPointLight);
@@ -1579,7 +1579,7 @@ void applicationLoop() {
 		sphere.setColor(glm::vec3(0.4f, 0.3f, 0.6f));
 		sphere.setProjectionMatrix(projection);
 		sphere.setViewMatrix(view);
-		sphere.setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+		sphere.setScale(glm::vec3(4.0f, 4.0f, 4.0f));
 		sphere.enableWireMode();
 		sphere.render(lightModelmatrix);
 
