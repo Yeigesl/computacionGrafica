@@ -668,7 +668,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	texture.freeImage(bitmap);
 
 	//textura VENTANA 
-	texture = Texture("../../Textures/ventana.jpg");
+	texture = Texture("../../Textures/ventana.jpg"); 
 	bitmap = texture.loadImage(false);
 	data = texture.convertToData(bitmap, imageWidth, imageHeight);
 	glGenTextures(1, &textureID25);
