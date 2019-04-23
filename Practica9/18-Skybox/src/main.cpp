@@ -85,7 +85,7 @@ bool ilumina = true;
 bool ilumina2 = true;
 int lastMousePosX, offsetX;
 int lastMousePosY, offsetY;
-float rot1 = 0.0f, rot2 = 0.0f;
+float rot1 = 0.0f, rot2 = 0.0f, rot3 = 0.0f;
 float i = 0.0f;
 
 double deltaTime;
@@ -308,6 +308,66 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		std::cout << "Failed to load texture" << std::endl;
 	texture.freeImage(bitmap);
 
+	//									TEXTURA JUEGO 1
+	//textura rosa 
+	texture = Texture("../../Textures/rosa.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID7);
+	glBindTexture(GL_TEXTURE_2D, textureID7);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	//textura gold
+	texture = Texture("../../Textures/gold.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID8);
+	glBindTexture(GL_TEXTURE_2D, textureID8);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	//textura caballo
+	texture = Texture("../../Textures/caballo.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID9);
+	glBindTexture(GL_TEXTURE_2D, textureID9);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
 
 	//---------------------------------------------------------------------------
 
@@ -507,14 +567,10 @@ void applicationLoop() {
 		glm::mat4 cubeModelMatrix = glm::translate(glm::mat4(1.0f), objPosition);
 
 		glm::mat4 matrix0 = glm::mat4(1.0f);
-		// Se coloca el torso en la coordenada (0, 0, -1.0)
 		matrix0 = glm::translate(matrix0, glm::vec3(0.0f, 0.0f, -4.0f));
-		
-
-		
 		glm::mat4 matrixs1 = glm::translate(matrix0, glm::vec3(0.0f,0.9f, 0.0f)); // esfera para primer juego 
 		glm::mat4 matrix1 = glm::translate(matrix0, glm::vec3(0.0f, 0.9f, 0.0f)); //caja 
-		glm::mat4 matrix2 = glm::translate(matrixs1, glm::vec3(0.0f, -0.25f, 0.0f));// cilindro medio
+		glm::mat4 matrix2 = glm::translate(matrixs1, glm::vec3(0.0f, -0.25f,0.0f));// cilindro medio
 		glm::mat4 matrixs2 = glm::translate(matrix2, glm::vec3(0.0f, 0.0f, 0.35f));//brazo posterior 
 		glm::mat4 matrixs2_1 = glm::translate(matrix2, glm::vec3(0.0f, 0.0f, -0.35f));// brazo anterior 
 		
@@ -528,8 +584,6 @@ void applicationLoop() {
 		matrixs2_1 = glm::rotate(matrixs2_1,rot1, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrixs2 = glm::rotate(matrixs2, rot2, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrixs2_1 = glm::rotate(matrixs2_1, rot2, glm::vec3(0.0f, 0.0f, 0.01f));
-
-		
 		// Se dibuja el cylindro principal del juego martillo 
 		matrix0 = glm::scale(matrix0, glm::vec3(0.6f, 1.0f, 0.6f));
 		glBindTexture(GL_TEXTURE_2D, textureID1);
@@ -538,11 +592,6 @@ void applicationLoop() {
 		cylinder.setViewMatrix(view);
 		cylinder.setScale(glm::vec3(0.5, 1.8, 0.5));
 		cylinder.render(matrix0);
-
-
-
-
-
 		//esfera  central del juego
 		glBindTexture(GL_TEXTURE_2D, textureID2);
 		matrixs1 = glm::rotate(matrixs1, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
@@ -553,7 +602,6 @@ void applicationLoop() {
 		sphere.setPosition(glm::vec3(0.0, 0.0, 0.7));
 		sphere.setScale(glm::vec3(1.0, 1.0, 1.0));
 		sphere.render(matrixs1);
-
 		//caja superior del juego 
 		glBindTexture(GL_TEXTURE_2D, textureID1);
 		matrix1 = glm::scale(matrix1, glm::vec3(0.2f, 0.2f, 0.2f));
@@ -563,11 +611,10 @@ void applicationLoop() {
 		box.enableWireMode();
 		box.setScale(glm::vec3(1.0, 1.0, 1.0));
 		box.render(matrix1);
-
 		// cilindro de en medio 
 		glBindTexture(GL_TEXTURE_2D, textureID2);
 		matrix2 = glm::rotate(matrix2, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
-		matrix2 = glm::scale(matrix2, glm::vec3(0.1f, 0.6f, 0.1f));
+		matrix2 = glm::scale(matrix2, glm::vec3(0.1f, 1.3f, 0.1f));
 		cylinder2.setShader(&shaderDirectionLight);
 		cylinder2.setProjectionMatrix(projection);
 		cylinder2.setViewMatrix(view);
@@ -643,9 +690,98 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs3);
-	
-	
+
+
+	/*------------				JUEGO 2		---------------------
+							CARRUSEL 
+
+							BASE DE TRES COLORES 
+	*/
+		glm::mat4 matrixs4 = glm::mat4(1.0f);
+		matrixs4 = glm::translate(matrixs4, glm::vec3(-1.3f, -0.5f,- 1.6f));   //BASE INFERIOR
+
 		
+		
+
+		//				MOVIMIENTOS JUEGO 2
+
+		matrixs4 = glm::rotate(matrixs4, rot2, glm::vec3(0.0f, 0.1f, 0.0f));
+		
+
+		//DISCO DORADO
+		matrixs4 = glm::scale(matrixs4, glm::vec3(3.5f, 0.1f, 3.5f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrixs4);
+		//disco rosa
+		glm::mat4  matrixs5 = glm::translate(matrixs4, glm::vec3(0.0f, 11.0f, 0.0f));  //BASE MEDIA 
+		matrixs5 = glm::scale(matrixs5, glm::vec3(1.0f, 0.1f, 1.0f));
+		glBindTexture(GL_TEXTURE_2D, textureID7);
+		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrixs5);
+		//disco dorado
+		glm::mat4  matrixs6 = glm::translate(matrixs5, glm::vec3(0.0f, 0.2f, 0.0f));
+		matrixs6 = glm::scale(matrixs6, glm::vec3(0.5f, 0.1f, 0.5f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrixs6);
+
+
+		//cilindro central
+		glm::mat4  matrix10 = glm::translate(matrixs4, glm::vec3(0.0f, 5.0f, 0.0f)); //TUBO 1
+		matrix10 = glm::scale(matrix10, glm::vec3(0.1f, 6.5f, 0.1f));
+		glBindTexture(GL_TEXTURE_2D, textureID7);
+		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix10);
+	
+		//CILINDRO 1 PARA SOSTENER LOS CABALLOS 
+		glm::mat4  matrix8 = glm::translate(matrixs4, glm::vec3(0.0f, 5.0f, -0.1f)); //TUBO 1
+		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
+		matrix8 = glm::scale(matrix8, glm::vec3(0.1f, 6.5f, 0.1f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix8);
+		
+		//CABALLO 1
+		glm::mat4  matrixs7 = glm::translate(matrix8, glm::vec3(0.0f,0.3f, -0.1f)); //caballo 1
+		//matrixs7 = glm::rotate(matrixs7, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
+		matrixs7 = glm::scale(matrixs7, glm::vec3(0.5f, 0.5f, 0.4f));
+		glBindTexture(GL_TEXTURE_2D, textureID9);
+		box.setShader(&shaderDirectionLight);
+		box.setProjectionMatrix(projection);
+		box.setViewMatrix(view);
+		box.render(matrixs7);
+
+
+		glm::mat4  matrix9 = glm::translate(matrixs4, glm::vec3(0.1f, 5.0f, -0.15f)); //TUBO 1
+		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
+		matrix9 = glm::scale(matrix9, glm::vec3(0.1f, 6.5f, 0.1f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix9);
+
+		//CABALLO 1
+		glm::mat4  matrixs8 = glm::translate(matrix9, glm::vec3(0.0f, 0.3f, -0.15f)); //caballo 1
+		//matrixs7 = glm::rotate(matrixs7, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
+		matrixs8 = glm::scale(matrixs8, glm::vec3(0.5f, 0.5f, 0.4f));
+		glBindTexture(GL_TEXTURE_2D, textureID9);
+		box.setShader(&shaderDirectionLight);
+		box.setProjectionMatrix(projection);
+		box.setViewMatrix(view);
+		box.render(matrixs8);
+
 
 
 
