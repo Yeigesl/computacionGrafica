@@ -82,9 +82,6 @@
     <None Include="..\..\Shaders\cubeTexture.fs">
       <Filter>Archivos de recursos</Filter>
     </None>
-    <None Include="..\..\Shaders\iluminacion_materiales_res.fs">
-      <Filter>Archivos de recursos</Filter>
-    </None>
     <None Include="..\..\Shaders\iluminacion_materiales_res.vs">
       <Filter>Archivos de recursos</Filter>
     </None>
