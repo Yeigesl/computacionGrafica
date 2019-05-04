@@ -147,7 +147,6 @@
     <None Include="..\..\Shaders\cubeTexture.fs" />
     <None Include="..\..\Shaders\cubeTexture.vs" />
     <None Include="..\..\Shaders\directionalLight.fs" />
-    <None Include="..\..\Shaders\iluminacion_materiales_res.fs" />
     <None Include="..\..\Shaders\iluminacion_materiales_res.vs" />
     <None Include="..\..\Shaders\pointLight.fs" />
     <None Include="..\..\Shaders\spotLight.fs" />

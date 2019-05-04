@@ -26,7 +26,11 @@
 //Texture includes
 #include "Headers/Texture.h"
 //Model includes
+<<<<<<< HEAD
 #include "Headers/Model.h"  // incluir para el uso de modelos 
+=======
+#include "Headers/Model.h" // incluir para el uso de modelos 
+>>>>>>> 50b0cca23defc6d4ceb0591058e8706073eaa3a0
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
@@ -54,8 +58,12 @@ Model arturito;
 Model modelTrain;
 Model modelDog;
 
+<<<<<<< HEAD
 GLuint textureID1, textureID2, textureID3, textureCespedID,
 textureWaterID, textureCubeTexture;
+=======
+GLuint textureID1, textureID2, textureID3, textureCespedID, textureWaterID, textureCubeTexture;
+>>>>>>> 50b0cca23defc6d4ceb0591058e8706073eaa3a0
 GLuint cubeTextureID;
 
 GLenum types[6] = {
@@ -84,12 +92,16 @@ GLFWwindow * window;
 bool exitApp = false;
 int lastMousePosX, offsetX;
 int lastMousePosY, offsetY;
+<<<<<<< HEAD
 bool finishRotation2=true;
 bool direcionDog = true;
 float rotationDog =0.0;
 float dogX = 0.0;
 float dogY = 0.0;
 float dogZ = 0.0;
+=======
+
+>>>>>>> 50b0cca23defc6d4ceb0591058e8706073eaa3a0
 double deltaTime;
 
 // Se definen todos las funciones.
@@ -514,6 +526,7 @@ void applicationLoop() {
 
 
 		//-------Se agrega el perro
+<<<<<<< HEAD
 	    //	SE HACE USO DE UNA MAQUINA DE ESTADO 
 		modelDog.setShader(&shaderLighting);
 		modelDog.setProjectionMatrix(projection);
@@ -527,6 +540,16 @@ void applicationLoop() {
 		
 	
 
+=======
+
+		modelDog.setShader(&shaderLighting);
+		modelDog.setProjectionMatrix(projection);
+		modelDog.setViewMatrix(view);
+		modelDog.setPosition(glm::vec3(8.0, .0, 5.0));
+		modelDog.setScale(glm::vec3(0.1, 0.1,0.1));
+		modelDog.setOrientation(glm::vec3(0.0f,90.0f,90.0f));
+		modelDog.render();
+>>>>>>> 50b0cca23defc6d4ceb0591058e8706073eaa3a0
 
 		/*arturito.setShader(&shaderLighting);
 		arturito.setProjectionMatrix(projection);
@@ -590,7 +613,11 @@ void applicationLoop() {
 		glDepthFunc(oldDepthFuncMode);
 		shaderCubeTexture.turnOff();
 
+<<<<<<< HEAD
 		//  CONTROL DE MOOVIEMIENTOS DELA FIGURA    moto                                                                                                                                                      
+=======
+		//  CONTROL DE MOOVIEMIENTOS DELA FIGURA                                                                                                                                                        
+>>>>>>> 50b0cca23defc6d4ceb0591058e8706073eaa3a0
 
 		if (finishRotation) { // EL VALOR DE LA VARIABLE ESTA EN VERDADERO
 			if (direcionAirCraft)
@@ -623,6 +650,7 @@ void applicationLoop() {
 			}
 		}
 
+<<<<<<< HEAD
 
 		
 		// movimientos perro 
@@ -662,6 +690,8 @@ void applicationLoop() {
 		}
 
 
+=======
+>>>>>>> 50b0cca23defc6d4ceb0591058e8706073eaa3a0
 		glfwSwapBuffers(window);
 	}
 }
