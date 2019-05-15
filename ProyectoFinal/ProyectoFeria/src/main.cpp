@@ -46,6 +46,7 @@ Shader shaderMateriales;
 Shader shaderDirectionLight;
 Shader shaderPointLight;
 Shader shaderSpotLight;
+Shader shaderLighting; // contiene todas las luces
 
 GLuint textureID1, textureID2, textureID3,textureID4,
 textureID5,textureID6, textureID7, textureID8, 
@@ -144,7 +145,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	GLenum err = glewInit();
 	if (GLEW_OK != err) {
 		std::cerr << "Failed to initialize glew" << std::endl;
-			exit(-1);
+		exit(-1);
 	}
 
 	glViewport(0, 0, screenWidth, screenHeight);
@@ -159,6 +160,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	shaderDirectionLight.initialize("../../Shaders/typeLight.vs", "../../Shaders/directionalLight.fs");
 	shaderPointLight.initialize("../../Shaders/typeLight.vs", "../../Shaders/pointLight.fs");
 	shaderSpotLight.initialize("../../Shaders/typeLight.vs", "../../Shaders/spotLight.fs");
+	shaderLighting.initialize("../../Shaders/typeLight.vs", "../../Shaders/multipleLights.fs");
+
+
 
 	sphere.init();
 	sphere2.init();
@@ -248,9 +252,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	texture.freeImage(bitmap);
 
 	//textura martillo
-	texture = Texture("../../Textures/martillo.png");
-	bitmap = texture.loadImage(false);
-	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	Texture texture3 = Texture("../../Textures/martillo.png");
+	FIBITMAP * bitmap3 = texture3.loadImage(false);
+	unsigned char * data3 = texture3.convertToData(bitmap3, imageWidth, imageHeight);
 	glGenTextures(1, &textureID4);
 	glBindTexture(GL_TEXTURE_2D, textureID4);
 	// set the texture wrapping parameters
@@ -259,13 +263,13 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	// set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+	if (data3) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data3);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
 		std::cout << "Failed to load texture" << std::endl;
-	texture.freeImage(bitmap);
+	texture3.freeImage(bitmap3);
 
 	//textura tiras
 	texture = Texture("../../Textures/tiras.jpg");
@@ -610,7 +614,7 @@ void applicationLoop() {
 		//						Se dibuja el cylindro principal del juego martillo 
 		matrix0 = glm::scale(matrix0, glm::vec3(0.6f, 1.0f, 0.6f));
 		glBindTexture(GL_TEXTURE_2D, textureID1);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.setScale(glm::vec3(0.5, 1.8, 0.5));
@@ -619,7 +623,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID2);
 		matrixs1 = glm::rotate(matrixs1, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs1 = glm::scale(matrixs1, glm::vec3(0.4f, 0.4f, 0.4f));
-		sphere.setShader(&shaderDirectionLight);
+		sphere.setShader(&shaderLighting);
 		sphere.setProjectionMatrix(projection);
 		sphere.setViewMatrix(view);
 		sphere.setPosition(glm::vec3(0.0, 0.0, 0.7));
@@ -628,7 +632,7 @@ void applicationLoop() {
 		//caja superior del juego 
 		glBindTexture(GL_TEXTURE_2D, textureID1);
 		matrix1 = glm::scale(matrix1, glm::vec3(0.2f, 0.2f, 0.2f));
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.enableWireMode();
@@ -638,7 +642,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID2);
 		matrix2 = glm::rotate(matrix2, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrix2 = glm::scale(matrix2, glm::vec3(0.1f, 1.3f, 0.1f));
-		cylinder2.setShader(&shaderDirectionLight);
+		cylinder2.setShader(&shaderLighting);
 		cylinder2.setProjectionMatrix(projection);
 		cylinder2.setViewMatrix(view);
 		cylinder2.render(matrix2);
@@ -646,7 +650,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID3);
 		matrixs2 = glm::rotate(matrixs2, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs2 = glm::scale(matrixs2, glm::vec3(0.1f, 0.1f, 1.8f));
-		cylinder3.setShader(&shaderDirectionLight);
+		cylinder3.setShader(&shaderLighting);
 		cylinder3.setProjectionMatrix(projection);
 		cylinder3.setViewMatrix(view);
 		cylinder3.render(matrixs2);
@@ -655,7 +659,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID4);
 		matrix3 = glm::rotate(matrix3, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix3 = glm::scale(matrix3, glm::vec3(0.2,2.5f,5.0f));
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrix3);
@@ -664,7 +668,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID5);
 		matrix5 = glm::rotate(matrix5, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix5 = glm::scale(matrix5, glm::vec3(0.2, 1.0f, 3.0f));
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrix5);
@@ -672,7 +676,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID3);
 		matrixs2_1 = glm::rotate(matrixs2_1, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs2_1 = glm::scale(matrixs2_1, glm::vec3(0.1f, 0.1f, 1.8f));
-		cylinder4.setShader(&shaderDirectionLight);
+		cylinder4.setShader(&shaderLighting);
 		cylinder4.setProjectionMatrix(projection);
 		cylinder4.setViewMatrix(view);
 		cylinder4.render(matrixs2_1);
@@ -681,7 +685,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID4);
 		matrix4 = glm::rotate(matrix4, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix4 = glm::scale(matrix4, glm::vec3(0.2, 2.5f, 5.0f));
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrix4);
@@ -690,7 +694,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID5);
 		matrix6 = glm::rotate(matrix6, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix6 = glm::scale(matrix6, glm::vec3(0.2, 1.0f, 3.0f));
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrix6);
@@ -700,7 +704,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID1);
 		matrix7 = glm::rotate(matrix7, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix7 = glm::scale(matrix7, glm::vec3(0.1f, 2.5f, 0.1f));
-		cylinder4.setShader(&shaderDirectionLight);
+		cylinder4.setShader(&shaderLighting);
 		cylinder4.setProjectionMatrix(projection);
 		cylinder4.setViewMatrix(view);
 		cylinder4.render(matrix7);
@@ -709,7 +713,7 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID6);
 		matrixs3 = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.0f, 0.1f));
 		matrixs3 = glm::scale(matrixs3, glm::vec3(4.5, 0.5f, 8.5f));
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs3);
@@ -734,7 +738,7 @@ void applicationLoop() {
 		//DISCO DORADO
 		matrixs4 = glm::scale(matrixs4, glm::vec3(3.5f, 0.1f, 3.5f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrixs4);
@@ -742,7 +746,7 @@ void applicationLoop() {
 		glm::mat4  matrixs5 = glm::translate(matrixs4, glm::vec3(0.0f, 11.0f, 0.0f));  //BASE MEDIA 
 		matrixs5 = glm::scale(matrixs5, glm::vec3(1.0f, 0.3f, 1.0f));
 		glBindTexture(GL_TEXTURE_2D, textureID7);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrixs5);
@@ -751,7 +755,7 @@ void applicationLoop() {
 		glm::mat4  matrixs6 = glm::translate(matrixs5, glm::vec3(0.0f, 0.2f, 0.0f));
 		matrixs6 = glm::scale(matrixs6, glm::vec3(0.5f, 0.1f, 0.5f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrixs6);
@@ -760,7 +764,7 @@ void applicationLoop() {
 		glm::mat4  matrix10 = glm::translate(matrixs4, glm::vec3(0.0f, 5.0f, 0.0f)); //TUBO 1
 		matrix10 = glm::scale(matrix10, glm::vec3(0.1f, 6.5f, 0.1f));
 		glBindTexture(GL_TEXTURE_2D, textureID7);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix10);
@@ -771,7 +775,7 @@ void applicationLoop() {
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix8 = glm::scale(matrix8, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix8);
@@ -780,7 +784,7 @@ void applicationLoop() {
 		//matrixs7 = glm::rotate(matrixs7, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs7 = glm::scale(matrixs7, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs7);
@@ -791,7 +795,7 @@ void applicationLoop() {
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix9 = glm::scale(matrix9, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix9);
@@ -799,7 +803,7 @@ void applicationLoop() {
 		//matrixs7 = glm::rotate(matrixs7, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs8 = glm::scale(matrixs8, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs8);
@@ -809,14 +813,14 @@ void applicationLoop() {
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix11 = glm::scale(matrix11, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix11);
 		glm::mat4  matrixs9 = glm::translate(matrix11, glm::vec3(0.0f, 0.05f, -0.05f)); //caballo 1
 		matrixs9 = glm::scale(matrixs9, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs9);
@@ -825,14 +829,14 @@ void applicationLoop() {
 		glm::mat4  matrix12 = glm::translate(matrixs4, glm::vec3(0.05, 5.0f, 0.22f)); //TUBO 2
 		matrix12 = glm::scale(matrix12, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix12);
 		glm::mat4  matrixs10 = glm::translate(matrix12, glm::vec3(0.0f, 0.05f, -0.05f)); //caballo 1
 		matrixs10 = glm::scale(matrixs10, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID10);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs10);
@@ -841,7 +845,7 @@ void applicationLoop() {
 		glm::mat4  matrixs11 = glm::translate(matrixs4, glm::vec3(0.0f, 3.0f, 0.0f));  //BASE MEDIA 
 		matrixs11 = glm::scale(matrixs11, glm::vec3(0.5f, 0.6f, 0.5f));
 		glBindTexture(GL_TEXTURE_2D, textureID7);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrixs11);
@@ -851,7 +855,7 @@ void applicationLoop() {
 		//matrix13 = glm::rotate(matrix13, 0.005f, glm::vec3(0.0f, 0.0f, 0.1f));
 		matrix13 = glm::scale(matrix13, glm::vec3(0.05f, 0.7f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrix13);
@@ -859,7 +863,7 @@ void applicationLoop() {
 		glm::mat4  matrixs13 = glm::translate(matrixs4, glm::vec3(0.0f, 2.0f, 0.16f)); //caballo 1
 		matrixs13 = glm::scale(matrixs13, glm::vec3(0.05f, 0.7f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs13);
@@ -867,7 +871,7 @@ void applicationLoop() {
 		glm::mat4  matrix14 = glm::translate(matrixs4, glm::vec3(0.0f, 2.7f, 0.13f)); //caballo 1
 		matrix14 = glm::scale(matrix14, glm::vec3(0.05f, 0.7f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrix14);
@@ -876,14 +880,14 @@ void applicationLoop() {
 		glm::mat4  matrix15 = glm::translate(matrixs11, glm::vec3(0.08, 5.3f, 0.20f)); //TUBO 2
 		matrix15 = glm::scale(matrix15, glm::vec3(0.03f, 7.0f, 0.03f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix15);
 		glm::mat4  matrixs14 = glm::translate(matrix15, glm::vec3(0.0f, 0.03f, -0.05f)); //caballo 1
 		matrixs14 = glm::scale(matrixs14, glm::vec3(1.0f, 0.4f, 1.0f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs14);
@@ -892,14 +896,14 @@ void applicationLoop() {
 		glm::mat4  matrix16 = glm::translate(matrixs11, glm::vec3(-0.08, 5.3f, 0.20f)); //TUBO 2
 		matrix16 = glm::scale(matrix16, glm::vec3(0.03f, 7.0f, 0.03f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix16);
 		glm::mat4  matrixs15 = glm::translate(matrix16, glm::vec3(0.0f, 0.03f, -0.05f)); //caballo 1
 		matrixs15 = glm::scale(matrixs15, glm::vec3(1.0f, 0.4f, 1.0f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs15);
@@ -908,14 +912,14 @@ void applicationLoop() {
 		glm::mat4  matrix17 = glm::translate(matrixs11, glm::vec3(0.08, 5.3f, -0.20f)); //TUBO 2
 		matrix17 = glm::scale(matrix17, glm::vec3(0.03f, 7.0f, 0.03f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix17);
 		glm::mat4  matrixs16 = glm::translate(matrix17, glm::vec3(0.0f, 0.03f, -0.05f)); //caballo 1
 		matrixs16 = glm::scale(matrixs16, glm::vec3(1.0f, 0.4f, 1.0f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs16);
@@ -924,14 +928,14 @@ void applicationLoop() {
 		glm::mat4  matrix18 = glm::translate(matrixs11, glm::vec3(-0.08, 5.3f, -0.20f)); //TUBO 2
 		matrix18 = glm::scale(matrix18, glm::vec3(0.03f, 7.0f, 0.03f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix18);
 		glm::mat4  matrixs17 = glm::translate(matrix18, glm::vec3(0.0f, 0.03f, -0.05f)); //caballo 1
 		matrixs17 = glm::scale(matrixs17, glm::vec3(1.0f, 0.4f, 1.0f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs17);
@@ -941,7 +945,7 @@ void applicationLoop() {
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix19 = glm::scale(matrix19, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix19);
@@ -950,7 +954,7 @@ void applicationLoop() {
 		//matrixs7 = glm::rotate(matrixs7, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs18 = glm::scale(matrixs18, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs18);
@@ -961,7 +965,7 @@ void applicationLoop() {
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix20 = glm::scale(matrix20, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix20);
@@ -969,7 +973,7 @@ void applicationLoop() {
 		//matrixs7 = glm::rotate(matrixs7, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs19 = glm::scale(matrixs19, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs19);
@@ -979,14 +983,14 @@ void applicationLoop() {
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrix21 = glm::scale(matrix21, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix21);
 		glm::mat4  matrixs20 = glm::translate(matrix21, glm::vec3(0.0f, 0.05f, -0.05f)); //caballo 1
 		matrixs20 = glm::scale(matrixs20, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs20);
@@ -995,14 +999,14 @@ void applicationLoop() {
 		glm::mat4  matrix22 = glm::translate(matrixs4, glm::vec3(-0.05, 5.0f, -0.22f)); //TUBO 2
 		matrix22 = glm::scale(matrix22, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
-		cylinder.setShader(&shaderDirectionLight);
+		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix22);
 		glm::mat4  matrixs21 = glm::translate(matrix22 ,glm::vec3(0.0f, 0.05f, -0.05f)); //caballo 1
 		matrixs21= glm::scale(matrixs21, glm::vec3(0.6f, 0.4f, 0.9f));
 		glBindTexture(GL_TEXTURE_2D, textureID10);
-		box.setShader(&shaderDirectionLight);
+		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs21);
@@ -1022,133 +1026,34 @@ void applicationLoop() {
 Se manejan los eventos para mover izquierda, dercha , acercar y alejar.
 
 */
-
-
-		// matriz de luz 
-		glm::mat4 lightModelmatrix = glm::rotate(cubeModelMatrix, angle, glm::vec3(0.0f, 1.0f, 0.0f));
-		lightModelmatrix = glm::translate(lightModelmatrix, glm::vec3(0.0f, 0.0f, -ratio));
-		if (ilumina) {
-			// Iluminación direccional 
-
-			shaderDirectionLight.turnOn();
-			//se comentan las sigyuientes lineas para spotlight
-			glUniform3fv(shaderDirectionLight.getUniformLocation("light.position"), 1, glm::value_ptr(glm::vec3(2.0f,0.0f,5.0)));
-			glUniform3fv(shaderDirectionLight.getUniformLocation("light.direction"), 1, glm::value_ptr(glm::vec3(-0.3f, -1.0f, -0.2f)));
-			//glUniform3fv(shaderDirectionLight.getUniformLocation("light.position"), 1, glm::value_ptr(camera->getPosition()));
-			//se comenta para direccional  y se comenta nuevamente para spot
-			glUniform3fv(shaderDirectionLight.getUniformLocation("light.direction"), 1, glm::value_ptr(camera->getFront())); //direcional
-			glUniform3fv(shaderDirectionLight.getUniformLocation("viewPos"), 1, glm::value_ptr(camera->getPosition()));
-			glUniform3f(shaderDirectionLight.getUniformLocation("light.ambient"), 0.2, 0.2, 0.2);
-			glUniform3f(shaderDirectionLight.getUniformLocation("light.diffuse"), 0.2, 0.3, 0.6);
-			glUniform3f(shaderDirectionLight.getUniformLocation("light.specular"), 0.5, 0.3, 0.2);
-			glUniform3f(shaderDirectionLight.getUniformLocation("material.ambient"), 1.0, 0.2, 0.6);
-			glUniform3f(shaderDirectionLight.getUniformLocation("material.diffuse"), 0.4, 0.5, 0.8);
-			glUniform3f(shaderDirectionLight.getUniformLocation("material.specular"), 0.5, 0.3, 0.2);
-			//definimos ángulos para el spotlight se descomentan 
-			//glUniform1f(shaderDirectionLight.getUniformLocation("light.cutOff"), glm::cos(glm::radians(5.0f))); 
-			// disminuimos valores el cono se hace maspeque
-			//glUniform1f(shaderDirectionLight.getUniformLocation("light.outerCutOff"), glm::cos(glm::radians(7.5f)));
-			//modificamos los  valores de point ligth, mas pequeño el termino  cuadratico    
-			//permite alejarse y que no se vea tanto la diferencia  de que se obscurece
-
-			//glUniform1f(shaderDirectionLight.getUniformLocation("light.constant"), 1.0f); //distancias  de 400
-			//glUniform1f(shaderDirectionLight.getUniformLocation("light.linear"), 0.007f);
-			//glUniform1f(shaderDirectionLight.getUniformLocation("light.quadratics"), 0.0002f);
-			//glUniform1f(shaderDirectionLight.getUniformLocation("material.shininess"), 32.0);
-			//sphere2.render();
-			//sphere2.setPosition(glm::vec3(-0.4, 0.5, 0.5));
-			//sphere2.render();
-			//cylinder2.setPosition(glm::vec3(-5.0, 0.0, 4.0));
-			//cylinder2.render();
-			//box.setPosition(glm::vec3(-5.0, 0.0, -9.0));
-			//box.render();
-			//PISO
-			//box1.setPosition(glm::vec3(-5.0, -15.0, 0.0));
-			//box1.render();
-			//PARED LATERAL 1
-			//box2.setPosition(glm::vec3(-20.0, 0.0, 0.0));
-			//box2.render();
-			//PARED LATERAL 2
-			//box3.setPosition(glm::vec3(10.0, 0.0, 0.0));
-			//box3.render();
-			shaderDirectionLight.turnOff();
-		}
-		else {
-			// Iluminación
-
-			shaderSpotLight.turnOn();
-			//se comentan las sigyuientes lineas para spotlight
-			//glUniform3fv(shaderSpotLight.getUniformLocation("light.position"), 1, glm::value_ptr(glm::vec3(2.0f,0.0f,5.0)));
-			//glUniform3fv(shaderSpotLight.getUniformLocation("light.direction"), 1, glm::value_ptr(glm::vec3(-0.3f, -1.0f, -0.2f)));
-			glUniform3fv(shaderSpotLight.getUniformLocation("light.position"), 1, glm::value_ptr(camera->getPosition())); //se comenta para direccional  y se comenta nuevamente para spot
-			glUniform3fv(shaderSpotLight.getUniformLocation("light.direction"), 1, glm::value_ptr(camera->getFront())); //direcional
-			glUniform3fv(shaderSpotLight.getUniformLocation("viewPos"), 1, glm::value_ptr(camera->getPosition()));
-			glUniform3f(shaderSpotLight.getUniformLocation("light.ambient"), 0.2, 0.2, 0.2);
-			glUniform3f(shaderSpotLight.getUniformLocation("light.diffuse"), 0.2, 0.3, 0.6);
-			glUniform3f(shaderSpotLight.getUniformLocation("light.specular"), 0.5, 0.3, 0.2);
-			glUniform3f(shaderSpotLight.getUniformLocation("material.ambient"), 1.0, 0.2, 0.6);
-			glUniform3f(shaderSpotLight.getUniformLocation("material.diffuse"), 0.4, 0.5, 0.8);
-			glUniform3f(shaderSpotLight.getUniformLocation("material.specular"), 0.5, 0.3, 0.2);
-			//definimos ángulos para el spotlight se descomentan 
-			glUniform1f(shaderSpotLight.getUniformLocation("light.cutOff"), glm::cos(glm::radians(5.0f))); // disminuimos valores el cono se hace maspeque
-			glUniform1f(shaderSpotLight.getUniformLocation("light.outerCutOff"), glm::cos(glm::radians(7.5f)));
-			//modificamos los  valores de point ligth, mas pequeño el termino  cuadratico    
-			//permite alejarse y que no se vea tanto la diferencia  de que se obscurece
-
-			glUniform1f(shaderSpotLight.getUniformLocation("light.constant"), 1.0f); //distancias  de 325
-			glUniform1f(shaderSpotLight.getUniformLocation("light.linear"), 0.014f);
-			glUniform1f(shaderSpotLight.getUniformLocation("light.quadratics"), 0.0007f);
-			glUniform1f(shaderSpotLight.getUniformLocation("material.shininess"), 32.0);
-			//sphere2.render();
-			//sphere2.setPosition(glm::vec3(-0.4, 0.5, 0.5));
-			//sphere2.render();
-			//cylinder2.setPosition(glm::vec3(-5.0, 0.0, 4.0));
-			//cylinder2.render();
+		shaderLighting.turnOn();
+		glUniform3fv(shaderLighting.getUniformLocation("viewPos"), 1, glm::value_ptr(camera->getPosition()));
+		//Directional light
+		glUniform3f(shaderLighting.getUniformLocation("directionalLight.light.ambient"), 0.025, 0.025, 0.025);
+		glUniform3f(shaderLighting.getUniformLocation("directionalLight.light.diffuse"), 0.1, 0.1, 0.1);
+		glUniform3f(shaderLighting.getUniformLocation("directionalLight.light.specular"), 0.15, 0.15, 0.15);
+		glUniform3fv(shaderLighting.getUniformLocation("directionalLight.direction"), 1, glm::value_ptr(glm::vec3(0, -1.0, 0.0)));
+		//Numero de luces spot y point
+		glUniform1i(shaderLighting.getUniformLocation("pointLightCount"), 0);
+		glUniform1i(shaderLighting.getUniformLocation("spotLightCount"), 1);
+		// Spot light
+		glUniform3fv(shaderLighting.getUniformLocation("spotLights[0].position"), 1, glm::value_ptr(camera->getPosition()));
+		glUniform3fv(shaderLighting.getUniformLocation("spotLights[0].direction"), 1, glm::value_ptr(camera->getFront()));
+		glUniform1f(shaderLighting.getUniformLocation("spotLights[0].cutOff"), glm::cos(glm::radians(12.5f)));
+		glUniform1f(shaderLighting.getUniformLocation("spotLights[0].outerCutOff"), glm::cos(glm::radians(15.0f)));
+		glUniform1f(shaderLighting.getUniformLocation("spotLights[0].constant"), 1.0f);
+		glUniform1f(shaderLighting.getUniformLocation("spotLights[0].linear"), 0.14f);
+		glUniform1f(shaderLighting.getUniformLocation("spotLights[0].quadratics"), 0.07f);
+		glUniform3f(shaderLighting.getUniformLocation("spotLights[0].light.ambient"), 0.025, 0.025, 0.025);
+		glUniform3f(shaderLighting.getUniformLocation("spotLights[0].light.diffuse"), 0.7, 0.2, 0.6);
+		glUniform3f(shaderLighting.getUniformLocation("spotLights[0].light.specular"), 0.1, 0.7, 0.8);
+		shaderLighting.turnOff();
 
 
 
-			shaderSpotLight.turnOff();
+		
 
-		}
-		if (ilumina2) {
-			// Iluminación
-
-			shaderPointLight.turnOn();
-			//se comentan las sigyuientes lineas para spotlight
-			glUniform3fv(shaderPointLight.getUniformLocation("light.position"), 1, glm::value_ptr(glm::vec3(2.0f,0.0f,5.0)));
-			glUniform3fv(shaderPointLight.getUniformLocation("light.direction"), 1, glm::value_ptr(glm::vec3(-0.3f, -1.0f, -0.2f)));
-			glUniform3fv(shaderPointLight.getUniformLocation("light.position"), 1, glm::value_ptr(camera->getPosition())); 
-			//se comenta para direccional  y se comenta nuevamente para spot
-			glUniform3fv(shaderPointLight.getUniformLocation("light.direction"), 1, glm::value_ptr(camera->getFront())); 
-			//direcional
-			glUniform3fv(shaderPointLight.getUniformLocation("viewPos"), 1, glm::value_ptr(camera->getPosition()));
-			glUniform3f(shaderPointLight.getUniformLocation("light.ambient"), 0.2, 0.2, 0.2);
-			glUniform3f(shaderPointLight.getUniformLocation("light.diffuse"), 0.2, 0.3, 0.6);
-			glUniform3f(shaderPointLight.getUniformLocation("light.specular"), 0.5, 0.3, 0.2);
-			glUniform3f(shaderPointLight.getUniformLocation("material.ambient"), 1.0, 0.2, 0.6);
-			glUniform3f(shaderPointLight.getUniformLocation("material.diffuse"), 0.4, 0.5, 0.8);
-			glUniform3f(shaderPointLight.getUniformLocation("material.specular"), 0.5, 0.3, 0.2);
-			//definimos ángulos para el spotlight se descomentan 
-			//glUniform1f(shaderPointLight.getUniformLocation("light.cutOff"), glm::cos(glm::radians(5.0f))); 
-			// disminuimos valores el cono se hace maspeque
-			//glUniform1f(shaderPointLight.getUniformLocation("light.outerCutOff"), glm::cos(glm::radians(7.5f)));
-			//modificamos los  valores de point ligth, mas pequeño el termino  cuadratico    
-			//permite alejarse y que no se vea tanto la diferencia  de que se obscurece
-
-			glUniform1f(shaderPointLight.getUniformLocation("light.constant"), 1.0f); //distancias  de 400
-			glUniform1f(shaderPointLight.getUniformLocation("light.linear"), 0.007f);
-			glUniform1f(shaderPointLight.getUniformLocation("light.quadratics"), 0.0002f);
-			glUniform1f(shaderPointLight.getUniformLocation("material.shininess"), 32.0);
-			//sphere2.render();
-			//sphere2.setPosition(glm::vec3(-0.4, 0.5, 0.5));
-			//sphere2.render();
-			//cylinder2.setPosition(glm::vec3(-5.0, 0.0, 4.0));
-			//cylinder2.render();
-
-			shaderPointLight.turnOff();
-
-
-		}
+		
 		
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -1158,14 +1063,7 @@ Se manejan los eventos para mover izquierda, dercha , acercar y alejar.
 			angle += 0.001;
 
 		
-		sphere.setShader(&shaderColor);
-		sphere.setColor(glm::vec3(0.4f, 0.3f, 0.6f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.setScale(glm::vec3(4.0f, 4.0f, 4.0f));
-		sphere.enableWireMode();
-		sphere.render(lightModelmatrix);
-
+		
 	
 
 

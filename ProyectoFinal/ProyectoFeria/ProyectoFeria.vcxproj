@@ -143,6 +143,19 @@
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TimeManager.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Shaders\cubeTexture.fs" />
+    <None Include="..\..\Shaders\cubeTexture.vs" />
+    <None Include="..\..\Shaders\directionalLight.fs" />
+    <None Include="..\..\Shaders\iluminacion_materiales_res.vs" />
+    <None Include="..\..\Shaders\pointLight.fs" />
+    <None Include="..\..\Shaders\spotLight.fs" />
+    <None Include="..\..\Shaders\texturizado_res.fs" />
+    <None Include="..\..\Shaders\texturizado_res.vs" />
+    <None Include="..\..\Shaders\transformaciones.fs" />
+    <None Include="..\..\Shaders\transformaciones.vs" />
+    <None Include="..\..\Shaders\typeLight.vs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
