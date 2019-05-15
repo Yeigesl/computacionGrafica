@@ -658,11 +658,11 @@ void applicationLoop() {
 		glm::mat4 matrix3 = glm::translate(matrixs2, glm::vec3(0.0f, 0.0f, 0.57f)); //caja pasajeros 
 		glBindTexture(GL_TEXTURE_2D, textureID4);
 		matrix3 = glm::rotate(matrix3, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
-		matrix3 = glm::scale(matrix3, glm::vec3(0.2,2.5f,5.0f));
-		box.setShader(&shaderLighting);
-		box.setProjectionMatrix(projection);
-		box.setViewMatrix(view);
-		box.render(matrix3);
+		matrix3 = glm::scale(matrix3, glm::vec3(0.7,0.7f,10.0f));
+		cylinder.setShader(&shaderLighting);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix3);
 		//detalle brazo posterior 
 		glm::mat4 matrix5 = glm::translate(matrixs2, glm::vec3(0.0f, 0.0f, -0.57f)); //caja pasajeros 
 		glBindTexture(GL_TEXTURE_2D, textureID5);
@@ -684,11 +684,11 @@ void applicationLoop() {
 		glm::mat4 matrix4 = glm::translate(matrixs2_1, glm::vec3(0.0f, 0.0f, 0.57f)); //caja pasajeros 
 		glBindTexture(GL_TEXTURE_2D, textureID4);
 		matrix4 = glm::rotate(matrix4, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
-		matrix4 = glm::scale(matrix4, glm::vec3(0.2, 2.5f, 5.0f));
-		box.setShader(&shaderLighting);
-		box.setProjectionMatrix(projection);
-		box.setViewMatrix(view);
-		box.render(matrix4);
+		matrix4 = glm::scale(matrix4, glm::vec3(0.7, 0.7f, 10.0f));
+		cylinder.setShader(&shaderLighting);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix4);
 		//detalle brazo anterior
 		glm::mat4 matrix6 = glm::translate(matrixs2_1, glm::vec3(0.0f, 0.0f, -0.57f)); //caja pasajeros 
 		glBindTexture(GL_TEXTURE_2D, textureID5);
@@ -995,7 +995,7 @@ void applicationLoop() {
 		box.setViewMatrix(view);
 		box.render(matrixs20);
 
-		//CARRUAJE 1
+		//CARRUAJE 2
 		glm::mat4  matrix22 = glm::translate(matrixs4, glm::vec3(-0.05, 5.0f, -0.22f)); //TUBO 2
 		matrix22 = glm::scale(matrix22, glm::vec3(0.05f, 6.5f, 0.05f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
@@ -1012,10 +1012,70 @@ void applicationLoop() {
 		box.render(matrixs21);
 		
 
+		//CARRUAJE 3
+		glm::mat4  matrix23 = glm::translate(matrixs4, glm::vec3(0.03, 5.0f, -0.22f)); //TUBO 2
+		matrix23 = glm::scale(matrix23, glm::vec3(0.05f, 6.5f, 0.05f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderLighting);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix23);
+		glm::mat4  matrixs22 = glm::translate(matrix23, glm::vec3(0.0f, 0.05f, -0.05f)); //caballo 1
+		matrixs22 = glm::scale(matrixs22, glm::vec3(0.6f, 0.4f, 0.9f));
+		glBindTexture(GL_TEXTURE_2D, textureID9);
+		box.setShader(&shaderLighting);
+		box.setProjectionMatrix(projection);
+		box.setViewMatrix(view);
+		box.render(matrixs22);
 
 
+		//CARRUAJE 4
+		glm::mat4  matrix24 = glm::translate(matrixs4, glm::vec3(-0.1, 5.0f, 0.15f)); //TUBO 2
+		matrix24 = glm::scale(matrix24, glm::vec3(0.05f, 6.5f, 0.05f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderLighting);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix24);
+		glm::mat4  matrixs23 = glm::translate(matrix24, glm::vec3(0.0f, 0.05f, 0.05f)); //caballo 1
+		matrixs23 = glm::scale(matrixs23, glm::vec3(0.6f, 0.4f, 0.9f));
+		glBindTexture(GL_TEXTURE_2D, textureID10);
+		box.setShader(&shaderLighting);
+		box.setProjectionMatrix(projection);
+		box.setViewMatrix(view);
+		box.render(matrixs23);
 
+		//Caballo 
+		glm::mat4  matrix25 = glm::translate(matrixs4, glm::vec3(0.1, 5.0f, -0.2f)); //TUBO 2
+		matrix25 = glm::scale(matrix25, glm::vec3(0.05f, 6.5f, 0.05f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderLighting);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix25);
+		glm::mat4  matrixs24 = glm::translate(matrix25, glm::vec3(0.0f, 0.05f, -0.08f)); //caballo 1
+		matrixs24 = glm::scale(matrixs24, glm::vec3(0.6f, 0.4f, 0.9f));
+		glBindTexture(GL_TEXTURE_2D, textureID10);
+		box.setShader(&shaderLighting);
+		box.setProjectionMatrix(projection);
+		box.setViewMatrix(view);
+		box.render(matrixs24);
 	
+		//Carruaje
+		glm::mat4  matrix26 = glm::translate(matrixs4, glm::vec3(0.13, 5.0f, -0.1f)); //TUBO 2
+		matrix26 = glm::scale(matrix26, glm::vec3(0.05f, 6.5f, 0.05f));
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		cylinder.setShader(&shaderLighting);
+		cylinder.setProjectionMatrix(projection);
+		cylinder.setViewMatrix(view);
+		cylinder.render(matrix26);
+		glm::mat4  matrixs25 = glm::translate(matrix26, glm::vec3(0.0f, 0.05f, -0.08f)); //caballo 1
+		matrixs25 = glm::scale(matrixs25, glm::vec3(0.6f, 0.4f, 0.9f));
+		glBindTexture(GL_TEXTURE_2D, textureID10);
+		box.setShader(&shaderLighting);
+		box.setProjectionMatrix(projection);
+		box.setViewMatrix(view);
+		box.render(matrixs25);
 	
 
 
