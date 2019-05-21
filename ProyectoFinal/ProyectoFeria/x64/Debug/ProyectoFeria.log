@@ -1,0 +1,21 @@
+﻿  Box.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Cylinder.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  FirstPersonCamera.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\camera.h(9): fatal error C1083: No se puede abrir el archivo incluir: 'glm/glm.hpp': No such file or directory
+  main.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\main.cpp(2): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Mesh.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\mesh.h(18): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Model.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\mesh.h(18): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  QueueTransformation.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\queuetransformation.h(8): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Shader.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\shader.h(6): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Sphere.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Texture.cpp
+c:\users\yareli\source\repos\proyctofinal\proyectocolaborativolabcgeihc\proyectofinal\proyectoferia\src\headers\texture.h(10): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Generando código...

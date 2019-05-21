@@ -25,10 +25,16 @@
 #include "Headers/FirstPersonCamera.h"
 //Texture includes
 #include "Headers/Texture.h"
+//Model includes
+#include "Headers/Model.h"
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
+/* Camara primera persona */
 std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
+/* Camara tercera persona (para juegos) */
+std::shared_ptr<FirstPersonCamera> camera3P(new FirstPersonCamera());
+
 
 Sphere sphere(20, 20);
 Sphere sphere2(20, 20);
@@ -37,6 +43,13 @@ Cylinder cylinder2(20, 20, 0.5, 0.5);
 Cylinder cylinder3(20, 20, 0.5, 0.5);
 Cylinder cylinder4(20, 20, 0.5, 0.5);
 Box box,box1,box2,box3,box4,box5,box6,box7;
+/* Iluminación */
+Sphere sphereLuz(0.1, 0.1);
+/* Carros Chocones */
+Box baseCCH;
+Cylinder columnasCCH(20, 20, 0.5, 0.5);
+/* Ambiente*/
+Box Suelo, way;
 
 
 Shader shaderColor;
@@ -48,6 +61,23 @@ Shader shaderPointLight;
 Shader shaderSpotLight;
 Shader shaderLighting; // contiene todas las luces
 
+/* M O D E L O S */
+/* Ambiente*/
+Model arbol;
+Model fence; 
+Model gate;
+Model Lampara;
+Model Lucario;
+Model Charizard;
+/* Autos chocones */
+Model Carro;
+Model Carro2;
+Model Carro3;
+/* Rueda de la fortuna */
+Model Wheel;
+/* Montaña rusa  */
+Model NaveSW;
+
 GLuint textureID1, textureID2, textureID3,textureID4,
 textureID5,textureID6, textureID7, textureID8, 
 textureID9, textureID10,textureID11, textureID12, 
@@ -57,6 +87,23 @@ textureID19, textureID20, textureID21,
 textureID22, textureID23, textureID24,
 textureID25, textureID26, textureCubeTexture;
 GLuint cubeTextureID;
+/* Texturas ambiente */
+GLuint textureCespedID, Camino;
+GLuint plataformaCCH, columsCCH;
+
+/* Camara */
+float posX = 1.0;
+float posY = 0.0;
+float posZ = 24.0;
+
+float posX3P, posY3P, posZ3P;
+
+bool ChangeCamera = true;
+
+/* Animaciones */
+bool animation1 = false;
+bool animation2 = false;
+
 
 GLenum types[6] = {
 	GL_TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -179,7 +226,46 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	box6.init();
 	box7.init();
 
-	camera->setPosition(glm::vec3(0.0f, 0.0f, 0.4f));
+	/* Luz */
+	sphereLuz.init();
+
+
+	/* Ambiente */
+	Suelo.init();
+	Suelo.scaleUVS(glm::vec2(100.0, 100.0));
+	way.init();
+	way.scaleUVS(glm::vec2(2.0, 100.0));
+
+	/* Carros chocones */
+	baseCCH.init();
+	columnasCCH.init();
+
+	/* Cámaras manejadas en la ventana*/
+	/* Primera persona */
+	camera->setPosition(glm::vec3(posX, posY, posZ));
+	/* Cámara tercera persona */
+	camera3P->setPosition(glm::vec3(posX3P, posY3P, posZ3P));
+
+
+
+
+
+	/*  M O D E L O S */
+	/* Ambiente */
+	arbol.loadModel("../../models/Tree/Tree.obj");
+	fence.loadModel("../../models/fence01_obj/fence01.obj");
+	/* Rueda de la fortuna */
+	Wheel.loadModel("../../models/RuedaFortuna/RuedaFortuna.obj");
+	/* Carros chocones */
+	Carro.loadModel("../../models/car/future_car_6_FINAL(1).obj");
+	Carro2.loadModel("../../models/ToonCar/toon_car (1).obj");
+	Carro3.loadModel("../../models/Car3/Flying Charger.obj");
+	gate.loadModel("../../models/FBX/untitled.obj");
+	Lampara.loadModel("../../models/Lampara/untitled.obj");
+	Lucario.loadModel("../../models/Lucario/FitLucario04.obj");
+	Charizard.loadModel("../../models/Charizard/charizard.obj");
+	NaveSW.loadModel("../../models/AirPlane/11804_Airplane_v2_l2.obj");
+
 	/*
 	//-------TEXTURAS----------------------------
 	Texturas para cada uno de los juegos
@@ -188,12 +274,92 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	|
 	|-------------------------------------------
 	*/
-
-	// Textura										JUEGO 1
 	int imageWidth, imageHeight;
-	Texture texture("../../Textures/azul.jpg");
+
+
+	/* Textura suelo de la feria */
+	Texture texture = Texture("../../Textures/cesped.jpg");
 	FIBITMAP* bitmap = texture.loadImage(false);
 	unsigned char * data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureCespedID);
+	glBindTexture(GL_TEXTURE_2D, textureCespedID);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	/* Camino de la feria */
+	texture  = Texture("../../Textures/Camino.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &Camino);
+	glBindTexture(GL_TEXTURE_2D, Camino);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	/* Carros chocones */
+	texture = Texture("../../Textures/baseCCH.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &plataformaCCH);
+	glBindTexture(GL_TEXTURE_2D, plataformaCCH);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	texture = Texture("../../Textures/metal.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &columsCCH);
+	glBindTexture(GL_TEXTURE_2D, columsCCH);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	// Textura										JUEGO 1
+	texture = Texture("../../Textures/azul.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
 	glGenTextures(1, &textureID1);
 	glBindTexture(GL_TEXTURE_2D, textureID1);
 	// set the texture wrapping parameters
@@ -476,8 +642,16 @@ void destroy() {
 	box6.destroy();
 	box7.destroy();
 
+	/* Luces */
+	sphereLuz.destroy();
 
+	/* Ambiente */
+	Suelo.destroy();
+	way.destroy();
 
+	/* Carros chocones */
+	baseCCH.destroy();
+	columnasCCH.destroy();
 }
 
 
@@ -512,9 +686,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		case GLFW_KEY_3:
 			ilumina2 =false;
 			break;
-
-
-	
 		}
 	}
 }
@@ -566,19 +737,52 @@ bool processInput(bool continueApplication) {
 	}
 	TimeManager::Instance().CalculateFrameRate(false);
 	deltaTime = TimeManager::Instance().DeltaTime;
+
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		camera->moveFrontCamera(true, deltaTime);
+
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		camera->moveFrontCamera(false, deltaTime);
+
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		camera->moveRightCamera(false, deltaTime);
+
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera->moveRightCamera(true, deltaTime);
+
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		rot1 += 0.03;
-	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
-		rot2 -= 0.03;
+	
 		
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+	{
+		rot2 -= 0.03;
+		/*float giro = glm::radians(0.0);
+		camera->setPosition(glm::vec3(posX, posY, posZ));*/
+
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+	{
+		animation1 = true;
+	}
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+		animation1 = false;
+
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+	{
+		posX = 0.0;
+		posY = 40.0f;
+		posZ = 0.0;
+		camera->setPosition(glm::vec3(posX, posY, posZ));
+	}
+	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+	{
+		posX = 0.0;
+		posY = 0.0f;
+		posZ = 20.0;
+		camera->setPosition(glm::vec3(posX, posY, posZ));
+	}
 		
 
 	glfwPollEvents();
@@ -600,6 +804,24 @@ void applicationLoop() {
 	float angle = 0.0;
 	float ratio = 20.0;
 
+	float aircraftZ = 0.0; //0.0
+	float aircraftX = 0.0; // 0.0
+	bool directionAirCraft = true;
+	float rotationAirCraft = 0.0;
+	int finishRotation = 1;
+
+	float aircraftZ1 = 0.0;
+	float aircraftX1 = 0.0;
+	float rotationAirCraft1 = 0.0;
+	int finishRotation1 = 1;
+	bool directionAirCraft1 = true;
+
+	float airPlaneZ = 0.0;
+	float airPlaneX = 0.0;
+	float rotationAirPlane = 0.0;
+	int finishRotationAirPlane = 1;
+	bool directionalAirPlane = true;
+
 	while (psi) {
 		psi = processInput(true);
 
@@ -616,21 +838,21 @@ void applicationLoop() {
 
 		glm::mat4 matrix0 = glm::mat4(1.0f);
 		matrix0 = glm::translate(matrix0, glm::vec3(0.0f, 0.0f, -4.0f));
-		glm::mat4 matrixs1 = glm::translate(matrix0, glm::vec3(0.0f,0.9f, 0.0f)); // esfera para primer juego 
+		glm::mat4 matrixs1 = glm::translate(matrix0, glm::vec3(0.0f, 0.9f, 0.0f)); // esfera para primer juego 
 		glm::mat4 matrix1 = glm::translate(matrix0, glm::vec3(0.0f, 0.9f, 0.0f)); //caja 
-		glm::mat4 matrix2 = glm::translate(matrixs1, glm::vec3(0.0f, -0.25f,0.0f));// cilindro medio
+		glm::mat4 matrix2 = glm::translate(matrixs1, glm::vec3(0.0f, -0.25f, 0.0f));// cilindro medio
 		glm::mat4 matrixs2 = glm::translate(matrix2, glm::vec3(0.0f, 0.0f, 0.35f));//brazo posterior 
 		glm::mat4 matrixs2_1 = glm::translate(matrix2, glm::vec3(0.0f, 0.0f, -0.35f));// brazo anterior 
-		
+
 
 		/*----------
 		/									MOVIMINETOS JUEGO 1
-	    */
+		*/
 
 		matrix2 = glm::rotate(matrixs2, rot1, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrix2 = glm::rotate(matrixs2, rot2, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrixs2 = glm::rotate(matrixs2, rot1, glm::vec3(0.0f, 0.0f, 0.01f));
-		matrixs2_1 = glm::rotate(matrixs2_1,rot1, glm::vec3(0.0f, 0.0f, 0.01f));
+		matrixs2_1 = glm::rotate(matrixs2_1, rot1, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrixs2 = glm::rotate(matrixs2, rot2, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrixs2_1 = glm::rotate(matrixs2_1, rot2, glm::vec3(0.0f, 0.0f, 0.01f));
 
@@ -681,7 +903,7 @@ void applicationLoop() {
 		glm::mat4 matrix3 = glm::translate(matrixs2, glm::vec3(0.0f, 0.0f, 0.57f)); //caja pasajeros 
 		glBindTexture(GL_TEXTURE_2D, textureID4);
 		matrix3 = glm::rotate(matrix3, 1.5708f, glm::vec3(0.0f, 0.1f, 0.0f));
-		matrix3 = glm::scale(matrix3, glm::vec3(0.7,0.7f,10.0f));
+		matrix3 = glm::scale(matrix3, glm::vec3(0.7, 0.7f, 10.0f));
 		cylinder.setShader(&shaderLighting);
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
@@ -742,22 +964,29 @@ void applicationLoop() {
 		box.render(matrixs3);
 
 
-	/*------------				JUEGO 2		---------------------
-							CARRUSEL 
+		/*------------				JUEGO 2		---------------------
+								CARRUSEL
 
-							BASE DE TRES COLORES 
-	*/
+								BASE DE TRES COLORES
+		*/
 		glm::mat4 matrixs4 = glm::mat4(1.0f);
-		matrixs4 = glm::translate(matrixs4, glm::vec3(-1.3f, -0.5f,- 1.6f));   //BASE INFERIOR
+		matrixs4 = glm::translate(matrixs4, glm::vec3(-1.3f, -0.5f, -1.6f));   //BASE INFERIOR
 
-		
-		
+
+
 
 		//				MOVIMIENTOS JUEGO 2
 		matrixs4 = glm::rotate(matrixs4, rot1, glm::vec3(0.0f, 0.1f, 0.0f));
 		matrixs4 = glm::rotate(matrixs4, rot2, glm::vec3(0.0f, 0.1f, 0.0f));
-		
+		/*
+		if(posY > 1.0 && posY < 4.0)
+		{
+			posY = 2.0;
+			pos
+			camera->setPosition(glm::vec3(posX, posY, posZ));
+		}
 
+		*/
 		//DISCO DORADO
 		matrixs4 = glm::scale(matrixs4, glm::vec3(3.5f, 0.1f, 3.5f));
 		glBindTexture(GL_TEXTURE_2D, textureID8);
@@ -791,7 +1020,7 @@ void applicationLoop() {
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix10);
-	
+
 		//CILINDRO 1 PARA SOSTENER LOS CABALLOS 
 		//CABALLO 1
 		glm::mat4  matrix8 = glm::translate(matrixs4, glm::vec3(0.2f, 5.0f, -0.05f)); //TUBO 1
@@ -803,7 +1032,7 @@ void applicationLoop() {
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix8);
 
-		glm::mat4  matrixs7 = glm::translate(matrix8, glm::vec3(0.0f,0.05f, -0.1f)); //caballo 1
+		glm::mat4  matrixs7 = glm::translate(matrix8, glm::vec3(0.0f, 0.05f, -0.1f)); //caballo 1
 		//matrixs7 = glm::rotate(matrixs7, 1.5708f, glm::vec3(0.1f, 0.0f, 0.0f));
 		matrixs7 = glm::scale(matrixs7, glm::vec3(0.3, 0.3f, 3.3f));
 		glBindTexture(GL_TEXTURE_2D, textureID9);
@@ -811,7 +1040,7 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs7);
-		
+
 
 		//CABALLO 2
 		glm::mat4  matrix9 = glm::translate(matrixs4, glm::vec3(0.2f, 5.0f, 0.1f)); //TUBO 1
@@ -830,7 +1059,7 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs8);
-		
+
 		//CABALLO 3
 		glm::mat4  matrix11 = glm::translate(matrixs4, glm::vec3(0.099f, 5.0f, 0.16f)); //TUBO 2
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
@@ -847,7 +1076,7 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs9);
-	
+
 		//CARRUAJE 1
 		glm::mat4  matrix12 = glm::translate(matrixs4, glm::vec3(0.05, 5.0f, 0.22f)); //TUBO 2
 		matrix12 = glm::scale(matrix12, glm::vec3(0.02f, 6.5f, 0.02f));
@@ -962,7 +1191,7 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs17);
-		
+
 		//CABALLO 8 
 		glm::mat4  matrix19 = glm::translate(matrixs4, glm::vec3(-0.2f, 5.0f, 0.05f)); //TUBO 1
 		//matrixs = glm::rotate(matrixs3, 0.001f, glm::vec3(0.0f, 0.1f, 0.0f));
@@ -1026,14 +1255,14 @@ void applicationLoop() {
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.render(matrix22);
-		glm::mat4  matrixs21 = glm::translate(matrix22 ,glm::vec3(0.0f, 0.05f, -0.05f)); //caballo 1
-		matrixs21= glm::scale(matrixs21, glm::vec3(0.6f, 0.3f, 3.0f));
+		glm::mat4  matrixs21 = glm::translate(matrix22, glm::vec3(0.0f, 0.05f, -0.05f)); //caballo 1
+		matrixs21 = glm::scale(matrixs21, glm::vec3(0.6f, 0.3f, 3.0f));
 		glBindTexture(GL_TEXTURE_2D, textureID10);
 		box.setShader(&shaderLighting);
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs21);
-		
+
 
 		//CARRUAJE 3
 		glm::mat4  matrix23 = glm::translate(matrixs4, glm::vec3(0.03, 5.0f, -0.22f)); //TUBO 2
@@ -1083,7 +1312,7 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs24);
-	
+
 		//Carruaje
 		glm::mat4  matrix26 = glm::translate(matrixs4, glm::vec3(0.13, 5.0f, -0.1f)); //TUBO 2
 		matrix26 = glm::scale(matrix26, glm::vec3(0.02f, 6.5f, 0.02f));
@@ -1099,7 +1328,7 @@ void applicationLoop() {
 		box.setProjectionMatrix(projection);
 		box.setViewMatrix(view);
 		box.render(matrixs25);
-	
+
 		//disco de puntos superior 
 
 		glm::mat4  matrixs26 = glm::translate(matrixs4, glm::vec3(0.0f, 14.0f, 0.0f));  //BASE MEDIA 
@@ -1111,14 +1340,231 @@ void applicationLoop() {
 		cylinder.render(matrixs26);
 
 
+		/* Carritos chocones */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, plataformaCCH);
+		baseCCH.setShader(&shaderLighting);
+		baseCCH.setProjectionMatrix(projection);
+		baseCCH.setViewMatrix(view);
+		baseCCH.setPosition(glm::vec3(5.0, -0.699, 5.0));
+		baseCCH.setScale(glm::vec3(5.0f, 0.5f, 5.0f));
+		baseCCH.offsetUVS(glm::vec2(0.01f, 0.01f));
+		baseCCH.render();
+		/*Techo */
+		baseCCH.setPosition(glm::vec3(5.0f, 2.699f, 5.0f));
+		baseCCH.setScale(glm::vec3(6.0f, 0.5f, 6.0f));
+		baseCCH.render();
 
 
-	
-/*------------				MANEJO DE LA ILUMINACION			-------------------
 
-Se manejan los eventos para mover izquierda, dercha , acercar y alejar.
+		/* Escalones 
+		baseCCH.setPosition(glm::vec3(12.5f, -0.699f, -10.0f));
+		baseCCH.setScale(glm::vec3(1.0f, 0.2f, 4.0f));
+		baseCCH.render();
 
-*/
+		baseCCH.setPosition(glm::vec3(12.5f, 0.75f, -10.0f));
+		baseCCH.setScale(glm::vec3(2.0f, 0.75f, 5.0f));
+		baseCCH.render();
+
+		baseCCH.setPosition(glm::vec3(12.5f, 0.0f, -10.0f));
+		baseCCH.setScale(glm::vec3(3.0f, 0.75f, 7.0f));
+		baseCCH.render(); */
+
+		/* Columnas*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, columsCCH);
+		columnasCCH.setShader(&shaderLighting);
+		columnasCCH.setProjectionMatrix(projection);
+		columnasCCH.setViewMatrix(view);
+		columnasCCH.setPosition(glm::vec3(2.55f, 0.7f, 7.45f));
+		columnasCCH.setScale(glm::vec3(0.1f, 4.0f, 0.1f));
+		columnasCCH.render();
+		
+		columnasCCH.setPosition(glm::vec3(7.45f, 0.7f, 7.4f));
+		columnasCCH.setScale(glm::vec3(0.1f, 4.0f, 0.1f));
+		columnasCCH.render();
+
+		columnasCCH.setPosition(glm::vec3(2.55f, 0.7f, 2.55f));
+		columnasCCH.setScale(glm::vec3(0.1f, 4.0f, 0.1f));
+		columnasCCH.render();
+
+		columnasCCH.setPosition(glm::vec3(7.45f, 0.7f, 2.55f));
+		columnasCCH.setScale(glm::vec3(0.1f, 4.0f, 0.1f));
+		columnasCCH.render();
+
+
+		Carro.setShader(&shaderLighting);
+		Carro.setProjectionMatrix(projection);
+		Carro.setViewMatrix(view);
+		Carro.setScale(glm::vec3(0.15f, 0.15f, 0.15f));
+		/* Movimientos del modelo. Desplazamiento en eje Z */
+		glm::mat4 matrixAirCraft = glm::translate(glm::mat4(1.0f), glm::vec3(aircraftX, 0.0, aircraftZ));
+		matrixAirCraft = glm::translate(matrixAirCraft, glm::vec3(3.0f, -0.45f, 7.0f));
+		matrixAirCraft = glm::rotate(matrixAirCraft, rotationAirCraft, glm::vec3(0, 1, 0));
+		Carro.render(matrixAirCraft);
+
+		Carro2.setShader(&shaderLighting);
+		Carro2.setProjectionMatrix(projection);
+		Carro2.setViewMatrix(view);
+		Carro2.setScale(glm::vec3(0.002f, 0.002f, 0.002f));
+		/* Movimientos del modelo. Desplazamiento en eje Z */
+		glm::mat4 matrixAirCraft1 = glm::translate(glm::mat4(1.0f), glm::vec3(aircraftX1, 0.0, aircraftZ1));
+		matrixAirCraft1 = glm::translate(matrixAirCraft1, glm::vec3(5.0f, -0.45f, 3.0f));
+		matrixAirCraft1 = glm::rotate(matrixAirCraft1, rotationAirCraft1, glm::vec3(0, 1, 0));
+		Carro2.render(matrixAirCraft1);
+
+		/*Carro3.setShader(&shaderLighting);
+		Carro3.setProjectionMatrix(projection);
+		Carro3.setViewMatrix(view);
+		Carro3.setScale(glm::vec3(10.0f, 10.0f, 10.0f));
+		/* Movimientos del modelo. Desplazamiento en eje Z 
+		glm::mat4 matrixAirCraft2 = glm::translate(glm::mat4(1.0f), glm::vec3(aircraftX2, 0.0, aircraftZ2));
+		matrixAirCraft2 = glm::translate(matrixAirCraft2, glm::vec3(5.0f, -0.4f, 3.0f));
+		matrixAirCraft2 = glm::rotate(matrixAirCraft2, rotationAirCraft2, glm::vec3(0, 1, 0));
+		Carro3.render(matrixAirCraft2); */
+
+		if (animation1)
+		{
+			/* Animación carro1 */
+			if (finishRotation == 1)
+			{
+				aircraftX += 0.1;
+				if (finishRotation == 1 && aircraftX > 4.0)
+				{
+					aircraftX = 4.0;
+					finishRotation = 2;
+				}
+
+			} /* :)*/
+			else if (finishRotation == 2)
+			{
+				aircraftZ -= 0.1;
+				if (finishRotation == 2 && aircraftZ < -4.0)
+				{
+					aircraftZ = -4.0;
+					finishRotation = 3;
+				}
+				else
+				{
+					rotationAirCraft += 0.1;
+					if (rotationAirCraft > glm::radians(90.0f))
+					{
+						rotationAirCraft = glm::radians(90.0f);
+					}
+				}
+			}
+			else if (finishRotation == 3)
+			{
+				aircraftX -= 0.1;
+				if (finishRotation == 3 && aircraftX < 0.0)
+				{
+					aircraftX = 0.0;
+					finishRotation = 4;
+				}
+				else
+				{
+					rotationAirCraft += 0.1;
+					if (rotationAirCraft > glm::radians(180.0f))
+					{
+						rotationAirCraft = glm::radians(180.0f);
+					}
+				}
+			}	
+			else if (finishRotation == 4)
+			{
+				aircraftZ += 0.1;
+				if (finishRotation == 4 && aircraftZ > 0.0)
+				{
+					aircraftZ = 0.0;
+					finishRotation = 1;
+				}
+				else
+				{
+					rotationAirCraft += 0.1;
+					if (rotationAirCraft > glm::radians(270.0f))
+					{
+						rotationAirCraft = glm::radians(270.0f);
+					}
+				}
+			}
+
+			rotationAirCraft += 0.1;
+			if (rotationAirCraft > glm::radians(360.0f))
+			{
+				rotationAirCraft = glm::radians(360.0f);
+			}
+				
+			camera->setPosition(glm::vec3(aircraftX + 3.0, 0.0f, aircraftZ + 7.0));
+
+			/* Animación carro 2*/
+			if (finishRotation1)
+			{
+				if (directionAirCraft1) 
+					aircraftZ1 += 0.015;
+
+				else 
+					aircraftZ1 -= 0.015;
+
+				if (directionAirCraft1 && aircraftZ1 > 4.0)
+				{
+					directionAirCraft1 = false;
+					finishRotation1 = false;
+					aircraftZ1 = 4.0;
+				}
+				if (!directionAirCraft1 && aircraftZ1 < 0.0)
+				{
+					directionAirCraft1 = true;
+					finishRotation1 = false;
+					aircraftZ1 = 0.0;
+				}
+			}
+			else
+			{
+				rotationAirCraft1 += 0.1;
+				if (!directionAirCraft1)
+				{
+					if (rotationAirCraft1 > glm::radians(180.0f))
+					{
+						finishRotation1 = true;
+						rotationAirCraft1 = glm::radians(180.0f);
+					}
+				}
+				else
+				{
+					if (rotationAirCraft1 > glm::radians(360.0f))
+					{
+						finishRotation1 = true;
+						rotationAirCraft1 = glm::radians(0.0f);
+					}
+				}
+			}
+
+		}
+
+		/* Rueda de la Fortuna */
+		Wheel.setShader(&shaderLighting);
+		Wheel.setProjectionMatrix(projection);
+		Wheel.setViewMatrix(view);
+		Wheel.setPosition(glm::vec3(-10.0f, 2.0f, 5.0f));
+		Wheel.setScale(glm::vec3(0.275f, 0.275f, 0.275f));
+		Wheel.render();
+
+		/* Nave */
+		NaveSW.setShader(&shaderLighting);
+		NaveSW.setProjectionMatrix(projection);
+		NaveSW.setViewMatrix(view);
+		NaveSW.setPosition(glm::vec3(-20.0f, 10.0f, 20.0f));
+		NaveSW.setScale(glm::vec3(0.001f, 0.001f, 0.001f));
+		NaveSW.render(); 
+
+
+
+
+		/*------------				MANEJO DE LA ILUMINACION			-------------------
+
+		Se manejan los eventos para mover izquierda, dercha , acercar y alejar.
+
+		*/
 		shaderLighting.turnOn();
 		glUniform3fv(shaderLighting.getUniformLocation("viewPos"), 1, glm::value_ptr(camera->getPosition()));
 		//Directional light
@@ -1143,24 +1589,183 @@ Se manejan los eventos para mover izquierda, dercha , acercar y alejar.
 		shaderLighting.turnOff();
 
 
+		/* AMBIENTE */
 
-		
-
-		
-		
-		glBindTexture(GL_TEXTURE_2D, 0);
+		/* Suelo */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureCespedID);
+		Suelo.setShader(&shaderLighting);
+		Suelo.setProjectionMatrix(projection);
+		Suelo.setViewMatrix(view);
+		Suelo.setPosition(glm::vec3(0.0f, -0.7f, 0.0f));
+		/* (x, y, z)*/
+		Suelo.setScale(glm::vec3(40.0f, 0.001f, 40.0f));
+		/* Offset de textura */
+		Suelo.offsetUVS(glm::vec2(0.0001, 0.0001));
+		Suelo.render();
 
 		if (angle > 2 * M_PI)
 			angle = 0.0;
 		else
 			angle += 0.001;
 
+		/* Camino */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, Camino);
+		way.setShader(&shaderTexture);
+		way.setProjectionMatrix(projection);
+		way.setViewMatrix(view);
+		way.setPosition(glm::vec3(1.0f, -0.698f, 0.0f));
+		way.setScale(glm::vec3(1.0f, 0.0f, 35.0f));
+		way.render();
+
+		way.setPosition(glm::vec3(0.0f, -0.698f, 0.0f));
+		way.setScale(glm::vec3(30.0f, 0.0f, 1.0f));
+		way.render();
+
+		way.setPosition(glm::vec3(0.0f, -0.698f, 10.0f));
+		way.setScale(glm::vec3(30.0f, 0.0f, 1.0f));
+		way.render();
+
+		/* Dibujo de arboles  */
+		arbol.setShader(&shaderLighting);
+		arbol.setProjectionMatrix(projection);
+		arbol.setViewMatrix(view);
+		arbol.setPosition(glm::vec3(-10.0f, -0.7f, 15.0f));
+		arbol.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		arbol.render();
 		
-		
-	
+		arbol.setPosition(glm::vec3(-3.0f, -0.7f, 8.0f));
+		arbol.render();
+		arbol.setPosition(glm::vec3(-5.0f, -0.7f, 8.0f));
+		arbol.render();
+		arbol.setPosition(glm::vec3(-16.0f, -0.7f, -12.0f));
+		arbol.render();
+		arbol.setPosition(glm::vec3(-11.0f, -0.7f, 0.0f));
+		arbol.render();
+		arbol.setPosition(glm::vec3(3.0f, -0.7f, 17.0f));
+		arbol.render();
+		arbol.setPosition(glm::vec3(3.0f, -0.7f, -17.0f));
+		arbol.render();
+		arbol.setPosition(glm::vec3(5.0f, -0.7f, 11.0f));
+		arbol.render();
+		arbol.setPosition(glm::vec3(8.0f, -0.7f, 2.0f));
+		arbol.render();
 
 
-		// Se Dibuja el Skybox
+		/* Entrada (fence) */
+		fence.setShader(&shaderTexture);
+		fence.setProjectionMatrix(projection);
+		fence.setViewMatrix(view);
+		fence.setPosition(glm::vec3(5.0f, -0.1f, 18.0f));
+		fence.setScale(glm::vec3(0.0065f, 0.0065f, 0.0065f));
+		fence.render(); 
+
+		
+		fence.setPosition(glm::vec3(7.5f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(10.0f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(12.5f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(15.0f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(17.5f, -0.1f, 18.0f));
+		fence.render();
+		
+
+		fence.setPosition(glm::vec3(-2.5f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-5.0f, -0.1f, 18.0));
+		fence.render();
+		fence.setPosition(glm::vec3(-7.5f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-10.0f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-12.5f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-15.0f, -0.1f, 18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-17.5f, -0.1f, 18.0f));
+		fence.render();
+
+		/* Detras*/
+
+		fence.setPosition(glm::vec3(5.0f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(7.5f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(10.0f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(12.5f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(15.0f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(17.5f, -0.1f, -18.0f));
+		fence.render();
+
+
+		fence.setPosition(glm::vec3(-5.0f, -0.1f, -18.0));
+		fence.render();
+		fence.setPosition(glm::vec3(-7.5f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-10.0f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-12.5f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-15.0f, -0.1f, -18.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-17.5f, -0.1f, -18.0f));
+		fence.render();
+
+		/* Puerta */
+		gate.setShader(&shaderLighting);
+		gate.setProjectionMatrix(projection);
+		gate.setViewMatrix(view);
+		gate.setPosition(glm::vec3(1.0f, -0.7f, 18.0f));
+		gate.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		gate.render();
+
+		/* Lampara */
+		Lampara.setShader(&shaderTexture);
+		Lampara.setProjectionMatrix(projection);
+		Lampara.setViewMatrix(view);
+		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 9.0f));
+		Lampara.setScale(glm::vec3(0.15, 0.15f, 0.15f));
+		Lampara.render();
+		
+		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 13.0f));
+		Lampara.render();
+		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 5.0f));
+		Lampara.render();
+		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 1.0f));
+		Lampara.render();
+		
+		Lampara.setPosition(glm::vec3(-5.0f, 0.0f, 7.0f));
+		Lampara.render();
+		Lampara.setPosition(glm::vec3(-5.0f, 0.0f, 3.0f));
+		Lampara.render();
+		Lampara.setPosition(glm::vec3(-5.0f, 0.0f, -1.0f));
+		Lampara.render();
+
+
+		Lucario.setShader(&shaderLighting);
+		Lucario.setProjectionMatrix(projection);
+		Lucario.setViewMatrix(view);
+		Lucario.setPosition(glm::vec3(2.0f, -0.698f, 18.0f));
+		Lucario.setScale(glm::vec3(0.1f, 0.1f, 0.1f));
+		Lucario.render();
+
+		Charizard.setShader(&shaderLighting);
+		Charizard.setProjectionMatrix(projection);
+		Charizard.setViewMatrix(view);
+		Charizard.setPosition(glm::vec3(0.0f, -0.698f, 18.0f));
+		Charizard.setScale(glm::vec3(0.1f, 0.1f, 0.1f));
+		Charizard.render();
+
+
+
+		/* Skybox */
 		GLint oldCullFaceMode;
 		GLint oldDepthFuncMode;
 		glGetIntegerv(GL_CULL_FACE_MODE, &oldCullFaceMode);

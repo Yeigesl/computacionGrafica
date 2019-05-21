@@ -1,0 +1,21 @@
+# OBJ Material Export by Luxion KeyShot
+
+newmtl Steel
+Kd 0 0 0
+Ks 0.619608 0.592157 0.572549
+
+newmtl Anodized Rough Black
+Kd 0 0 0
+Ks 0 0 0
+
+newmtl Paint Metallic Slate Grey
+Kd 0.196078 0.196078 0.266667
+Ks 0.360785 0.396078 0.476471
+
+newmtl Glass Refractive Black
+Kd 0 0 0
+Ks 0.0392157 0.0392157 0.0392157
+
+newmtl Flying charger:color:0:0:0
+Kd 0 0 0
+Ks 0 0 0

@@ -223,6 +223,13 @@ public:
 		update();
 	}
 
+	// TODO PUT IN ALL EXAMPLES
+	void offsetUVS(glm::vec2 offset) {
+		for (int i = 0; i < vertexArray.size(); i++)
+			vertexArray[i].m_tex += offset;
+		update();
+	}
+
 	void scaleUVS(glm::vec2 scaleUVS) {
 		for (int i = 0; i < vertexArray.size(); i++)
 			vertexArray[i].m_tex = vertexArray[i].m_tex * scaleUVS;
