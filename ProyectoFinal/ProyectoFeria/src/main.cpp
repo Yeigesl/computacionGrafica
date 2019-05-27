@@ -36,6 +36,8 @@ std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 std::shared_ptr<FirstPersonCamera> camera3P(new FirstPersonCamera());
 
 
+const float toRadians = 3.14159265f / 180.0f;
+
 Sphere sphere(20, 20);
 Sphere sphere2(20, 20);
 Cylinder cylinder(20, 20, 0.5, 0.5);
@@ -69,6 +71,10 @@ Model gate;
 Model Lampara;
 Model Lucario;
 Model Charizard;
+/*Tazas*/
+Model taza1;
+Model baseT;
+Model carpaT;
 /* Autos chocones */
 Model Carro;
 Model Carro2;
@@ -103,6 +109,9 @@ bool ChangeCamera = true;
 /* Animaciones */
 bool animation1 = false;
 bool animation2 = false;
+
+/*Animacion tazas*/
+float girot = 0.0f;
 
 
 GLenum types[6] = {
@@ -265,7 +274,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	Lucario.loadModel("../../models/Lucario/FitLucario04.obj");
 	Charizard.loadModel("../../models/Charizard/charizard.obj");
 	NaveSW.loadModel("../../models/AirPlane/11804_Airplane_v2_l2.obj");
-
+	/*Tazas*/
+	baseT.loadModel("../../models/BaseT/Base.obj");
+	taza1.loadModel("../../models/taza1/taza17.obj");
+	carpaT.loadModel("../../models/carpaT/carpa8.obj");
 	/*
 	//-------TEXTURAS----------------------------
 	Texturas para cada uno de los juegos
@@ -1357,7 +1369,7 @@ void applicationLoop() {
 
 
 
-		/* Escalones 
+		/* Escalones
 		baseCCH.setPosition(glm::vec3(12.5f, -0.699f, -10.0f));
 		baseCCH.setScale(glm::vec3(1.0f, 0.2f, 4.0f));
 		baseCCH.render();
@@ -1379,7 +1391,7 @@ void applicationLoop() {
 		columnasCCH.setPosition(glm::vec3(2.55f, 0.7f, 7.45f));
 		columnasCCH.setScale(glm::vec3(0.1f, 4.0f, 0.1f));
 		columnasCCH.render();
-		
+
 		columnasCCH.setPosition(glm::vec3(7.45f, 0.7f, 7.4f));
 		columnasCCH.setScale(glm::vec3(0.1f, 4.0f, 0.1f));
 		columnasCCH.render();
@@ -1417,7 +1429,7 @@ void applicationLoop() {
 		Carro3.setProjectionMatrix(projection);
 		Carro3.setViewMatrix(view);
 		Carro3.setScale(glm::vec3(10.0f, 10.0f, 10.0f));
-		/* Movimientos del modelo. Desplazamiento en eje Z 
+		/* Movimientos del modelo. Desplazamiento en eje Z
 		glm::mat4 matrixAirCraft2 = glm::translate(glm::mat4(1.0f), glm::vec3(aircraftX2, 0.0, aircraftZ2));
 		matrixAirCraft2 = glm::translate(matrixAirCraft2, glm::vec3(5.0f, -0.4f, 3.0f));
 		matrixAirCraft2 = glm::rotate(matrixAirCraft2, rotationAirCraft2, glm::vec3(0, 1, 0));
@@ -1469,7 +1481,7 @@ void applicationLoop() {
 						rotationAirCraft = glm::radians(180.0f);
 					}
 				}
-			}	
+			}
 			else if (finishRotation == 4)
 			{
 				aircraftZ += 0.1;
@@ -1493,16 +1505,16 @@ void applicationLoop() {
 			{
 				rotationAirCraft = glm::radians(360.0f);
 			}
-				
+
 			camera->setPosition(glm::vec3(aircraftX + 3.0, 0.0f, aircraftZ + 7.0));
 
 			/* Animación carro 2*/
 			if (finishRotation1)
 			{
-				if (directionAirCraft1) 
+				if (directionAirCraft1)
 					aircraftZ1 += 0.015;
 
-				else 
+				else
 					aircraftZ1 -= 0.015;
 
 				if (directionAirCraft1 && aircraftZ1 > 4.0)
@@ -1555,7 +1567,7 @@ void applicationLoop() {
 		NaveSW.setViewMatrix(view);
 		NaveSW.setPosition(glm::vec3(-20.0f, 10.0f, 20.0f));
 		NaveSW.setScale(glm::vec3(0.001f, 0.001f, 0.001f));
-		NaveSW.render(); 
+		NaveSW.render();
 
 
 
@@ -1634,7 +1646,7 @@ void applicationLoop() {
 		arbol.setPosition(glm::vec3(-10.0f, -0.7f, 15.0f));
 		arbol.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
 		arbol.render();
-		
+
 		arbol.setPosition(glm::vec3(-3.0f, -0.7f, 8.0f));
 		arbol.render();
 		arbol.setPosition(glm::vec3(-5.0f, -0.7f, 8.0f));
@@ -1659,9 +1671,9 @@ void applicationLoop() {
 		fence.setViewMatrix(view);
 		fence.setPosition(glm::vec3(5.0f, -0.1f, 18.0f));
 		fence.setScale(glm::vec3(0.0065f, 0.0065f, 0.0065f));
-		fence.render(); 
+		fence.render();
 
-		
+
 		fence.setPosition(glm::vec3(7.5f, -0.1f, 18.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(10.0f, -0.1f, 18.0f));
@@ -1672,7 +1684,7 @@ void applicationLoop() {
 		fence.render();
 		fence.setPosition(glm::vec3(17.5f, -0.1f, 18.0f));
 		fence.render();
-		
+
 
 		fence.setPosition(glm::vec3(-2.5f, -0.1f, 18.0f));
 		fence.render();
@@ -1733,14 +1745,14 @@ void applicationLoop() {
 		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 9.0f));
 		Lampara.setScale(glm::vec3(0.15, 0.15f, 0.15f));
 		Lampara.render();
-		
+
 		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 13.0f));
 		Lampara.render();
 		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 5.0f));
 		Lampara.render();
 		Lampara.setPosition(glm::vec3(-3.0f, 0.0f, 1.0f));
 		Lampara.render();
-		
+
 		Lampara.setPosition(glm::vec3(-5.0f, 0.0f, 7.0f));
 		Lampara.render();
 		Lampara.setPosition(glm::vec3(-5.0f, 0.0f, 3.0f));
@@ -1762,6 +1774,108 @@ void applicationLoop() {
 		Charizard.setPosition(glm::vec3(0.0f, -0.698f, 18.0f));
 		Charizard.setScale(glm::vec3(0.1f, 0.1f, 0.1f));
 		Charizard.render();
+
+		/*Tazas*/
+
+		/*baseT.setShader(&shaderLighting);
+		baseT.setProjectionMatrix(projection);
+		baseT.setViewMatrix(view);
+		baseT.setPosition(glm::vec3(12.0f, -0.698f, 5.0f));
+		baseT.setScale(glm::vec3(0.015f, 0.015f, 0.015f));
+		baseT.render();*/
+
+		/*taza1.setShader(&shaderLighting);
+		taza1.setProjectionMatrix(projection);
+		taza1.setViewMatrix(view);
+		taza1.setPosition(glm::vec3(12.0f, -0.698f, 5.0f));
+		taza1.setScale(glm::vec3(0.015f, 0.015f, 0.015f));
+		taza1.render();*/
+		//Animacion taza//
+
+
+
+		//glm::mat4 = model(1.0f);
+		glm::mat4 model(1.0);
+		glm::mat4 model2(1.0);
+		glm::mat4 model3(1.0);
+		girot += 5.0f * deltaTime;
+
+		carpaT.setShader(&shaderLighting);
+		carpaT.setProjectionMatrix(projection);
+		carpaT.setViewMatrix(view);
+		//carpaT.setScale(glm::vec3(0.015f, 0.015f, 0.015f));
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(12.0f, -0.698f, 5.0f));
+		model2 = model;
+		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
+		carpaT.render(model);
+
+
+
+		baseT.setShader(&shaderLighting);
+		baseT.setProjectionMatrix(projection);
+		baseT.setViewMatrix(view);
+		//baseT.setScale(glm::vec3(0.015f, 0.015f, 0.015f));
+		model = glm::mat4(1.0);
+		model = glm::translate(model2, glm::vec3(0.0f, 0.0f, 0.0f));
+		model3 = model;
+		model3 = model = glm::rotate(model, girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
+		baseT.render(model);
+
+		//Taza1
+		taza1.setShader(&shaderLighting);
+		taza1.setProjectionMatrix(projection);
+		taza1.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model3, glm::vec3(0.25f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
+		model = glm::rotate(model, 9 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		taza1.render(model);
+
+		//Taza2
+		taza1.setShader(&shaderLighting);
+		taza1.setProjectionMatrix(projection);
+		taza1.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model3, glm::vec3(2.0f, 0.0f, -0.75f));
+		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 9 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		taza1.render(model);
+
+		//Taza3
+		taza1.setShader(&shaderLighting);
+		taza1.setProjectionMatrix(projection);
+		taza1.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model3, glm::vec3(0.5f, 0.0f, 1.75f));
+		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 9 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		taza1.render(model);
+
+		//Taza4
+		taza1.setShader(&shaderLighting);
+		taza1.setProjectionMatrix(projection);
+		taza1.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model3, glm::vec3(-0.5f, 0.0f, -2.0f));
+		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
+		model = glm::rotate(model, 20 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 13 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		taza1.render(model);
+
+		//Taza5
+		taza1.setShader(&shaderLighting);
+		taza1.setProjectionMatrix(projection);
+		taza1.setViewMatrix(view);;
+		model = glm::mat4(1.0);
+		model = glm::translate(model3, glm::vec3(-1.75f, 0.0f, 0.25f));
+		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
+		model = glm::rotate(model, 14 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		taza1.render(model);
+
 
 
 

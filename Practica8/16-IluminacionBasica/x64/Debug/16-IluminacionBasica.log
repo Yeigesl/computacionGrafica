@@ -1,0 +1,18 @@
+﻿  Box.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Cylinder.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  FirstPersonCamera.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\Headers\Camera.h(9): fatal error C1083: No se puede abrir el archivo incluir: 'glm/glm.hpp': No such file or directory
+  main.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\main.cpp(2): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  QueueTransformation.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\Headers\QueueTransformation.h(8): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Shader.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\Headers\Shader.h(6): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Sphere.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Texture.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica8\16-IluminacionBasica\src\Headers\Texture.h(10): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  TimeManager.cpp
+  Generando código...

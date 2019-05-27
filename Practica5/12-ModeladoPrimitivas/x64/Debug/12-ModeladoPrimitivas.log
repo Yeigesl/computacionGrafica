@@ -1,1 +1,12 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.WindowsSDK.targets(46,5): error MSB8036: No se encontró la versión del SDK de Windows 10.0.16299.0. Instale la versión requerida del SDK de Windows o cambie la versión del SDK en las páginas de propiedades de proyecto o haciendo clic con el botón derecho en la solución y seleccionando "Redestinar solución".
+﻿  Box.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica5\12-ModeladoPrimitivas\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Cylinder.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica5\12-ModeladoPrimitivas\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  main.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica5\12-ModeladoPrimitivas\src\main.cpp(2): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Shader.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica5\12-ModeladoPrimitivas\src\Headers\Shader.h(6): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  Sphere.cpp
+C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\Practica5\12-ModeladoPrimitivas\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+  TimeManager.cpp
+  Generando código...
