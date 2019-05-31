@@ -51,7 +51,7 @@ Sphere sphereLuz(0.1, 0.1);
 Box baseCCH;
 Cylinder columnasCCH(20, 20, 0.5, 0.5);
 /* Ambiente*/
-Box Suelo, way;
+Box Suelo, way,water;
 
 
 Shader shaderColor;
@@ -67,6 +67,7 @@ Shader shaderLighting; // contiene todas las luces
 /* Ambiente*/
 Model arbol;
 Model fence; 
+Model fencel;
 Model gate;
 Model Lampara;
 Model Lucario;
@@ -81,8 +82,10 @@ Model Carro2;
 Model Carro3;
 /* Rueda de la fortuna */
 Model Wheel;
-/* Montaña rusa  */
+/* Nave  */
 Model NaveSW;
+/*Modelo montaña rusa*/
+Model   montana;
 
 GLuint textureID1, textureID2, textureID3,textureID4,
 textureID5,textureID6, textureID7, textureID8, 
@@ -91,10 +94,10 @@ textureID13, textureID14, textureID15,
 textureID16, textureID17, textureID18, 
 textureID19, textureID20, textureID21,
 textureID22, textureID23, textureID24,
-textureID25, textureID26, textureCubeTexture;
+textureID25, textureID26, textureID27, textureCubeTexture;
 GLuint cubeTextureID;
 /* Texturas ambiente */
-GLuint textureCespedID, Camino;
+GLuint textureCespedID, Camino,textureWater;
 GLuint plataformaCCH, columsCCH;
 
 /* Camara */
@@ -244,6 +247,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	Suelo.scaleUVS(glm::vec2(100.0, 100.0));
 	way.init();
 	way.scaleUVS(glm::vec2(2.0, 100.0));
+	water.init();
+	water.scaleUVS(glm::vec2(2.0, 100.0));
+
 
 	/* Carros chocones */
 	baseCCH.init();
@@ -278,6 +284,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	baseT.loadModel("../../models/BaseT/Base.obj");
 	taza1.loadModel("../../models/taza1/taza17.obj");
 	carpaT.loadModel("../../models/carpaT/carpa8.obj");
+
+	
+
+
+
 	/*
 	//-------TEXTURAS----------------------------
 	Texturas para cada uno de los juegos
@@ -308,6 +319,32 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture.freeImage(bitmap);
+
+
+	/* Textura agua para el show acuático */
+	texture = Texture("../../Textures/water2.jpg");
+	bitmap = texture.loadImage(false);
+    data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureWater);
+	glBindTexture(GL_TEXTURE_2D, textureWater);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+
+
+
 
 	/* Camino de la feria */
 	texture  = Texture("../../Textures/Camino.jpg");
@@ -660,6 +697,7 @@ void destroy() {
 	/* Ambiente */
 	Suelo.destroy();
 	way.destroy();
+	water.destroy();
 
 	/* Carros chocones */
 	baseCCH.destroy();
@@ -1570,7 +1608,9 @@ void applicationLoop() {
 		NaveSW.render();
 
 
+		
 
+		
 
 		/*------------				MANEJO DE LA ILUMINACION			-------------------
 
@@ -1620,6 +1660,29 @@ void applicationLoop() {
 			angle = 0.0;
 		else
 			angle += 0.001;
+
+		/* Agua */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureWater);
+		water.setShader(&shaderLighting);
+		water.setProjectionMatrix(projection);
+		water.setViewMatrix(view);
+		water.setPosition(glm::vec3(-10.4f, -0.5f, -8.4f));
+		/* (x, y, z)*/
+		water.setScale(glm::vec3(8.0f, 3.0f, 8.0f));
+		/* Offset de textura */
+		water.offsetUVS(glm::vec2(0.01, 0.01));
+		water.render();
+
+		if (angle > 2 * M_PI) 
+			angle = 0.0;
+		else
+			angle += 0.001;
+
+
+
+
+
 
 		/* Camino */
 		glActiveTexture(GL_TEXTURE0);
@@ -1671,64 +1734,208 @@ void applicationLoop() {
 		fence.setViewMatrix(view);
 		fence.setPosition(glm::vec3(5.0f, -0.1f, 18.0f));
 		fence.setScale(glm::vec3(0.0065f, 0.0065f, 0.0065f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 
 
 		fence.setPosition(glm::vec3(7.5f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(10.0f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(12.5f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(15.0f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(17.5f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 
 
 		fence.setPosition(glm::vec3(-2.5f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-5.0f, -0.1f, 18.0));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-7.5f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-10.0f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-12.5f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-15.0f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-17.5f, -0.1f, 18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 
 		/* Detras*/
-
+		fence.setPosition(glm::vec3(1.0f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(2.0f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
+		fence.render();
 		fence.setPosition(glm::vec3(5.0f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(7.5f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(10.0f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(12.5f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(15.0f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(17.5f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
-
-
+	
+		fence.setPosition(glm::vec3(-1.0f, -0.1f, -18.0));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-2.0f, -0.1f, -18.0));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
+		fence.render();
 		fence.setPosition(glm::vec3(-5.0f, -0.1f, -18.0));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-7.5f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-10.0f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-12.5f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-15.0f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
 		fence.setPosition(glm::vec3(-17.5f, -0.1f, -18.0f));
+		fence.setOrientation(glm::vec3(0.0f, 0.0f, 0.0f));
 		fence.render();
+
+		/*Laterales izquierdo */
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 1.0));
+		fence.setOrientation(glm::vec3(180.0f,90.0f,180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 2.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 5.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 7.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 10.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 12.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 15.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 17.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+
+
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, -1.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, -2.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, -5.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, -7.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, -10.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, -12.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, 15.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(-18.0f, -0.1f, -17.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+
+		/*Laterales derecho */
+		/*Laterales izquierdo */
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 2.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 3.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 5.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 7.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 10.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 12.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 15.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 17.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+
+
+		fence.setPosition(glm::vec3(19.0f, -0.1f, -2.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, -3.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, -5.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, -7.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, -10.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, -12.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, 15.0));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+		fence.setPosition(glm::vec3(19.0f, -0.1f, -17.5));
+		fence.setOrientation(glm::vec3(180.0f, 90.0f, 180.0f));
+		fence.render();
+
+
+		
+		
 
 		/* Puerta */
 		gate.setShader(&shaderLighting);
@@ -1876,7 +2083,8 @@ void applicationLoop() {
 		model = glm::rotate(model, 14 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		taza1.render(model);
 
-
+		
+	
 
 
 		/* Skybox */
