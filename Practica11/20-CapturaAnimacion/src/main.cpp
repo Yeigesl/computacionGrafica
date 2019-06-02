@@ -502,7 +502,7 @@ void applicationLoop() {
 		// matrix de vista
 		glm::mat4 view = camera->getViewMatrix();
 
-		ss.str("");
+		ss.str(""); //archivo
 
 		shaderLighting.turnOn();
 		glUniform3fv(shaderLighting.getUniformLocation("viewPos"), 1, glm::value_ptr(camera->getPosition()));

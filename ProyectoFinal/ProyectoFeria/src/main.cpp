@@ -40,10 +40,16 @@ const float toRadians = 3.14159265f / 180.0f;
 
 Sphere sphere(20, 20);
 Sphere sphere2(20, 20);
+Sphere sphere3(20, 20);
+Sphere sphere4(20, 20);
+Sphere sphere5(20, 20);
+
 Cylinder cylinder(20, 20, 0.5, 0.5);
 Cylinder cylinder2(20, 20, 0.5, 0.5);
 Cylinder cylinder3(20, 20, 0.5, 0.5);
 Cylinder cylinder4(20, 20, 0.5, 0.5);
+Cylinder cylinder5(20, 20, 0.5, 0.5);
+
 Box box,box1,box2,box3,box4,box5,box6,box7;
 /* Iluminación */
 Sphere sphereLuz(0.1, 0.1);
@@ -51,7 +57,7 @@ Sphere sphereLuz(0.1, 0.1);
 Box baseCCH;
 Cylinder columnasCCH(20, 20, 0.5, 0.5);
 /* Ambiente*/
-Box Suelo, way,water;
+Box Suelo, way,water,hielo;
 
 
 Shader shaderColor;
@@ -86,6 +92,7 @@ Model Wheel;
 Model NaveSW;
 /*Modelo montaña rusa*/
 Model   montana;
+Model   pingu;
 
 GLuint textureID1, textureID2, textureID3,textureID4,
 textureID5,textureID6, textureID7, textureID8, 
@@ -94,10 +101,11 @@ textureID13, textureID14, textureID15,
 textureID16, textureID17, textureID18, 
 textureID19, textureID20, textureID21,
 textureID22, textureID23, textureID24,
-textureID25, textureID26, textureID27, textureCubeTexture;
+textureID25, textureID26, textureID27, textureID28,
+textureID29, textureID30, textureID31, textureCubeTexture;
 GLuint cubeTextureID;
 /* Texturas ambiente */
-GLuint textureCespedID, Camino,textureWater;
+GLuint textureCespedID, Camino,textureWater,textureHielo;
 GLuint plataformaCCH, columsCCH;
 
 /* Camara */
@@ -225,10 +233,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	sphere.init();
 	sphere2.init();
+	sphere3.init();
+	sphere4.init();
+	sphere5.init();
 	cylinder.init();
 	cylinder2.init();
 	cylinder3.init();
 	cylinder4.init();
+	cylinder5.init();
 	box.init();
 	box1.init();
 	box2.init();
@@ -249,6 +261,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	way.scaleUVS(glm::vec2(2.0, 100.0));
 	water.init();
 	water.scaleUVS(glm::vec2(2.0, 100.0));
+	hielo.init();
+	hielo.scaleUVS(glm::vec2(2.0, 100.0));
 
 
 	/* Carros chocones */
@@ -284,6 +298,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	baseT.loadModel("../../models/BaseT/Base.obj");
 	taza1.loadModel("../../models/taza1/taza17.obj");
 	carpaT.loadModel("../../models/carpaT/carpa8.obj");
+
+	
 
 	
 
@@ -632,6 +648,110 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	texture.freeImage(bitmap);
 
 
+	//textura hielo
+	texture = Texture("../../Textures/piso.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureHielo);
+	glBindTexture(GL_TEXTURE_2D, textureHielo);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	
+	//textura piel de pingüino negra
+	texture = Texture("../../Textures/piel.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID27);
+	glBindTexture(GL_TEXTURE_2D, textureID27);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+	//textura piel de pingüino blanca
+	texture = Texture("../../Textures/peloBlanco.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID28);
+	glBindTexture(GL_TEXTURE_2D, textureID28);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+	//textura pico pingüino
+	texture = Texture("../../Textures/pico.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID30);
+	glBindTexture(GL_TEXTURE_2D, textureID30);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+	//textura ojo pingüino
+	texture = Texture("../../Textures/ojo.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID31);
+	glBindTexture(GL_TEXTURE_2D, textureID31);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
 	//---------------------------------------------------------------------------
 
 	glGenTextures(1, &cubeTextureID);
@@ -678,10 +798,15 @@ void destroy() {
 	shaderPointLight.destroy();
 	shaderSpotLight.destroy();
 	sphere.destroy();
+	sphere2.destroy();
+	sphere3.destroy();
+	sphere4.destroy();
+	sphere5.destroy();
 	cylinder.destroy();
 	cylinder2.destroy();
 	cylinder3.destroy();
 	cylinder4.destroy();
+	cylinder5.destroy();
 	box.destroy();
 	box1.destroy();
 	box2.destroy();
@@ -896,7 +1021,7 @@ void applicationLoop() {
 
 
 		/*----------
-		/									MOVIMINETOS JUEGO 1
+		/									MOVIMINETOS JUEGO  COHETE
 		*/
 
 		matrix2 = glm::rotate(matrixs2, rot1, glm::vec3(0.0f, 0.0f, 0.01f));
@@ -1013,6 +1138,239 @@ void applicationLoop() {
 		box.setViewMatrix(view);
 		box.render(matrixs3);
 
+		/*
+		pINGüino*/
+
+		//**************************************************************************
+		glm::mat4 matrixp0 = glm::mat4(1.0f);
+		//se coloca el   torso en la coordenada 0,0,-1
+		matrixp0 = glm::translate(matrixp0, glm::vec3(-10.4f, 3.2f, -8.4f));
+		//con msts1 se  dibuja la primer esfera , se coloca -0.5 unidade en el eje y debajo del torso      
+		glm::mat4 matrixsp1 = glm::translate(matrixp0, glm::vec3(0.0f, -0.05f, 0.0f));
+		//se escala el cilindro del torso , es decir en el eje 0.6x se hace  mas pequeño mas angosto , pero largo
+		glm::mat4 matrixsp5 = glm::translate(matrixp0, glm::vec3(0.0f, 0.05f, 0.0f));
+		glm::mat4 matrixsp6 = glm::translate(matrixsp5, glm::vec3(0.03f, 0.0f, 0.0f));
+		glm::mat4 matrixp7 = glm::rotate(matrixsp6, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::mat4 matrixsp8 = glm::translate(matrixsp5, glm::vec3(-0.01f, 0.0f, 0.0f));//esfera superior torso
+		glm::mat4 matrixp9 = glm::rotate(matrixsp8, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+		// se coloca -.5 en x ya que  el brazo esta en -.25 
+		glm::mat4 matrixsp15 = glm::translate(matrixp9, glm::vec3(-.5f, 0.0f, 0.0f));
+		// posicón codo derecho 
+		glm::mat4 matrixsp16 = glm::translate(matrixp7, glm::vec3(.5f, 0.0f, 0.0f));
+		glm::mat4 matrixp17 = glm::rotate(matrixsp15, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::mat4 matrixp18 = glm::rotate(matrixsp16, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+		glm::mat4 matrixp19 = glm::rotate(matrixsp5, 0.0f, glm::vec3(0.0f, 1.0f, -1.0f));
+
+		//cabeza
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp19 = glm::translate(matrixp19, glm::vec3(0.0f, 0.3f, 0.0f));
+		matrixp19 = glm::scale(matrixp19, glm::vec3(0.4f, 0.6, 0.4f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixp19);
+
+
+
+		//pico
+		glm::mat4 matrixpico = glm::rotate(matrixp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
+		glBindTexture(GL_TEXTURE_2D, textureID30);
+		matrixpico = glm::translate(matrixp19, glm::vec3(0.0f, -0.1f, 0.4f));
+		matrixpico = glm::scale(matrixpico, glm::vec3(0.2f, 0.3, 0.2f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixpico);
+	
+
+		
+		//ojo 1 pinguino 
+		glm::mat4 matrixojo1 = glm::rotate(matrixp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
+		glBindTexture(GL_TEXTURE_2D, textureID31);
+		matrixojo1 = glm::translate(matrixp19, glm::vec3(-0.2f, 0.3f, 0.3f));
+		matrixojo1 = glm::scale(matrixojo1, glm::vec3(0.2f, 0.2, 0.2f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixojo1);
+		
+
+
+		//ojo 1  interior pinguino 
+		glm::mat4 matrixojoi = glm::rotate(matrixojo1, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
+		glBindTexture(GL_TEXTURE_2D, textureID30);
+		matrixojoi = glm::translate(matrixojo1, glm::vec3(0.0f, 0.1f, 0.4f));
+		matrixojoi = glm::scale(matrixojoi, glm::vec3(0.1f, 0.1, 0.1f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixojoi);
+		
+
+		//ojo 2 pinguino 
+		glm::mat4 matrixojo2 = glm::rotate(matrixp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
+		glBindTexture(GL_TEXTURE_2D, textureID31);
+		matrixojo2 = glm::translate(matrixp19, glm::vec3(0.2f, 0.3f, 0.3f));
+		matrixojo2 = glm::scale(matrixojo2, glm::vec3(0.2f, 0.2, 0.2f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixojo2);
+		//ojo 2  interior pinguino 
+		glm::mat4 matrixojoi2 = glm::rotate(matrixojo2, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
+		glBindTexture(GL_TEXTURE_2D, textureID30);
+		matrixojoi2 = glm::translate(matrixojo2, glm::vec3(0.0f, 0.1f, 0.4f));
+		matrixojoi2 = glm::scale(matrixojoi2, glm::vec3(0.10f, 0.1, 0.1f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixojoi2);
+
+		
+
+
+
+		//brazo izquierdo
+		//matrix9
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp9 = glm::translate(matrixp9, glm::vec3(-0.25f, 0.1f, 0.0f));
+		matrixp9 = glm::rotate(matrixp9, 1.5708f, glm::vec3(0.2f, 0.1f, 0.0f));
+		matrixp9 = glm::scale(matrixp9, glm::vec3(0.5f, 0.2f, 0.1f));
+		sphere4.setShader(&shaderLighting);
+		sphere4.setProjectionMatrix(projection);
+		sphere4.setViewMatrix(view);
+		sphere4.render(matrixp9);
+		//esfera superior izquierda torso 
+		matrixsp8 = glm::scale(matrixsp8, glm::vec3(0.1f, 0.1f, 0.1f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.render(matrixsp8);
+		//brazo derecho 
+		//matrix7
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp7 = glm::translate(matrixp7, glm::vec3(0.25f, 0.1f, 0.0f));
+		matrixp7 = glm::rotate(matrixp7, 1.5708f, glm::vec3(-0.2f, 0.1f, 0.0f));
+		matrixp7 = glm::scale(matrixp7, glm::vec3(0.5f, 0.2f, 0.1f));
+		sphere4.setShader(&shaderLighting);
+		sphere4.setProjectionMatrix(projection);
+		sphere4.setViewMatrix(view);
+		sphere4.render(matrixp7);
+		//matrixs6
+		//esfera superior derecha 
+		matrixsp6 = glm::scale(matrixsp6, glm::vec3(0.1f, 0.1f, 0.1f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.enableWireMode();
+		sphere.render(matrixsp6);
+		//hemos escalado las esferas a 0.1
+		// esfera superior centro 
+		matrixsp5 = glm::scale(matrixsp5, glm::vec3(0.1, 0.1f, 0.1f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.enableWireMode();
+		sphere.render(matrixsp5);
+
+		//torso 
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp0 = glm::scale(matrixp0, glm::vec3(0.5f, 0.6f, 0.4f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixp0);
+
+
+
+
+	
+		//Estomago Blanco
+		glm::mat4 matrixpanza = glm::rotate(matrixp0, 0.0f, glm::vec3(0.5f, 0.5f, 0.0f));
+		glBindTexture(GL_TEXTURE_2D, textureID28);
+		matrixpanza = glm::translate(matrixp0, glm::vec3(0.0f, -0.1f, 0.3f));
+		matrixpanza = glm::scale(matrixpanza, glm::vec3(0.6f, 0.6, 0.6f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixpanza);
+		
+
+
+		glm::mat4 matrixsp2 = glm::translate(matrixsp1, glm::vec3(-0.0225f, 0.0f, 0.0f));
+		glm::mat4 matrixsp3 = glm::translate(matrixsp1, glm::vec3(0.0225f, 0.0f, 0.0f));
+
+		//esfera inferior centro torso 
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixsp1 = glm::scale(matrixsp1, glm::vec3(0.1f, 0.1f, 0.1f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.enableWireMode();
+		sphere.render(matrixsp1);
+
+		glm::mat4 matrixp1 = glm::rotate(matrixsp2, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixp1 = glm::translate(matrixp1, glm::vec3(0.0, -0.04, 0.0));
+
+		glm::mat4 matrixp10 = glm::rotate(matrixsp3, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixp10 = glm::translate(matrixp10, glm::vec3(0.0, -0.04, 0.0));
+
+		// movemos hacia la posición que queremos 
+		//rod izq
+		glm::mat4 matrixsp4 = glm::translate(matrixp1, glm::vec3(0.0f, -0.4f, 0.0f));
+		//rod der 
+		glm::mat4 matrixsp11 = glm::translate(matrixp10, glm::vec3(0.0f, -0.4f, 0.0f));
+		//posiciona pierna izquierda 
+		glm::mat4 matrixp2 = glm::rotate(matrixsp4, 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixp2 = glm::translate(matrixsp4, glm::vec3(0.0f, -0.3f, 0.0f));
+		//posiciona pierna derecha 
+		glm::mat4 matrixp12 = glm::rotate(matrixsp11, -0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
+		matrixp12 = glm::translate(matrixsp11, glm::vec3(0.0f, -0.3f, 0.0f));
+	
+		//rodilla derecha
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixsp11 = glm::rotate(matrixsp11, 1.5708f, glm::vec3(0.0f, 0.0f, 0.0f));
+		matrixsp11 = glm::scale(matrixsp11, glm::vec3(0.2f, 0.3f, 0.2f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.render(matrixsp11);
+		//rodilla izquierda
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixsp4 = glm::rotate(matrixsp4, 1.5708f, glm::vec3(0.0f, 0.0f, 0.0f));
+		matrixsp4 = glm::scale(matrixsp4, glm::vec3(0.2f, 0.3f, 0.2f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.render(matrixsp4);
+
+
+		//parte 1 pierna derecha
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp10 = glm::scale(matrixp10, glm::vec3(0.1f, 0.4f, 0.3f));
+		cylinder3.setProjectionMatrix(projection);
+		cylinder3.setViewMatrix(view);
+		cylinder3.enableWireMode();
+		cylinder3.render(matrixp10);
+
+		//parte 1 pierna izquierda 
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp1 = glm::scale(matrixp1, glm::vec3(0.1f, 0.4f, 0.2f));
+		cylinder3.setProjectionMatrix(projection);
+		cylinder3.setViewMatrix(view);
+		cylinder3.render(matrixp1);
+		//Esfera izquierda torso 
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixsp2 = glm::scale(matrixsp2, glm::vec3(0.1f, 0.1f, 0.1f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.render(matrixsp2);
+		//Esfera derecha inferior torso 
+		//Esto permite hacer las esferas mas grandes , es decir escalarlas 
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixsp3 = glm::scale(matrixsp3, glm::vec3(0.1f, 0.1f, 0.1f));
+		sphere.setProjectionMatrix(projection);
+		sphere.setViewMatrix(view);
+		sphere.render(matrixsp3);
+
+		 
+
+		//**********************************************************************
+	
 
 		/*------------				JUEGO 2		---------------------
 								CARRUSEL
@@ -1607,6 +1965,8 @@ void applicationLoop() {
 		NaveSW.setScale(glm::vec3(0.001f, 0.001f, 0.001f));
 		NaveSW.render();
 
+	
+
 
 		
 
@@ -1667,14 +2027,33 @@ void applicationLoop() {
 		water.setShader(&shaderLighting);
 		water.setProjectionMatrix(projection);
 		water.setViewMatrix(view);
-		water.setPosition(glm::vec3(-10.4f, -0.5f, -8.4f));
+		water.setPosition(glm::vec3(-10.4f, 0.5f, -8.4f));
 		/* (x, y, z)*/
-		water.setScale(glm::vec3(8.0f, 3.0f, 8.0f));
+		water.setScale(glm::vec3(8.0f, 2.0f, 8.0f));
 		/* Offset de textura */
 		water.offsetUVS(glm::vec2(0.01, 0.01));
 		water.render();
 
 		if (angle > 2 * M_PI) 
+			angle = 0.0;
+		else
+			angle += 0.001;
+
+
+		/* Hielo */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureHielo);
+		hielo.setShader(&shaderLighting);
+		hielo.setProjectionMatrix(projection);
+		hielo.setViewMatrix(view);
+		hielo.setPosition(glm::vec3(-10.4f, 2.7f, -8.4f));
+		/* (x, y, z)*/
+		hielo.setScale(glm::vec3(3.0f, 0.2f, 3.0f));
+		/* Offset de textura */
+		hielo.offsetUVS(glm::vec2(0.001, 0.001));
+		hielo.render();
+
+		if (angle > 2 * M_PI)
 			angle = 0.0;
 		else
 			angle += 0.001;
