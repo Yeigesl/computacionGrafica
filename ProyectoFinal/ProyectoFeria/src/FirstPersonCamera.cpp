@@ -54,3 +54,11 @@ void FirstPersonCamera::moveRightCamera(bool dir, float dt) {
 		this->position -= (float)dt * speed * this->right;
 	updateCamera();
 }
+
+void FirstPersonCamera::moveUpCamera(bool dir, float dt) {
+	if (dir)
+		this->position += (float)dt * speed * this->up;
+	else
+		this->position -= (float)dt * speed * this->up;
+	updateCamera();
+}
