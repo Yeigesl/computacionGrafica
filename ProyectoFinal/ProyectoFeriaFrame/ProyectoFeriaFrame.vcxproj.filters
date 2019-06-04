@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\TimeManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Texture.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Sphere.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Shader.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\QueueTransformation.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Model.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Mesh.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\FirstPersonCamera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Cylinder.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Camera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Box.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProyectoFeria\src\Headers\Abstractmodel.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ProyectoFeria\src\Box.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\Cylinder.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\FirstPersonCamera.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\Mesh.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\Model.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\QueueTransformation.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\Shader.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\Sphere.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\Texture.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProyectoFeria\src\TimeManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Shaders\cubeTexture.fs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\cubeTexture.vs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\directionalLight.fs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\iluminacion_materiales_res.vs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\pointLight.fs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\spotLight.fs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\texturizado_res.fs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\texturizado_res.vs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\transformaciones.fs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\transformaciones.vs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\..\Shaders\typeLight.vs">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+  </ItemGroup>
+</Project>

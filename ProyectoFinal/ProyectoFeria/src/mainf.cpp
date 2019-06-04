@@ -4,6 +4,7 @@
 //std includes
 #include <string>
 #include <iostream>
+#include <sstream>
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -120,11 +121,25 @@ bool ChangeCamera = true;
 /* Animaciones */
 bool animation1 = false;
 bool animation2 = false;
-bool animation3 = false;
-
 
 /*Animacion tazas*/
 float girot = 0.0f;
+
+//Archivos 
+bool saveFrame = false, availableSave = true;
+
+std::string matToString(glm::mat4 matrix) {
+	std::stringstream ss;
+	const float *pSource = (const float*)glm::value_ptr(matrix);
+	for (int i = 0; i < 16; ++i) {
+		ss << pSource[i];
+		if (i < 15)
+			ss << ",";
+	}
+	return ss.str();
+}
+
+
 
 
 GLenum types[6] = {
@@ -153,19 +168,24 @@ GLFWwindow * window;
 bool exitApp = false;
 bool ilumina = true;
 bool ilumina2 = true;
-bool mueve = false;
 int lastMousePosX, offsetX;
 int lastMousePosY, offsetY;
-float rot1 = 0.0f, rot2 = 0.0f, rot3 = 0.0f,
-rot4 = 0.0f , rot5 = 0.0f, rot6 = 0.0f, rot7 = 0.0f ;
+float rot1 = 0.0f, rot2 = 0.0f, rot3 = 0.0f;
 float i = 0.0f;
-int j = 0.0f;
 
 double deltaTime;
 
 
-
-float movX, movZ,rotationP;
+std::string matToString(glm::mat4 matrix) {
+	std::stringstream ss;
+	const float *pSource = (const float*)glm::value_ptr(matrix);
+	for (int i = 0; i < 16; ++i) {
+		ss << pSource[i];
+		if (i < 15)
+			ss << ",";
+	}
+	return ss.str();
+}
 
 // Se definen todos las funciones.
 void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes);
@@ -870,11 +890,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		case GLFW_KEY_3:
 			ilumina2 =false;
 			break;
-	
-
 		}
-
-
 	}
 }
 
@@ -957,11 +973,6 @@ bool processInput(bool continueApplication) {
 	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
 		animation1 = false;
 
-	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
-	{
-			rot4 += 0.01;
-	}
-
 	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
 	{
 		posX = 0.0;
@@ -1015,17 +1026,37 @@ void applicationLoop() {
 	int finishRotationAirPlane = 1;
 	bool directionalAirPlane = true;
 
+
+	std::stringstream ss;
+	/* Este archivo guarada los movimeintos
+	al dar pipe  se genera un nuevo renglon
+	guarada cada matris de 4*4 y separa con coma cada valor
+	*/
+	/* Este archivo guarada los movimeintos
+	al dar pipe  se genera un nuevo renglon
+	guarada cada matris de 4*4 y separa con coma cada valor
+	*/
+	std::ofstream myfile;
+	myfile.open("../../animaciones/animationCarrusel.txt");
+
+
+
 	while (psi) {
 		psi = processInput(true);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
+		
+
 		// Matrix de proyeccion en perspectiva
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
 			(float)screenWidth / screenWidth, 0.01f, 100.0f);
 		// matrix de vista
 		glm::mat4 view = camera->getViewMatrix();
+
+		ss.str(""); //
+
 
 		glm::mat4 cubeModelMatrix = glm::translate(glm::mat4(1.0f), objPosition);
 
@@ -1043,7 +1074,11 @@ void applicationLoop() {
 		*/
 
 		matrix2 = glm::rotate(matrixs2, rot1, glm::vec3(0.0f, 0.0f, 0.01f));
+		if (saveFrame)
+			ss << matToString(matrix2) << "|";
 		matrix2 = glm::rotate(matrixs2, rot2, glm::vec3(0.0f, 0.0f, 0.01f));
+		if (saveFrame)
+			ss << matToString(matrix2) << "|";
 		matrixs2 = glm::rotate(matrixs2, rot1, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrixs2_1 = glm::rotate(matrixs2_1, rot1, glm::vec3(0.0f, 0.0f, 0.01f));
 		matrixs2 = glm::rotate(matrixs2, rot2, glm::vec3(0.0f, 0.0f, 0.01f));
@@ -1160,16 +1195,9 @@ void applicationLoop() {
 		pINGüino*/
 
 		//**************************************************************************
-
-
-		//PINGUINO 1
-		//Baase 2
-		glm::mat4 matrixpbase = glm::mat4(1.0f);
-		matrixpbase = glm::translate(matrixpbase, glm::vec3(-11.4f,2.0f, -5.4f));
-		glm::mat4 matrixp0= glm::translate(matrixpbase, glm::vec3(0.0f, 2.0f, 0.20f));
-		matrixp0 = glm::rotate(matrixpbase, rot4, glm::vec3(0.1f, 0.0f, 0.00f));
+		glm::mat4 matrixp0 = glm::mat4(1.0f);
 		//se coloca el   torso en la coordenada 0,0,-1
-		//matrixp0 = glm::translate(matrixp0,glm::vec3(-10.4f, 2.0f, -5.0f));
+		matrixp0 = glm::translate(matrixp0, glm::vec3(-10.4f, 3.2f, -8.4f));
 		//con msts1 se  dibuja la primer esfera , se coloca -0.5 unidade en el eje y debajo del torso      
 		glm::mat4 matrixsp1 = glm::translate(matrixp0, glm::vec3(0.0f, -0.05f, 0.0f));
 		//se escala el cilindro del torso , es decir en el eje 0.6x se hace  mas pequeño mas angosto , pero largo
@@ -1185,29 +1213,18 @@ void applicationLoop() {
 		glm::mat4 matrixp17 = glm::rotate(matrixsp15, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
 		glm::mat4 matrixp18 = glm::rotate(matrixsp16, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
 		glm::mat4 matrixp19 = glm::rotate(matrixsp5, 0.0f, glm::vec3(0.0f, 1.0f, -1.0f));
-		//base
-		glBindTexture(GL_TEXTURE_2D, textureID1);
-		matrixpbase = glm::scale(matrixpbase, glm::vec3(0.01f, 0.01, 0.01f));
-		box.setShader(&shaderLighting);
-		box.setProjectionMatrix(projection);
-		box.setViewMatrix(view);
-		box.render(matrixpbase);
-		//torso 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixp0 = glm::scale(matrixp0, glm::vec3(0.5f, 0.6f, 0.4f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixp0);
 
 		//cabeza
 		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixp19 = glm::translate(matrixp0, glm::vec3(0.0f, 0.6f, 0.0f));
+		matrixp19 = glm::translate(matrixp19, glm::vec3(0.0f, 0.3f, 0.0f));
 		matrixp19 = glm::scale(matrixp19, glm::vec3(0.4f, 0.6, 0.4f));
 		sphere5.setShader(&shaderLighting);
 		sphere5.setProjectionMatrix(projection);
 		sphere5.setViewMatrix(view);
 		sphere5.render(matrixp19);
+
+
+
 		//pico
 		glm::mat4 matrixpico = glm::rotate(matrixp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
 		glBindTexture(GL_TEXTURE_2D, textureID30);
@@ -1217,6 +1234,9 @@ void applicationLoop() {
 		sphere5.setProjectionMatrix(projection);
 		sphere5.setViewMatrix(view);
 		sphere5.render(matrixpico);
+	
+
+		
 		//ojo 1 pinguino 
 		glm::mat4 matrixojo1 = glm::rotate(matrixp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
 		glBindTexture(GL_TEXTURE_2D, textureID31);
@@ -1258,6 +1278,11 @@ void applicationLoop() {
 		sphere5.setProjectionMatrix(projection);
 		sphere5.setViewMatrix(view);
 		sphere5.render(matrixojoi2);
+
+		
+
+
+
 		//brazo izquierdo
 		//matrix9
 		glBindTexture(GL_TEXTURE_2D, textureID29);
@@ -1298,7 +1323,16 @@ void applicationLoop() {
 		sphere.enableWireMode();
 		sphere.render(matrixsp5);
 
-	
+		//torso 
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp0 = glm::scale(matrixp0, glm::vec3(0.5f, 0.6f, 0.4f));
+		sphere5.setShader(&shaderLighting);
+		sphere5.setProjectionMatrix(projection);
+		sphere5.setViewMatrix(view);
+		sphere5.render(matrixp0);
+
+
+
 
 	
 		//Estomago Blanco
@@ -1359,15 +1393,16 @@ void applicationLoop() {
 
 
 		//parte 1 pierna derecha
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixp10 = glm::scale(matrixp10, glm::vec3(0.2f, 0.4f, 0.3f));
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp10 = glm::scale(matrixp10, glm::vec3(0.1f, 0.4f, 0.3f));
 		cylinder3.setProjectionMatrix(projection);
 		cylinder3.setViewMatrix(view);
+		cylinder3.enableWireMode();
 		cylinder3.render(matrixp10);
 
 		//parte 1 pierna izquierda 
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixp1 = glm::scale(matrixp1, glm::vec3(0.2f, 0.4f, 0.2f));
+		glBindTexture(GL_TEXTURE_2D, textureID29);
+		matrixp1 = glm::scale(matrixp1, glm::vec3(0.1f, 0.4f, 0.2f));
 		cylinder3.setProjectionMatrix(projection);
 		cylinder3.setViewMatrix(view);
 		cylinder3.render(matrixp1);
@@ -1384,465 +1419,6 @@ void applicationLoop() {
 		sphere.setProjectionMatrix(projection);
 		sphere.setViewMatrix(view);
 		sphere.render(matrixsp3);
-		/*
-		
-		-------------------------------pinguino 2
-		
-		
-		*/
-
-
-		//PINGUINO 2
-		//Baase 2
-		glm::mat4 matrixppbase = glm::mat4(1.0f);
-		matrixppbase = glm::translate(matrixppbase, glm::vec3(-8.4f, 1.8f, -5.4f));
-		glm::mat4 matrixpp0 = glm::translate(matrixppbase, glm::vec3(0.0f, 2.0f, 0.20f));
-		matrixpp0 = glm::rotate(matrixppbase, rot4, glm::vec3(0.1f, 0.0f, 0.00f));
-		//se coloca el   torso en la coordenada 0,0,-1
-		//matrixp0 = glm::translate(matrixp0,glm::vec3(-10.4f, 2.0f, -5.0f));
-		//con msts1 se  dibuja la primer esfera , se coloca -0.5 unidade en el eje y debajo del torso      
-		glm::mat4 matrixspp1 = glm::translate(matrixpp0, glm::vec3(0.0f, -0.05f, 0.0f));
-		//se escala el cilindro del torso , es decir en el eje 0.6x se hace  mas pequeño mas angosto , pero largo
-		glm::mat4 matrixspp5 = glm::translate(matrixpp0, glm::vec3(0.0f, 0.05f, 0.0f));
-		glm::mat4 matrixspp6 = glm::translate(matrixspp5, glm::vec3(0.03f, 0.0f, 0.0f));
-		glm::mat4 matrixpp7 = glm::rotate(matrixspp6, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4 matrixspp8 = glm::translate(matrixspp5, glm::vec3(-0.01f, 0.0f, 0.0f));//esfera superior torso
-		glm::mat4 matrixpp9 = glm::rotate(matrixspp8, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		// se coloca -.5 en x ya que  el brazo esta en -.25 
-		glm::mat4 matrixspp15 = glm::translate(matrixpp9, glm::vec3(-.5f, 0.0f, 0.0f));
-		// posicón codo derecho 
-		glm::mat4 matrixspp16 = glm::translate(matrixpp7, glm::vec3(.5f, 0.0f, 0.0f));
-		glm::mat4 matrixpp17 = glm::rotate(matrixspp15, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4 matrixpp18 = glm::rotate(matrixspp16, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4 matrixpp19 = glm::rotate(matrixspp5, 0.0f, glm::vec3(0.0f, 1.0f, -1.0f));
-		//base
-		glBindTexture(GL_TEXTURE_2D, textureID1);
-		matrixppbase = glm::scale(matrixppbase, glm::vec3(0.01f, 0.01, 0.01f));
-		box.setShader(&shaderLighting);
-		box.setProjectionMatrix(projection);
-		box.setViewMatrix(view);
-		box.render(matrixppbase);
-		//torso 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp0 = glm::scale(matrixpp0, glm::vec3(0.5f, 0.6f, 0.4f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpp0);
-
-		//cabeza
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp19 = glm::translate(matrixpp0, glm::vec3(0.0f, 0.6f, 0.0f));
-		matrixpp19 = glm::scale(matrixpp19, glm::vec3(0.4f, 0.6, 0.4f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpp19);
-		//pico
-		glm::mat4 matrixpicop = glm::rotate(matrixpp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixpicop = glm::translate(matrixpp19, glm::vec3(0.0f, -0.1f, 0.4f));
-		matrixpicop = glm::scale(matrixpicop, glm::vec3(0.2f, 0.3, 0.2f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpicop);
-		//ojo 1 pinguino 
-		glm::mat4 matrixojo1p = glm::rotate(matrixpp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID31);
-		matrixojo1p = glm::translate(matrixpp19, glm::vec3(-0.2f, 0.3f, 0.3f));
-		matrixojo1p = glm::scale(matrixojo1p, glm::vec3(0.2f, 0.2, 0.2f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojo1p);
-
-
-
-		//ojo 1  interior pinguino 
-		glm::mat4 matrixojoip = glm::rotate(matrixojo1p, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixojoip = glm::translate(matrixojo1p, glm::vec3(0.0f, 0.1f, 0.4f));
-		matrixojoip = glm::scale(matrixojoip, glm::vec3(0.1f, 0.1, 0.1f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojoip);
-
-
-		//ojo 2 pinguino 
-		glm::mat4 matrixojo2p = glm::rotate(matrixpp19, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID31);
-		matrixojo2p = glm::translate(matrixpp19, glm::vec3(0.2f, 0.3f, 0.3f));
-		matrixojo2p = glm::scale(matrixojo2p, glm::vec3(0.2f, 0.2, 0.2f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojo2p);
-		//ojo 2  interior pinguino 
-		glm::mat4 matrixojoi2p = glm::rotate(matrixojo2p, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixojoi2p = glm::translate(matrixojo2p, glm::vec3(0.0f, 0.1f, 0.4f));
-		matrixojoi2p = glm::scale(matrixojoi2p, glm::vec3(0.10f, 0.1, 0.1f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojoi2p);
-		//brazo izquierdo
-		//matrix9
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp9 = glm::translate(matrixpp9, glm::vec3(-0.25f, 0.1f, 0.0f));
-		matrixpp9 = glm::rotate(matrixpp9, 1.5708f, glm::vec3(0.2f, 0.1f, 0.0f));
-		matrixpp9 = glm::scale(matrixpp9, glm::vec3(0.5f, 0.2f, 0.1f));
-		sphere4.setShader(&shaderLighting);
-		sphere4.setProjectionMatrix(projection);
-		sphere4.setViewMatrix(view);
-		sphere4.render(matrixpp9);
-		//esfera superior izquierda torso 
-		matrixspp8 = glm::scale(matrixspp8, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp8);
-		//brazo derecho 
-		//matrix7
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp7 = glm::translate(matrixpp7, glm::vec3(0.25f, 0.1f, 0.0f));
-		matrixpp7 = glm::rotate(matrixpp7, 1.5708f, glm::vec3(-0.2f, 0.1f, 0.0f));
-		matrixpp7 = glm::scale(matrixpp7, glm::vec3(0.5f, 0.2f, 0.1f));
-		sphere4.setShader(&shaderLighting);
-		sphere4.setProjectionMatrix(projection);
-		sphere4.setViewMatrix(view);
-		sphere4.render(matrixpp7);
-		//matrixs6
-		//esfera superior derecha 
-		matrixspp6 = glm::scale(matrixspp6, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.enableWireMode();
-		sphere.render(matrixspp6);
-		//hemos escalado las esferas a 0.1
-		// esfera superior centro 
-		matrixspp5 = glm::scale(matrixspp5, glm::vec3(0.1, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.enableWireMode();
-		sphere.render(matrixspp5);
-
-
-
-
-		//Estomago Blanco
-		glm::mat4 matrixpanzap = glm::rotate(matrixpp0, 0.0f, glm::vec3(0.5f, 0.5f, 0.0f));
-		glBindTexture(GL_TEXTURE_2D, textureID28);
-		matrixpanzap = glm::translate(matrixpp0, glm::vec3(0.0f, -0.1f, 0.3f));
-		matrixpanzap = glm::scale(matrixpanzap, glm::vec3(0.6f, 0.6, 0.6f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpanzap);
-
-
-
-		glm::mat4 matrixspp2 = glm::translate(matrixspp1, glm::vec3(-0.0225f, 0.0f, 0.0f));
-		glm::mat4 matrixspp3 = glm::translate(matrixspp1, glm::vec3(0.0225f, 0.0f, 0.0f));
-
-		//esfera inferior centro torso 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp1 = glm::scale(matrixspp1, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.enableWireMode();
-		sphere.render(matrixspp1);
-
-		glm::mat4 matrixpp1 = glm::rotate(matrixspp2, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp1 = glm::translate(matrixpp1, glm::vec3(0.0, -0.04, 0.0));
-
-		glm::mat4 matrixpp10 = glm::rotate(matrixspp3, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp10 = glm::translate(matrixpp10, glm::vec3(0.0, -0.04, 0.0));
-
-		// movemos hacia la posición que queremos 
-		//rod izq
-		glm::mat4 matrixspp4 = glm::translate(matrixpp1, glm::vec3(0.0f, -0.4f, 0.0f));
-		//rod der 
-		glm::mat4 matrixspp11 = glm::translate(matrixpp10, glm::vec3(0.0f, -0.4f, 0.0f));
-		//posiciona pierna izquierda 
-		glm::mat4 matrixpp2 = glm::rotate(matrixspp4, 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp2 = glm::translate(matrixspp4, glm::vec3(0.0f, -0.3f, 0.0f));
-		//posiciona pierna derecha 
-		glm::mat4 matrixpp12 = glm::rotate(matrixspp11, -0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp12 = glm::translate(matrixspp11, glm::vec3(0.0f, -0.3f, 0.0f));
-
-		//rodilla derecha
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp11 = glm::rotate(matrixspp11, 1.5708f, glm::vec3(0.0f, 0.0f, 0.0f));
-		matrixspp11 = glm::scale(matrixspp11, glm::vec3(0.2f, 0.3f, 0.2f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp11);
-		//rodilla izquierda
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp4 = glm::rotate(matrixspp4, 1.5708f, glm::vec3(0.0f, 0.0f, 0.0f));
-		matrixspp4 = glm::scale(matrixspp4, glm::vec3(0.2f, 0.3f, 0.2f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp4);
-
-
-		//parte 1 pierna derecha
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixpp10 = glm::scale(matrixpp10, glm::vec3(0.2f, 0.4f, 0.3f));
-		cylinder3.setProjectionMatrix(projection);
-		cylinder3.setViewMatrix(view);
-		cylinder3.render(matrixpp10);
-
-		//parte 1 pierna izquierda 
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixpp1 = glm::scale(matrixpp1, glm::vec3(0.2f, 0.4f, 0.2f));
-		cylinder3.setProjectionMatrix(projection);
-		cylinder3.setViewMatrix(view);
-		cylinder3.render(matrixpp1);
-		//Esfera izquierda torso 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp2 = glm::scale(matrixspp2, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp2);
-		//Esfera derecha inferior torso 
-		//Esto permite hacer las esferas mas grandes , es decir escalarlas 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp3 = glm::scale(matrixspp3, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp3);
-
-
-		/*
-		---------------------------Pingu 3
-		
-		*/
-
-		//PINGUINO 2
-		//Baase 2
-		glm::mat4 matrixppbasei = glm::mat4(1.0f);
-		matrixppbasei = glm::translate(matrixppbasei, glm::vec3(-6.4f, 1.8f, -5.2f));
-		glm::mat4 matrixpp0i = glm::translate(matrixppbasei, glm::vec3(0.0f, 2.0f, 0.20f));
-		matrixpp0i = glm::rotate(matrixppbasei, rot4, glm::vec3(0.1f, 0.0f, 0.00f));
-		//se coloca el   torso en la coordenada 0,0,-1
-		//matrixp0 = glm::translate(matrixp0,glm::vec3(-10.4f, 2.0f, -5.0f));
-		//con msts1 se  dibuja la primer esfera , se coloca -0.5 unidade en el eje y debajo del torso      
-		glm::mat4 matrixspp1i = glm::translate(matrixpp0i, glm::vec3(0.0f, -0.05f, 0.0f));
-		//se escala el cilindro del torso , es decir en el eje 0.6x se hace  mas pequeño mas angosto , pero largo
-		glm::mat4 matrixspp5i = glm::translate(matrixpp0i, glm::vec3(0.0f, 0.05f, 0.0f));
-		glm::mat4 matrixspp6i = glm::translate(matrixspp5i, glm::vec3(0.03f, 0.0f, 0.0f));
-		glm::mat4 matrixpp7i = glm::rotate(matrixspp6i, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4 matrixspp8i = glm::translate(matrixspp5i, glm::vec3(-0.01f, 0.0f, 0.0f));//esfera superior torso
-		glm::mat4 matrixpp9i = glm::rotate(matrixspp8i, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		// se coloca -.5 en x ya que  el brazo esta en -.25 
-		glm::mat4 matrixspp15i = glm::translate(matrixpp9i, glm::vec3(-.5f, 0.0f, 0.0f));
-		// posicón codo derecho 
-		glm::mat4 matrixspp16i = glm::translate(matrixpp7i, glm::vec3(.5f, 0.0f, 0.0f));
-		glm::mat4 matrixpp17i = glm::rotate(matrixspp15i, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4 matrixpp18i = glm::rotate(matrixspp16i, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		glm::mat4 matrixpp19i = glm::rotate(matrixspp5i, 0.0f, glm::vec3(0.0f, 1.0f, -1.0f));
-		//base
-		glBindTexture(GL_TEXTURE_2D, textureID1);
-		matrixppbasei = glm::scale(matrixppbasei, glm::vec3(0.01f, 0.01, 0.01f));
-		box.setShader(&shaderLighting);
-		box.setProjectionMatrix(projection);
-		box.setViewMatrix(view);
-		box.render(matrixppbasei);
-		//torso 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp0i = glm::scale(matrixpp0i, glm::vec3(0.5f, 0.6f, 0.4f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpp0i);
-
-		//cabeza
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp19i = glm::translate(matrixpp0i, glm::vec3(0.0f, 0.6f, 0.0f));
-		matrixpp19i = glm::scale(matrixpp19i, glm::vec3(0.4f, 0.6, 0.4f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpp19i);
-		//pico
-		glm::mat4 matrixpicopi = glm::rotate(matrixpp19i, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixpicopi = glm::translate(matrixpp19i, glm::vec3(0.0f, -0.1f, 0.4f));
-		matrixpicopi = glm::scale(matrixpicopi, glm::vec3(0.2f, 0.3, 0.2f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpicopi);
-		//ojo 1 pinguino 
-		glm::mat4 matrixojo1pi = glm::rotate(matrixpp19i, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID31);
-		matrixojo1pi = glm::translate(matrixpp19i, glm::vec3(-0.2f, 0.3f, 0.3f));
-		matrixojo1pi = glm::scale(matrixojo1pi, glm::vec3(0.2f, 0.2, 0.2f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojo1pi);
-
-
-
-		//ojo 1  interior pinguino 
-		glm::mat4 matrixojoipi = glm::rotate(matrixojo1pi, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixojoipi = glm::translate(matrixojo1pi, glm::vec3(0.0f, 0.1f, 0.4f));
-		matrixojoipi = glm::scale(matrixojoipi, glm::vec3(0.1f, 0.1, 0.1f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojoipi);
-
-
-		//ojo 2 pinguino 
-		glm::mat4 matrixojo2pi = glm::rotate(matrixpp19i, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID31);
-		matrixojo2pi = glm::translate(matrixpp19i, glm::vec3(0.2f, 0.3f, 0.3f));
-		matrixojo2pi = glm::scale(matrixojo2pi, glm::vec3(0.2f, 0.2, 0.2f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojo2pi);
-		//ojo 2  interior pinguino 
-		glm::mat4 matrixojoi2pi = glm::rotate(matrixojo2pi, 0.0f, glm::vec3(0.5f, 0.5f, 0.5f));
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixojoi2pi = glm::translate(matrixojo2pi, glm::vec3(0.0f, 0.1f, 0.4f));
-		matrixojoi2pi = glm::scale(matrixojoi2pi, glm::vec3(0.10f, 0.1, 0.1f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixojoi2pi);
-		//brazo izquierdo
-		//matrix9
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp9i = glm::translate(matrixpp9i, glm::vec3(-0.25f, 0.1f, 0.0f));
-		matrixpp9i = glm::rotate(matrixpp9i, 1.5708f, glm::vec3(0.2f, 0.1f, 0.0f));
-		matrixpp9i = glm::scale(matrixpp9i, glm::vec3(0.5f, 0.2f, 0.1f));
-		sphere4.setShader(&shaderLighting);
-		sphere4.setProjectionMatrix(projection);
-		sphere4.setViewMatrix(view);
-		sphere4.render(matrixpp9i);
-		//esfera superior izquierda torso 
-		matrixspp8i = glm::scale(matrixspp8i, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp8i);
-		//brazo derecho 
-		//matrix7
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixpp7i = glm::translate(matrixpp7i, glm::vec3(0.25f, 0.1f, 0.0f));
-		matrixpp7i = glm::rotate(matrixpp7i, 1.5708f, glm::vec3(-0.2f, 0.1f, 0.0f));
-		matrixpp7i = glm::scale(matrixpp7i, glm::vec3(0.5f, 0.2f, 0.1f));
-		sphere4.setShader(&shaderLighting);
-		sphere4.setProjectionMatrix(projection);
-		sphere4.setViewMatrix(view);
-		sphere4.render(matrixpp7i);
-		//matrixs6
-		//esfera superior derecha 
-		matrixspp6i = glm::scale(matrixspp6i, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.enableWireMode();
-		sphere.render(matrixspp6i);
-		//hemos escalado las esferas a 0.1
-		// esfera superior centro 
-		matrixspp5i = glm::scale(matrixspp5i, glm::vec3(0.1, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.enableWireMode();
-		sphere.render(matrixspp5i);
-
-
-
-
-		//Estomago Blanco
-		glm::mat4 matrixpanzapi = glm::rotate(matrixpp0i, 0.0f, glm::vec3(0.5f, 0.5f, 0.0f));
-		glBindTexture(GL_TEXTURE_2D, textureID28);
-		matrixpanzapi = glm::translate(matrixpp0i, glm::vec3(0.0f, -0.1f, 0.3f));
-		matrixpanzapi = glm::scale(matrixpanzapi, glm::vec3(0.6f, 0.6, 0.6f));
-		sphere5.setShader(&shaderLighting);
-		sphere5.setProjectionMatrix(projection);
-		sphere5.setViewMatrix(view);
-		sphere5.render(matrixpanzapi);
-
-
-
-		glm::mat4 matrixspp2i = glm::translate(matrixspp1i, glm::vec3(-0.0225f, 0.0f, 0.0f));
-		glm::mat4 matrixspp3i = glm::translate(matrixspp1i, glm::vec3(0.0225f, 0.0f, 0.0f));
-
-		//esfera inferior centro torso 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp1i = glm::scale(matrixspp1i, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.enableWireMode();
-		sphere.render(matrixspp1i);
-
-		glm::mat4 matrixpp1i = glm::rotate(matrixspp2i, -0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp1i = glm::translate(matrixpp1i, glm::vec3(0.0, -0.04, 0.0));
-
-		glm::mat4 matrixpp10i = glm::rotate(matrixspp3i, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp10i = glm::translate(matrixpp10i, glm::vec3(0.0, -0.04, 0.0));
-
-		// movemos hacia la posición que queremos 
-		//rod izq
-		glm::mat4 matrixspp4i = glm::translate(matrixpp1i, glm::vec3(0.0f, -0.4f, 0.0f));
-		//rod der 
-		glm::mat4 matrixspp11i = glm::translate(matrixpp10i, glm::vec3(0.0f, -0.4f, 0.0f));
-		//posiciona pierna izquierda 
-		glm::mat4 matrixpp2i = glm::rotate(matrixspp4i, 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp2i = glm::translate(matrixspp4i, glm::vec3(0.0f, -0.3f, 0.0f));
-		//posiciona pierna derecha 
-		glm::mat4 matrixpp12i = glm::rotate(matrixspp11i, -0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
-		matrixpp12i = glm::translate(matrixspp11i, glm::vec3(0.0f, -0.3f, 0.0f));
-
-		//rodilla derecha
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp11i = glm::rotate(matrixspp11i, 1.5708f, glm::vec3(0.0f, 0.0f, 0.0f));
-		matrixspp11i = glm::scale(matrixspp11i, glm::vec3(0.2f, 0.3f, 0.2f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp11i);
-		//rodilla izquierda
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp4i = glm::rotate(matrixspp4i, 1.5708f, glm::vec3(0.0f, 0.0f, 0.0f));
-		matrixspp4i = glm::scale(matrixspp4i, glm::vec3(0.2f, 0.3f, 0.2f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp4i);
-
-
-		//parte 1 pierna derecha
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixpp10i = glm::scale(matrixpp10i, glm::vec3(0.2f, 0.4f, 0.3f));
-		cylinder3.setProjectionMatrix(projection);
-		cylinder3.setViewMatrix(view);
-		cylinder3.render(matrixpp10i);
-
-		//parte 1 pierna izquierda 
-		glBindTexture(GL_TEXTURE_2D, textureID30);
-		matrixpp1i = glm::scale(matrixpp1i, glm::vec3(0.2f, 0.4f, 0.2f));
-		cylinder3.setProjectionMatrix(projection);
-		cylinder3.setViewMatrix(view);
-		cylinder3.render(matrixpp1i);
-		//Esfera izquierda torso 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp2i = glm::scale(matrixspp2i, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp2i);
-		//Esfera derecha inferior torso 
-		//Esto permite hacer las esferas mas grandes , es decir escalarlas 
-		glBindTexture(GL_TEXTURE_2D, textureID29);
-		matrixspp3i = glm::scale(matrixspp3i, glm::vec3(0.1f, 0.1f, 0.1f));
-		sphere.setProjectionMatrix(projection);
-		sphere.setViewMatrix(view);
-		sphere.render(matrixspp3i);
 
 		 
 
@@ -2298,6 +1874,16 @@ void applicationLoop() {
 		matrixAirCraft1 = glm::rotate(matrixAirCraft1, rotationAirCraft1, glm::vec3(0, 1, 0));
 		Carro2.render(matrixAirCraft1);
 
+		/*Carro3.setShader(&shaderLighting);
+		Carro3.setProjectionMatrix(projection);
+		Carro3.setViewMatrix(view);
+		Carro3.setScale(glm::vec3(10.0f, 10.0f, 10.0f));
+		/* Movimientos del modelo. Desplazamiento en eje Z
+		glm::mat4 matrixAirCraft2 = glm::translate(glm::mat4(1.0f), glm::vec3(aircraftX2, 0.0, aircraftZ2));
+		matrixAirCraft2 = glm::translate(matrixAirCraft2, glm::vec3(5.0f, -0.4f, 3.0f));
+		matrixAirCraft2 = glm::rotate(matrixAirCraft2, rotationAirCraft2, glm::vec3(0, 1, 0));
+		Carro3.render(matrixAirCraft2); */
+
 		if (animation1)
 		{
 			/* Animación carro1 */
@@ -2416,13 +2002,6 @@ void applicationLoop() {
 
 		}
 
-
-
-	
-
-
-
-
 		/* Rueda de la Fortuna */
 		Wheel.setShader(&shaderLighting);
 		Wheel.setProjectionMatrix(projection);
@@ -2430,7 +2009,6 @@ void applicationLoop() {
 		Wheel.setPosition(glm::vec3(-10.0f, 2.0f, 5.0f));
 		Wheel.setScale(glm::vec3(0.275f, 0.275f, 0.275f));
 		Wheel.render();
-
 
 		/* Nave */
 		NaveSW.setShader(&shaderLighting);
@@ -2963,6 +2541,8 @@ void applicationLoop() {
 
 		glfwSwapBuffers(window);
 	}
+
+	myfile.close();
 }
 
 

@@ -20,34 +20,34 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{4d5219ce-7ea0-4708-8dc4-52f2ff220bbb}</ProjectGuid>
-    <RootNamespace>_21_PlayAnimationTheLast</RootNamespace>
+    <ProjectGuid>{26ffea0c-7d80-4618-bf7d-75f1c00c807b}</ProjectGuid>
+    <RootNamespace>ProyectoFeriaFrame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -121,31 +121,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Box.cpp" />
-    <ClCompile Include="src\Cylinder.cpp" />
-    <ClCompile Include="src\FirstPersonCamera.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\Model.cpp" />
-    <ClCompile Include="src\QueueTransformation.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\Sphere.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\TimeManager.cpp" />
+    <ClInclude Include="..\src\Headers\Abstractmodel.h" />
+    <ClInclude Include="..\src\Headers\Box.h" />
+    <ClInclude Include="..\src\Headers\Camera.h" />
+    <ClInclude Include="..\src\Headers\Cylinder.h" />
+    <ClInclude Include="..\src\Headers\FirstPersonCamera.h" />
+    <ClInclude Include="..\src\Headers\Mesh.h" />
+    <ClInclude Include="..\src\Headers\Model.h" />
+    <ClInclude Include="..\src\Headers\QueueTransformation.h" />
+    <ClInclude Include="..\src\Headers\Shader.h" />
+    <ClInclude Include="..\src\Headers\Sphere.h" />
+    <ClInclude Include="..\src\Headers\Texture.h" />
+    <ClInclude Include="..\src\Headers\TimeManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Headers\Abstractmodel.h" />
-    <ClInclude Include="src\Headers\Box.h" />
-    <ClInclude Include="src\Headers\Camera.h" />
-    <ClInclude Include="src\Headers\Cylinder.h" />
-    <ClInclude Include="src\Headers\FirstPersonCamera.h" />
-    <ClInclude Include="src\Headers\Mesh.h" />
-    <ClInclude Include="src\Headers\Model.h" />
-    <ClInclude Include="src\Headers\QueueTransformation.h" />
-    <ClInclude Include="src\Headers\Shader.h" />
-    <ClInclude Include="src\Headers\Sphere.h" />
-    <ClInclude Include="src\Headers\Texture.h" />
-    <ClInclude Include="src\Headers\TimeManager.h" />
+    <ClCompile Include="..\src\Box.cpp" />
+    <ClCompile Include="..\src\Cylinder.cpp" />
+    <ClCompile Include="..\src\FirstPersonCamera.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Mesh.cpp" />
+    <ClCompile Include="..\src\Model.cpp" />
+    <ClCompile Include="..\src\QueueTransformation.cpp" />
+    <ClCompile Include="..\src\Shader.cpp" />
+    <ClCompile Include="..\src\Sphere.cpp" />
+    <ClCompile Include="..\src\Texture.cpp" />
+    <ClCompile Include="..\src\TimeManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Shaders\cubeTexture.fs" />
+    <None Include="..\..\..\Shaders\cubeTexture.vs" />
+    <None Include="..\..\..\Shaders\directionalLight.fs" />
+    <None Include="..\..\..\Shaders\iluminacion_materiales_res.vs" />
+    <None Include="..\..\..\Shaders\pointLight.fs" />
+    <None Include="..\..\..\Shaders\spotLight.fs" />
+    <None Include="..\..\..\Shaders\texturizado_res.fs" />
+    <None Include="..\..\..\Shaders\texturizado_res.vs" />
+    <None Include="..\..\..\Shaders\transformaciones.fs" />
+    <None Include="..\..\..\Shaders\transformaciones.vs" />
+    <None Include="..\..\..\Shaders\typeLight.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
