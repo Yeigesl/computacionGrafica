@@ -1,22 +1,330 @@
 ﻿  Box.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(52): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(53): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(54): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(55): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(56): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(57): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(129): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
   Cylinder.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(52): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(53): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(54): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(55): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(56): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(57): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(129): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\cylinder.cpp(33): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\cylinder.cpp(34): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\cylinder.cpp(44): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\cylinder.cpp(45): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
   FirstPersonCamera.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Camera.h(9): fatal error C1083: No se puede abrir el archivo incluir: 'glm/glm.hpp': No such file or directory
   main.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\main.cpp(2): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(52): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(53): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(54): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(55): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(56): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(57): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(129): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(55): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(877): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(878): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(879): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(880): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(882): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(882): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(917): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(920): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(923): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(926): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(929): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(934): warning C4305: '-=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1839): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1849): warning C4305: '-=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1857): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1866): warning C4305: '-=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1874): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1883): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1891): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1899): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1911): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1914): warning C4305: '-=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1931): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1983): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1984): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1985): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1998): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(1999): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(2000): warning C4305: 'argumento': truncamiento de 'double' a 'GLfloat'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(2022): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(2040): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(2059): warning C4305: '+=': truncamiento de 'double' a 'float'
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\main.cpp(2387): warning C4244: '+=': conversión de 'double' a 'float'; posible pérdida de datos
   Mesh.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Mesh.h(18): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(52): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(53): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(54): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(55): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(56): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(57): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(129): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
   Model.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Mesh.h(18): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(52): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(53): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(54): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(55): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(56): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(57): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(129): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
   QueueTransformation.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\QueueTransformation.h(8): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
   Shader.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Shader.h(6): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
   Sphere.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Abstractmodel.h(14): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(52): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(53): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(54): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(55): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(56): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(57): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\headers\abstractmodel.h(129): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\sphere.cpp(8): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\farengar\documents\github\computaciongrafica\proyectofinal\proyectoferia\src\sphere.cpp(12): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
   Texture.cpp
-C:\Users\ulisesor\Documents\gitProject\CG\computacionGrafica\ProyectoFinal\ProyectoFeria\src\Headers\Texture.h(10): fatal error C1083: No se puede abrir el archivo incluir: 'GL/glew.h': No such file or directory
   TimeManager.cpp
   Generando código...
+main.obj : error LNK2019: símbolo externo __imp_glewInit sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwInit sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwTerminate sin resolver al que se hace referencia en la función "void __cdecl destroyWindow(void)" (?destroyWindow@@YAXXZ)
+main.obj : error LNK2019: símbolo externo glfwGetPrimaryMonitor sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwWindowHint sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwCreateWindow sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwDestroyWindow sin resolver al que se hace referencia en la función "void __cdecl destroyWindow(void)" (?destroyWindow@@YAXXZ)
+main.obj : error LNK2019: símbolo externo glfwWindowShouldClose sin resolver al que se hace referencia en la función "bool __cdecl processInput(bool)" (?processInput@@YA_N_N@Z)
+main.obj : error LNK2019: símbolo externo glfwSetWindowSizeCallback sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwPollEvents sin resolver al que se hace referencia en la función "bool __cdecl processInput(bool)" (?processInput@@YA_N_N@Z)
+main.obj : error LNK2019: símbolo externo glfwSetInputMode sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwGetKey sin resolver al que se hace referencia en la función "bool __cdecl processInput(bool)" (?processInput@@YA_N_N@Z)
+main.obj : error LNK2019: símbolo externo glfwGetMouseButton sin resolver al que se hace referencia en la función "void __cdecl mouseCallback(struct GLFWwindow *,double,double)" (?mouseCallback@@YAXPEAUGLFWwindow@@NN@Z)
+main.obj : error LNK2019: símbolo externo glfwSetKeyCallback sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwSetMouseButtonCallback sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwSetCursorPosCallback sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwMakeContextCurrent sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2019: símbolo externo glfwSwapBuffers sin resolver al que se hace referencia en la función "void __cdecl applicationLoop(void)" (?applicationLoop@@YAXXZ)
+main.obj : error LNK2019: símbolo externo glfwSwapInterval sin resolver al que se hace referencia en la función "void __cdecl init(int,int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,bool)" (?init@@YAXHHV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z)
+main.obj : error LNK2001: símbolo externo __imp___glewActiveTexture sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewActiveTexture sin resolver
+Texture.obj : error LNK2001: símbolo externo __imp___glewActiveTexture sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewBindBuffer sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewBindBuffer sin resolver
+Model.obj : error LNK2001: símbolo externo __imp___glewBindBuffer sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewBufferData sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewBufferData sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewDeleteBuffers sin resolver
+Model.obj : error LNK2001: símbolo externo __imp___glewDeleteBuffers sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewGenBuffers sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewGenBuffers sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewMapBuffer sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewUnmapBuffer sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewEnableVertexAttribArray sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewEnableVertexAttribArray sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewUniform1f sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewUniform1i sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewUniform1i sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewUniform3f sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewUniform3fv sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewUniformMatrix4fv sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewUniformMatrix4fv sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewUseProgram sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewUseProgram sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewUseProgram sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewVertexAttribPointer sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewVertexAttribPointer sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewGenerateMipmap sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewBindVertexArray sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewBindVertexArray sin resolver
+Model.obj : error LNK2001: símbolo externo __imp___glewBindVertexArray sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewDeleteVertexArrays sin resolver
+Model.obj : error LNK2001: símbolo externo __imp___glewDeleteVertexArrays sin resolver
+main.obj : error LNK2001: símbolo externo __imp___glewGenVertexArrays sin resolver
+Mesh.obj : error LNK2001: símbolo externo __imp___glewGenVertexArrays sin resolver
+main.obj : error LNK2001: símbolo externo __imp_glewExperimental sin resolver
+Model.obj : error LNK2019: símbolo externo "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ) sin resolver al que se hace referencia en la función "public: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadModel@Model@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: símbolo externo "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ) sin resolver al que se hace referencia en la función "public: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadModel@Model@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: símbolo externo "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z) sin resolver al que se hace referencia en la función "public: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadModel@Model@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: símbolo externo "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ) sin resolver al que se hace referencia en la función "public: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?loadModel@Model@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: símbolo externo aiGetMaterialTextureCount sin resolver al que se hace referencia en la función "public: unsigned int __cdecl aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QEBAIW4aiTextureType@@@Z)
+Model.obj : error LNK2019: símbolo externo aiGetMaterialTexture sin resolver al que se hace referencia en la función "public: enum aiReturn __cdecl aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z)
+Shader.obj : error LNK2001: símbolo externo __imp___glewAttachShader sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewCompileShader sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewCreateProgram sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewCreateShader sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewDeleteProgram sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewDeleteShader sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewDetachShader sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewGetShaderInfoLog sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewGetShaderiv sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewGetUniformLocation sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewLinkProgram sin resolver
+Shader.obj : error LNK2001: símbolo externo __imp___glewShaderSource sin resolver
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_Unload sin resolver al que se hace referencia en la función "public: void __cdecl Texture::freeImage(struct FIBITMAP *)" (?freeImage@Texture@@QEAAXPEAUFIBITMAP@@@Z)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_Load sin resolver al que se hace referencia en la función "public: bool __cdecl Texture::load(void)" (?load@Texture@@QEAA_NXZ)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_GetFIFFromFilename sin resolver al que se hace referencia en la función "public: bool __cdecl Texture::load(void)" (?load@Texture@@QEAA_NXZ)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_FIFSupportsReading sin resolver al que se hace referencia en la función "public: bool __cdecl Texture::load(void)" (?load@Texture@@QEAA_NXZ)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_GetFileType sin resolver al que se hace referencia en la función "public: bool __cdecl Texture::load(void)" (?load@Texture@@QEAA_NXZ)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_GetBits sin resolver al que se hace referencia en la función "public: unsigned char * __cdecl Texture::convertToData(struct FIBITMAP *,int &,int &)" (?convertToData@Texture@@QEAAPEAEPEAUFIBITMAP@@AEAH1@Z)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_GetBPP sin resolver al que se hace referencia en la función "public: bool __cdecl Texture::load(void)" (?load@Texture@@QEAA_NXZ)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_GetWidth sin resolver al que se hace referencia en la función "public: unsigned char * __cdecl Texture::convertToData(struct FIBITMAP *,int &,int &)" (?convertToData@Texture@@QEAAPEAEPEAUFIBITMAP@@AEAH1@Z)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_GetHeight sin resolver al que se hace referencia en la función "public: unsigned char * __cdecl Texture::convertToData(struct FIBITMAP *,int &,int &)" (?convertToData@Texture@@QEAAPEAEPEAUFIBITMAP@@AEAH1@Z)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_ConvertTo32Bits sin resolver al que se hace referencia en la función "public: bool __cdecl Texture::load(void)" (?load@Texture@@QEAA_NXZ)
+Texture.obj : error LNK2019: símbolo externo __imp_FreeImage_FlipVertical sin resolver al que se hace referencia en la función "public: bool __cdecl Texture::load(void)" (?load@Texture@@QEAA_NXZ)
+..\..\external\glew\lib\glew32d.lib : warning LNK4272: el tipo de máquina de biblioteca 'x86' está en conflicto con el tipo de máquina de destino 'x64'
+..\..\external\glfw\lib\glfw3.lib : warning LNK4272: el tipo de máquina de biblioteca 'x86' está en conflicto con el tipo de máquina de destino 'x64'
+..\..\external\assimp\lib\assimp-vc140-mt.lib : warning LNK4272: el tipo de máquina de biblioteca 'x86' está en conflicto con el tipo de máquina de destino 'x64'
+..\..\external\freealut\lib\alut.lib : warning LNK4272: el tipo de máquina de biblioteca 'x86' está en conflicto con el tipo de máquina de destino 'x64'
+..\..\external\FreeImage\lib\FreeImaged.lib : warning LNK4272: el tipo de máquina de biblioteca 'x86' está en conflicto con el tipo de máquina de destino 'x64'
+..\..\external\OpenAL\lib\OpenAL32.lib : warning LNK4272: el tipo de máquina de biblioteca 'x86' está en conflicto con el tipo de máquina de destino 'x64'
+C:\Users\Farengar\Documents\GitHub\computacionGrafica\x64\Debug\ProyectoFeria.exe : fatal error LNK1120: 68 externos sin resolver

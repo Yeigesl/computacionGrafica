@@ -27,6 +27,13 @@
 #include "Headers/Texture.h"
 //Model includes
 #include "Headers/Model.h"
+//OpenAL includes
+#include "al.h" 
+#include "alc.h" 
+#include "AL/alut.h"
+//Canciones
+#define DANCIN "media/Aaron Smith - Dancin (KRONO Remix).wav"
+
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
@@ -123,6 +130,15 @@ bool animation2 = false;
 
 /*Animacion tazas*/
 float girot = 0.0f;
+
+//OpenAL variables
+ALCcontext *context;
+ALCdevice *device;
+ALuint buffer;
+ALint state;
+ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
+	//Fuentes de sonido
+	ALuint source[4];
 
 
 GLenum types[6] = {
@@ -912,7 +928,7 @@ bool processInput(bool continueApplication) {
 	}
 	TimeManager::Instance().CalculateFrameRate(false);
 	deltaTime = TimeManager::Instance().DeltaTime;
-
+	//movement
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		camera->moveFrontCamera(true, deltaTime);
 
@@ -924,6 +940,23 @@ bool processInput(bool continueApplication) {
 
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera->moveRightCamera(true, deltaTime);
+
+	//Up - Down
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT ) == GLFW_PRESS)
+		camera->moveUpCamera (false, deltaTime);
+
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		camera->moveUpCamera (true, deltaTime);
+
+	//camera
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		camera->mouseMoveCamera(0.0f, -1.0f, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		camera->mouseMoveCamera(0.0f, +1.0f, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		camera->mouseMoveCamera(-1.0f, 0.0f, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		camera->mouseMoveCamera(1.0f, 0.0f, deltaTime);
 
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		rot1 += 0.03;
@@ -1002,6 +1035,19 @@ void applicationLoop() {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+		
+		//Listener update OpenAL
+		glm::vec3 pos = camera->getPosition();
+		glm::vec3 front = camera->getFront();
+		std::cout << "Posicion: " << pos[0] << "," << pos[1] << "," << pos[2] << std::endl;
+		alListener3i(AL_POSITION, pos[0], pos[1], pos[2]);
+		listenerOri[0] = front[0];
+		listenerOri[1] = front[1];
+		listenerOri[2] = front[2];
+		alListenerfv(AL_ORIENTATION, listenerOri);
+
+		
 
 		// Matrix de proyeccion en perspectiva
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
@@ -2497,8 +2543,50 @@ void applicationLoop() {
 
 int main(int argc, char ** argv) {
 	init(800, 700, "Window GLFW", false);
+
+	// Initialize the environment
+	//alutInit(0, NULL);
+	alutInitWithoutContext(NULL, NULL);
+	device = alcOpenDevice(NULL);
+	context = alcCreateContext(device, NULL);
+	alcMakeContextCurrent(context);
+
+	alListener3i(AL_POSITION, 0, 0, 0);
+	alListener3i(AL_VELOCITY, 0, 0, 0);
+	alListenerfv(AL_ORIENTATION, listenerOri);
+	
+	alGenSources((ALuint)4, source);
+	alSourcef(source[0], AL_PITCH, 1.0f);
+	alSourcef(source[0], AL_GAIN, 1);
+	alSource3f(source[0], AL_POSITION, 0, 0, 0);
+	alSource3f(source[0], AL_VELOCITY, 0, 0, 0);
+	alSourcei(source[0], AL_LOOPING, AL_FALSE);
+
+	alDistanceModel(AL_LINEAR_DISTANCE);
+	alSourcei(source[0], AL_MAX_DISTANCE, 100);
+	alSourcei(source[0], AL_REFERENCE_DISTANCE, 20);
+
+
+	alGenBuffers(1, &buffer);
+
+	buffer = alutCreateBufferFromFile(DANCIN);
+
+	alSourcei(source[0], AL_BUFFER, buffer);
+	alSourcePlay(source[0]);
+
+
 	applicationLoop();
 	destroy();
+
+	//OpenAL close
+	alDeleteSources(1, source);
+	alDeleteBuffers(1, &buffer);
+	device = alcGetContextsDevice(context);
+	alcMakeContextCurrent(NULL);
+	alcDestroyContext(context);
+	alcCloseDevice(device);
+	alutExit();
+
 	return 1;
 }
 
