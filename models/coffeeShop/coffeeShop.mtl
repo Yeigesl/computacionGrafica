@@ -1,0 +1,143 @@
+newmtl material_1
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd crt1a.png
+
+newmtl material_1_black
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0.0901961 0.0901961 0.0901961
+Ks 1 1 1
+Km 0
+
+newmtl material_1_counter_top
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd cnt1.png
+
+newmtl material_1_display1
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd d1.png
+
+newmtl material_1_display2
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd d2.png
+
+newmtl material_1_display3
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd d3.png
+
+newmtl material_1_display4
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd d4.png
+
+newmtl material_1_sign
+d 1
+Ns 1
+Ni 0
+Ka 1 0 0
+Kd 0.501961 1 0
+Ks 1 1 1
+Km 0
+
+newmtl material_1_silver
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+
+newmtl material_1_sink
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0.501961 0.501961 0.501961
+Ks 1 1 1
+Km 0
+
+newmtl material_1_structure
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd st1.png
+
+newmtl material_1_trans_green
+d 0.7
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0.501961 1 0
+Ks 1 1 1
+Km 0
+
+newmtl material_1_wood
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+Km 0
+map_Kd wd1.png
+
+newmtl material_1_name
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0.133333 0.145098 0.141176
+Ks 1 1 1
+Km 0
+
+newmtl material_2
+d 1
+Ns 1
+Ni 0
+Ka 0 0 0
+Kd 0.133333 0.145098 0.141176
+Ks 1 1 1
+Km 0
+

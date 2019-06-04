@@ -28,7 +28,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\external\glm;..\..\external\glew\include;..\..\external\glfw\include;..\..\external\FreeImage\include;..\..\external\assimp\include;../../external/OpenAL/include;../../external/freealut/include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\external\glew\lib\;..\..\external\glfw\lib;..\..\external\FreeImage\lib;..\..\external\assimp\lib;../../external/OpenAL/lib;../../external/freealut/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\external\glm;..\..\external\glew\include;..\..\external\glfw\include;..\..\external\FreeImage\include;..\..\external\assimp\include;..\..\external\OpenAL\include;../../external/freealut/include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\external\glew\lib\;..\..\external\glfw\lib;..\..\external\FreeImage\lib;..\..\external\assimp\lib;..\..\external\OpenAL\lib;../../external/freealut/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>..\..\external\glew\lib;..\..\external\glfw\lib;..\..\external\FreeImage\lib;..\..\external\assimp\lib;..\..\external\OpenAL\lib;..\..\external\freealut\lib;$(LibraryPath)</LibraryPath>

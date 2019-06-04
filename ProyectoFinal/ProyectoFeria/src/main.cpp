@@ -89,6 +89,8 @@ Model Charizard;
 Model taza1;
 Model baseT;
 Model carpaT;
+/*Cafeteria*/
+Model coffeeShop;
 /* Autos chocones */
 Model Carro;
 Model Carro2;
@@ -323,6 +325,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	baseT.loadModel("../../models/BaseT/Base.obj");
 	taza1.loadModel("../../models/taza1/taza17.obj");
 	carpaT.loadModel("../../models/carpaT/carpa8.obj");
+
+	/*cafeteria*/
+	coffeeShop.loadModel("../../models/coffeeShop/coffeeShop.obj"); //CHECAR
 
 	
 
@@ -2982,6 +2987,16 @@ void applicationLoop() {
 		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
 		model = glm::rotate(model, 14 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		taza1.render(model);
+		
+		//coffee shop
+		coffeeShop.setShader(&shaderLighting);
+		coffeeShop.setProjectionMatrix(projection);
+		coffeeShop.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(9.0f, -0.698f, 14.5f));
+		model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));
+		//model = glm::rotate(model, 14 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		coffeeShop.render(model);
 
 		
 	
