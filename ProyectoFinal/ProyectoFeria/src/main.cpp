@@ -31,8 +31,21 @@
 #include "al.h" 
 #include "alc.h" 
 #include "AL/alut.h"
+//OpenAL variables
+ALCcontext *context;
+ALCdevice *device;
+ALint state;
+ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
+//Fuentes de sonido
+int numeroCancion = 0;
+const int maxCanciones = 20;
+ALuint source[maxCanciones];
+ALuint buffer[maxCanciones];
+
 //Canciones
-#define DANCIN "media/Aaron Smith - Dancin (KRONO Remix).wav"
+#define DANCIN "media/Aaron Smith - Dancin (KRONO Remix).wav"						//Cancion 0
+#define CANNON "media/Falbi_s_House_-_The_Legend_of_Zelda_-_Twilight_Princess.wav"	//Cancion 1
+#define MEDUSA "media/Bob_Esponja_Bailando_con_la_medusa.wav"
 
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
@@ -135,15 +148,6 @@ bool animation3 = false;
 
 /*Animacion tazas*/
 float girot = 0.0f;
-
-//OpenAL variables
-ALCcontext *context;
-ALCdevice *device;
-ALuint buffer;
-ALint state;
-ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
-	//Fuentes de sonido
-	ALuint source[4];
 
 
 GLenum types[6] = {
@@ -3047,6 +3051,26 @@ void applicationLoop() {
 	}
 }
 
+void play(const char * cancion, glm::vec3 posicion, float radio) {
+	if (numeroCancion > maxCanciones)
+		printf("MAXIMO  DE CANCIONES ALCANZADO");
+	else {
+		alSourcef(source[numeroCancion], AL_PITCH, 1.0f);
+		alSourcef(source[numeroCancion], AL_GAIN, 1);
+		alSource3f(source[numeroCancion], AL_POSITION, posicion[0], posicion[1], posicion[2]);
+		alSource3f(source[numeroCancion], AL_VELOCITY, 0, 0, 0);
+		alSourcei(source[numeroCancion], AL_LOOPING, AL_TRUE);
+
+		alSourcef(source[numeroCancion], AL_MAX_DISTANCE, radio);
+		alSourcei(source[numeroCancion], AL_REFERENCE_DISTANCE, 1);
+
+		buffer[numeroCancion] = alutCreateBufferFromFile(cancion);
+
+		alSourcei(source[numeroCancion], AL_BUFFER, buffer[numeroCancion]);
+		alSourcePlay(source[numeroCancion]);
+		numeroCancion++;
+	}
+}
 
 
 
@@ -3061,29 +3085,18 @@ int main(int argc, char ** argv) {
 	device = alcOpenDevice(NULL);
 	context = alcCreateContext(device, NULL);
 	alcMakeContextCurrent(context);
-
+	//init listener
 	alListener3i(AL_POSITION, 0, 0, 0);
 	alListener3i(AL_VELOCITY, 0, 0, 0);
 	alListenerfv(AL_ORIENTATION, listenerOri);
 	
-	alGenSources((ALuint)4, source);
-	alSourcef(source[0], AL_PITCH, 1.0f);
-	alSourcef(source[0], AL_GAIN, 1);
-	alSource3f(source[0], AL_POSITION, 0, 0, 0);
-	alSource3f(source[0], AL_VELOCITY, 0, 0, 0);
-	alSourcei(source[0], AL_LOOPING, AL_FALSE);
-
+	alGenSources(maxCanciones, source);
+	alGenBuffers(maxCanciones, buffer);
 	alDistanceModel(AL_LINEAR_DISTANCE);
-	alSourcei(source[0], AL_MAX_DISTANCE, 100);
-	alSourcei(source[0], AL_REFERENCE_DISTANCE, 20);
 
-
-	alGenBuffers(1, &buffer);
-
-	buffer = alutCreateBufferFromFile(DANCIN);
-
-	alSourcei(source[0], AL_BUFFER, buffer);
-	alSourcePlay(source[0]);
+	play(DANCIN, glm::vec3(12.0f, 0.0f, 18.0f), 10.0);
+	play(CANNON, glm::vec3(-1.3f, 0.0f, -1.5f), 2.0);
+	play(MEDUSA, glm::vec3(-10.3f, 0.0f, 8.2f), 8.0);
 
 
 	applicationLoop();
@@ -3091,7 +3104,7 @@ int main(int argc, char ** argv) {
 
 	//OpenAL close
 	alDeleteSources(1, source);
-	alDeleteBuffers(1, &buffer);
+	alDeleteBuffers(1, buffer);
 	device = alcGetContextsDevice(context);
 	alcMakeContextCurrent(NULL);
 	alcDestroyContext(context);
