@@ -91,6 +91,7 @@ Model baseT;
 Model carpaT;
 /*Cafeteria*/
 Model coffeeShop;
+Model bancaMadera;
 /* Autos chocones */
 Model Carro;
 Model Carro2;
@@ -328,6 +329,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	/*cafeteria*/
 	coffeeShop.loadModel("../../models/coffeeShop/coffeeShop.obj"); //CHECAR
+	bancaMadera.loadModel("../../models/BancaMad/wood_bench.obj");
 
 	
 
@@ -2998,6 +3000,25 @@ void applicationLoop() {
 		//model = glm::rotate(model, 14 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		coffeeShop.render(model);
 
+		//banca1
+		bancaMadera.setShader(&shaderLighting);
+		bancaMadera.setProjectionMatrix(projection);
+		bancaMadera.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(14.0f, -0.698f, 13.5f));
+		model = glm::scale(model, glm::vec3(0.001f, 0.001f, 0.001f));
+		model = glm::rotate(model, 30 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		bancaMadera.render(model);
+
+		//banca1
+		bancaMadera.setShader(&shaderLighting);
+		bancaMadera.setProjectionMatrix(projection);
+		bancaMadera.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(16.0f, -0.698f, 15.7f));
+		model = glm::scale(model, glm::vec3(0.001f, 0.001f, 0.001f));
+		model = glm::rotate(model, 70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		bancaMadera.render(model);
 		
 	
 
