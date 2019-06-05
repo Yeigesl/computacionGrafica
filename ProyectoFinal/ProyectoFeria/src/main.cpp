@@ -45,7 +45,8 @@ ALuint buffer[maxCanciones];
 //Canciones
 #define DANCIN "media/Aaron Smith - Dancin (KRONO Remix).wav"						//Cancion 0
 #define CANNON "media/Falbi_s_House_-_The_Legend_of_Zelda_-_Twilight_Princess.wav"	//Cancion 1
-#define MEDUSA "media/Bob_Esponja_Bailando_con_la_medusa.wav"
+#define MEDUSA "media/Bob_Esponja_Bailando_con_la_medusa.wav"						//Cancion 2
+#define DEJAVU "media/Initial_D_-_Deja_Vu.wav"										//Cancion 3
 
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
@@ -3062,7 +3063,7 @@ void play(const char * cancion, glm::vec3 posicion, float radio) {
 		alSourcei(source[numeroCancion], AL_LOOPING, AL_TRUE);
 
 		alSourcef(source[numeroCancion], AL_MAX_DISTANCE, radio);
-		alSourcei(source[numeroCancion], AL_REFERENCE_DISTANCE, 1);
+		alSourcei(source[numeroCancion], AL_REFERENCE_DISTANCE, radio/2);
 
 		buffer[numeroCancion] = alutCreateBufferFromFile(cancion);
 
@@ -3096,8 +3097,10 @@ int main(int argc, char ** argv) {
 
 	play(DANCIN, glm::vec3(12.0f, 0.0f, 18.0f), 10.0);
 	play(CANNON, glm::vec3(-1.3f, 0.0f, -1.5f), 2.0);
-	play(MEDUSA, glm::vec3(-10.3f, 0.0f, 8.2f), 8.0);
-
+	play(MEDUSA, glm::vec3(-10.3f, 0.0f, -8.2f), 8.0);
+	play(DEJAVU, glm::vec3(4.5f, 0.0f, 3.5f), 5.0);
+		//correccion ganancia
+		alSourcef(source[3], AL_GAIN, 0.5);
 
 	applicationLoop();
 	destroy();
