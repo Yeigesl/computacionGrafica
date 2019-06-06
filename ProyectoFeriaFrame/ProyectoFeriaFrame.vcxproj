@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{f2b0e9e6-0545-48c3-92eb-aadbabb73281}</ProjectGuid>
+    <RootNamespace>ProyectoFeriaFrame</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\..\external\glm;..\..\external\glew\include;..\..\external\glfw\include;..\..\external\FreeImage\include;..\..\external\assimp\include;../../external/OpenAL/include;../../external/freealut/include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\external\glew\lib\;..\..\external\glfw\lib;..\..\external\FreeImage\lib;..\..\external\assimp\lib;../../external/OpenAL/lib;../../external/freealut/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glew32d.lib;glfw3.lib;opengl32.lib;glu32.lib;assimp-vc140-mt.lib;FreeImaged.lib;alut.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Abstractmodel.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Box.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Camera.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Cylinder.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\FirstPersonCamera.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Mesh.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Model.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\QueueTransformation.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Shader.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Sphere.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\Texture.h" />
+    <ClInclude Include="..\ProyectoFinal\ProyectoFeria\src\Headers\TimeManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\Box.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\Cylinder.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\FirstPersonCamera.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\Mesh.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\Model.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\QueueTransformation.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\Shader.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\Sphere.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\Texture.cpp" />
+    <ClCompile Include="..\ProyectoFinal\ProyectoFeria\src\TimeManager.cpp" />
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shaders\cubeTexture.fs" />
+    <None Include="..\Shaders\cubeTexture.vs" />
+    <None Include="..\Shaders\directionalLight.fs" />
+    <None Include="..\Shaders\iluminacion_materiales_res.vs" />
+    <None Include="..\Shaders\pointLight.fs" />
+    <None Include="..\Shaders\spotLight.fs" />
+    <None Include="..\Shaders\texturizado_res.fs" />
+    <None Include="..\Shaders\texturizado_res.vs" />
+    <None Include="..\Shaders\transformaciones.fs" />
+    <None Include="..\Shaders\transformaciones.vs" />
+    <None Include="..\Shaders\typeLight.vs" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
