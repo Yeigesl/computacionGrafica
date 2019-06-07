@@ -28,6 +28,30 @@
 #include "Headers/Texture.h"
 //Model includes
 #include "Headers/Model.h"
+<<<<<<< HEAD
+=======
+//OpenAL includes
+#include "al.h" 
+#include "alc.h" 
+#include "AL/alut.h"
+//OpenAL variables
+ALCcontext *context;
+ALCdevice *device;
+ALint state;
+ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f };
+//Fuentes de sonido
+int numeroCancion = 0;
+const int maxCanciones = 20;
+ALuint source[maxCanciones];
+ALuint buffer[maxCanciones];
+
+//Canciones
+#define DANCIN "media/Aaron Smith - Dancin (KRONO Remix).wav"						//Cancion 0
+#define CANNON "media/Falbi_s_House_-_The_Legend_of_Zelda_-_Twilight_Princess.wav"	//Cancion 1
+#define MEDUSA "media/Bob_Esponja_Bailando_con_la_medusa.wav"						//Cancion 2
+#define DEJAVU "media/Initial_D_-_Deja_Vu.wav"										//Cancion 3
+
+>>>>>>> 9ca62382ee4162c3bba48d001c12fe8f8e87a7dc
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
@@ -83,6 +107,9 @@ Model Charizard;
 Model taza1;
 Model baseT;
 Model carpaT;
+/*Cafeteria*/
+Model coffeeShop;
+Model bancaMadera;
 /* Autos chocones */
 Model Carro;
 Model Carro2;
@@ -326,6 +353,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	taza1.loadModel("../../models/taza1/taza17.obj");
 	carpaT.loadModel("../../models/carpaT/carpa8.obj");
 
+<<<<<<< HEAD
 	/*Montaña rusa*/
 	montana.loadModel("../../models/montana/monta.obj");
 	escaleras.loadModel("../../models/escaleras/escaleras.obj");
@@ -340,6 +368,17 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cono.loadModel("../../models/cuerpos_CT/conoPayaso.obj");
 	mono.loadModel("../../models/cuerpos_CT/mono.obj");
 	tumba.loadModel("../../models/cuerpos_CT/tumba.obj");
+=======
+	/*cafeteria*/
+	coffeeShop.loadModel("../../models/coffeeShop/coffeeShop.obj"); //CHECAR
+	bancaMadera.loadModel("../../models/BancaMad/wood_bench.obj");
+
+	
+
+	
+
+
+>>>>>>> 9ca62382ee4162c3bba48d001c12fe8f8e87a7dc
 
 	/*
 	//-------TEXTURAS----------------------------
@@ -3195,7 +3234,36 @@ void applicationLoop() {
 		model = glm::scale(model, glm::vec3(0.015f, 0.015f, 0.015f));
 		model = glm::rotate(model, 14 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		taza1.render(model);
+		
+		//coffee shop
+		coffeeShop.setShader(&shaderLighting);
+		coffeeShop.setProjectionMatrix(projection);
+		coffeeShop.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(9.0f, -0.698f, 14.5f));
+		model = glm::scale(model, glm::vec3(0.025f, 0.025f, 0.025f));
+		//model = glm::rotate(model, 14 * girot * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		coffeeShop.render(model);
 
+		//banca1
+		bancaMadera.setShader(&shaderLighting);
+		bancaMadera.setProjectionMatrix(projection);
+		bancaMadera.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(14.0f, -0.698f, 13.5f));
+		model = glm::scale(model, glm::vec3(0.001f, 0.001f, 0.001f));
+		model = glm::rotate(model, 30 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		bancaMadera.render(model);
+
+		//banca1
+		bancaMadera.setShader(&shaderLighting);
+		bancaMadera.setProjectionMatrix(projection);
+		bancaMadera.setViewMatrix(view);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(16.0f, -0.698f, 15.7f));
+		model = glm::scale(model, glm::vec3(0.001f, 0.001f, 0.001f));
+		model = glm::rotate(model, 70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		bancaMadera.render(model);
 		
 	
 
@@ -3224,6 +3292,26 @@ void applicationLoop() {
 	}
 }
 
+void play(const char * cancion, glm::vec3 posicion, float radio) {
+	if (numeroCancion > maxCanciones)
+		printf("MAXIMO  DE CANCIONES ALCANZADO");
+	else {
+		alSourcef(source[numeroCancion], AL_PITCH, 1.0f);
+		alSourcef(source[numeroCancion], AL_GAIN, 1);
+		alSource3f(source[numeroCancion], AL_POSITION, posicion[0], posicion[1], posicion[2]);
+		alSource3f(source[numeroCancion], AL_VELOCITY, 0, 0, 0);
+		alSourcei(source[numeroCancion], AL_LOOPING, AL_TRUE);
+
+		alSourcef(source[numeroCancion], AL_MAX_DISTANCE, radio);
+		alSourcei(source[numeroCancion], AL_REFERENCE_DISTANCE, radio/2);
+
+		buffer[numeroCancion] = alutCreateBufferFromFile(cancion);
+
+		alSourcei(source[numeroCancion], AL_BUFFER, buffer[numeroCancion]);
+		alSourcePlay(source[numeroCancion]);
+		numeroCancion++;
+	}
+}
 
 
 
@@ -3231,8 +3319,46 @@ void applicationLoop() {
 
 int main(int argc, char ** argv) {
 	init(800, 700, "Window GLFW", false);
+<<<<<<< HEAD
 	applicationLoop();
 	destroy();
+=======
+
+	// Initialize the environment
+	//alutInit(0, NULL);
+	alutInitWithoutContext(NULL, NULL);
+	device = alcOpenDevice(NULL);
+	context = alcCreateContext(device, NULL);
+	alcMakeContextCurrent(context);
+	//init listener
+	alListener3i(AL_POSITION, 0, 0, 0);
+	alListener3i(AL_VELOCITY, 0, 0, 0);
+	alListenerfv(AL_ORIENTATION, listenerOri);
+	
+	alGenSources(maxCanciones, source);
+	alGenBuffers(maxCanciones, buffer);
+	alDistanceModel(AL_LINEAR_DISTANCE);
+
+	play(DANCIN, glm::vec3(12.0f, 0.0f, 18.0f), 10.0);
+	play(CANNON, glm::vec3(-1.3f, 0.0f, -1.5f), 2.0);
+	play(MEDUSA, glm::vec3(-10.3f, 0.0f, -8.2f), 8.0);
+	play(DEJAVU, glm::vec3(4.5f, 0.0f, 3.5f), 5.0);
+		//correccion ganancia
+		alSourcef(source[3], AL_GAIN, 0.5);
+
+	applicationLoop();
+	destroy();
+
+	//OpenAL close
+	alDeleteSources(1, source);
+	alDeleteBuffers(1, buffer);
+	device = alcGetContextsDevice(context);
+	alcMakeContextCurrent(NULL);
+	alcDestroyContext(context);
+	alcCloseDevice(device);
+	alutExit();
+
+>>>>>>> 9ca62382ee4162c3bba48d001c12fe8f8e87a7dc
 	return 1;
 }
 
