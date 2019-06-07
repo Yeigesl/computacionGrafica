@@ -94,6 +94,20 @@ Model NaveSW;
 /*Modelo montaña rusa*/
 Model   montana;
 Model   pingu;
+Model escaleras;
+Model tren;
+Model mide;
+Model cabeza;
+Model cono;
+Model salvaVidas;
+Model mono;
+Model tumba;
+
+
+
+//modelos para casa de teror 
+Model casa;
+Model cuerpo1;
 
 GLuint textureID1, textureID2, textureID3,textureID4,
 textureID5,textureID6, textureID7, textureID8, 
@@ -103,7 +117,10 @@ textureID16, textureID17, textureID18,
 textureID19, textureID20, textureID21,
 textureID22, textureID23, textureID24,
 textureID25, textureID26, textureID27, textureID28,
-textureID29, textureID30, textureID31, textureCubeTexture;
+textureID29, textureID30, textureID31, 
+textureID32, textureID33, textureID34, 
+textureID35, textureID36, textureID37, 
+textureID38, textureID39, textureID40, textureCubeTexture;
 GLuint cubeTextureID;
 /* Texturas ambiente */
 GLuint textureCespedID, Camino,textureWater,textureHielo;
@@ -309,11 +326,20 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	taza1.loadModel("../../models/taza1/taza17.obj");
 	carpaT.loadModel("../../models/carpaT/carpa8.obj");
 
-	
+	/*Montaña rusa*/
+	montana.loadModel("../../models/montana/monta.obj");
+	escaleras.loadModel("../../models/escaleras/escaleras.obj");
+	tren.loadModel("../../models/tren/trenecito.obj");
+	mide.loadModel("../../models/mide/medidor.obj");
 
-	
-
-
+	/*Modelos casa del terror */
+	casa.loadModel("../../models/casa/casa.obj");
+	cuerpo1.loadModel("../../models/cuerpos_CT/cuerpo.obj");
+	cabeza.loadModel("../../models/cuerpos_CT/cabeza.obj");
+	salvaVidas.loadModel("../../models/cuerpos_CT/salvaobj.obj");
+	cono.loadModel("../../models/cuerpos_CT/conoPayaso.obj");
+	mono.loadModel("../../models/cuerpos_CT/mono.obj");
+	tumba.loadModel("../../models/cuerpos_CT/tumba.obj");
 
 	/*
 	//-------TEXTURAS----------------------------
@@ -760,6 +786,115 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	else
 		std::cout << "Failed to load texture" << std::endl;
 	texture.freeImage(bitmap);
+
+
+	//textura rojo montaña rusa 
+	texture = Texture("../../Textures/rojo.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID32);
+	glBindTexture(GL_TEXTURE_2D, textureID32);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+	//textura ladrillos 
+	texture = Texture("../../Textures/texturaLadrillos.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID33);
+	glBindTexture(GL_TEXTURE_2D, textureID33);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+	//texturaverde para e tren de la montaña rusa 
+	texture = Texture("../../Textures/verde.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID34);
+	glBindTexture(GL_TEXTURE_2D, textureID34);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+
+	//textura azul 
+	texture = Texture("../../Textures/azulM.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID35);
+	glBindTexture(GL_TEXTURE_2D, textureID35);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
+
+
+
+	//textura colores payaso
+	texture = Texture("../../Textures/puntos.jpg");
+	bitmap = texture.loadImage(false);
+	data = texture.convertToData(bitmap, imageWidth, imageHeight);
+	glGenTextures(1, &textureID36);
+	glBindTexture(GL_TEXTURE_2D, textureID36);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_BGRA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+		std::cout << "Failed to load texture" << std::endl;
+	texture.freeImage(bitmap);
+
 
 
 	//---------------------------------------------------------------------------
@@ -1847,6 +1982,17 @@ void applicationLoop() {
 
 		 
 
+		/*salvavidas*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID8);
+		salvaVidas.setShader(&shaderLighting);
+		salvaVidas.setProjectionMatrix(projection);
+		salvaVidas.setViewMatrix(view);
+		salvaVidas.setPosition(glm::vec3(-8.5f, 4.5f, -3.3f));
+		salvaVidas.setOrientation(glm::vec3(0.0, 180.0, 0.0));
+		salvaVidas.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		salvaVidas.render();
+
 		//**********************************************************************
 	
 
@@ -2442,9 +2588,121 @@ void applicationLoop() {
 		NaveSW.render();
 
 	
+		/*Montaña rusa la cual fue hecha en blender */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID32);
+		montana.setShader(&shaderLighting);
+		montana.setProjectionMatrix(projection);
+		montana.setViewMatrix(view);
+		montana.setPosition(glm::vec3(12.0f, -0.2f, -8.0f));
+		montana.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		montana.render();
 
+		/*Escaleras para la montaña rusa */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID32);
+		escaleras.setShader(&shaderLighting);
+		escaleras.setProjectionMatrix(projection);
+		escaleras.setViewMatrix(view);
+		escaleras.setPosition(glm::vec3(10.2f, -5.2f, -4.8f));
+		escaleras.setOrientation(glm::vec3(0.0,180.0,0.0));
+		escaleras.setScale(glm::vec3(0.5f, 1.8f, 1.3f));
+		escaleras.render();
 
 		
+		/*Carro de montaña rusa*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID34);
+		tren.setShader(&shaderLighting);
+		tren.setProjectionMatrix(projection);
+		tren.setViewMatrix(view);
+		tren.setPosition(glm::vec3(8.5f, -0.54f, -8.3f));
+		tren.setOrientation(glm::vec3(0.0, 0.0, 0.0));
+		tren.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		tren.render();
+
+
+		/*Mide montaña */
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID35);
+		mide.setShader(&shaderLighting);
+		mide.setProjectionMatrix(projection);
+		mide.setViewMatrix(view);
+		mide.setPosition(glm::vec3(6.5f, -0.54f, -8.3f));
+		mide.setOrientation(glm::vec3(0.0, 0.0, 0.0));
+		mide.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		mide.render();
+
+		/*Casa*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID33);
+		casa.setShader(&shaderLighting);
+		casa.setProjectionMatrix(projection);
+		casa.setViewMatrix(view);
+		casa.setPosition(glm::vec3(-16.0f, -1.0f, 14.0f));
+		casa.setOrientation(glm::vec3(0.0, 0.0, 0.0));
+		casa.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+		casa.render();
+
+		/*Cuerpo muñeco 1*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID36);
+		cuerpo1.setShader(&shaderLighting);
+		cuerpo1.setProjectionMatrix(projection);
+		cuerpo1.setViewMatrix(view);
+		cuerpo1.setPosition(glm::vec3(-15.5f, 0.1f, 14.3f));
+		cuerpo1.setOrientation(glm::vec3(0.0, 180.0, 0.0));
+		cuerpo1.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		cuerpo1.render();
+
+		/*Cabeza muñeco*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID36);
+		cabeza.setShader(&shaderLighting);
+		cabeza.setProjectionMatrix(projection);
+		cabeza.setViewMatrix(view);
+		cabeza.setPosition(glm::vec3(-15.5f, 0.4f, 14.3f));
+		cabeza.setOrientation(glm::vec3(0.0, 180.0, 0.0));
+		cabeza.setScale(glm::vec3(0.1f, 0.1f, 0.1f));
+		cabeza.render();
+		/*sombrero muñeco*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID36);
+		cono.setShader(&shaderLighting);
+		cono.setProjectionMatrix(projection);
+		cono.setViewMatrix(view);
+		cono.setPosition(glm::vec3(-15.5f, 0.7f, 14.3f));
+		cono.setOrientation(glm::vec3(0.0, 180.0, 0.0));
+		cono.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		cono.render();
+
+
+		/*tumba*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID36);
+		tumba.setShader(&shaderLighting);
+		tumba.setProjectionMatrix(projection);
+		tumba.setViewMatrix(view);
+		tumba.setPosition(glm::vec3(-15.5f, 0.5f, 13.3f));
+		tumba.setOrientation(glm::vec3(0.0, 180.0, 0.0));
+		tumba.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		tumba.render();
+
+		/*tumba*/
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID36);
+		mono.setShader(&shaderLighting);
+		mono.setProjectionMatrix(projection);
+		mono.setViewMatrix(view);
+		mono.setPosition(glm::vec3(-15.5f, 0.5f, 13.3f));
+		mono.setOrientation(glm::vec3(0.0, 180.0, 0.0));
+		mono.setScale(glm::vec3(0.3f, 0.3f, 0.3f));
+		mono.render();
+
+
+
+
+
 
 		
 
