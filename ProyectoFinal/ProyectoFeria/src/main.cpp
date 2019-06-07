@@ -28,8 +28,8 @@
 #include "Headers/Texture.h"
 //Model includes
 #include "Headers/Model.h"
-<<<<<<< HEAD
-=======
+
+
 //OpenAL includes
 #include "al.h" 
 #include "alc.h" 
@@ -51,7 +51,6 @@ ALuint buffer[maxCanciones];
 #define MEDUSA "media/Bob_Esponja_Bailando_con_la_medusa.wav"						//Cancion 2
 #define DEJAVU "media/Initial_D_-_Deja_Vu.wav"										//Cancion 3
 
->>>>>>> 9ca62382ee4162c3bba48d001c12fe8f8e87a7dc
 
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 
@@ -353,7 +352,6 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	taza1.loadModel("../../models/taza1/taza17.obj");
 	carpaT.loadModel("../../models/carpaT/carpa8.obj");
 
-<<<<<<< HEAD
 	/*Montaña rusa*/
 	montana.loadModel("../../models/montana/monta.obj");
 	escaleras.loadModel("../../models/escaleras/escaleras.obj");
@@ -368,7 +366,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cono.loadModel("../../models/cuerpos_CT/conoPayaso.obj");
 	mono.loadModel("../../models/cuerpos_CT/mono.obj");
 	tumba.loadModel("../../models/cuerpos_CT/tumba.obj");
-=======
+
 	/*cafeteria*/
 	coffeeShop.loadModel("../../models/coffeeShop/coffeeShop.obj"); //CHECAR
 	bancaMadera.loadModel("../../models/BancaMad/wood_bench.obj");
@@ -378,7 +376,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	
 
 
->>>>>>> 9ca62382ee4162c3bba48d001c12fe8f8e87a7dc
+
 
 	/*
 	//-------TEXTURAS----------------------------
@@ -3319,10 +3317,10 @@ void play(const char * cancion, glm::vec3 posicion, float radio) {
 
 int main(int argc, char ** argv) {
 	init(800, 700, "Window GLFW", false);
-<<<<<<< HEAD
+
 	applicationLoop();
 	destroy();
-=======
+
 
 	// Initialize the environment
 	//alutInit(0, NULL);
@@ -3358,7 +3356,7 @@ int main(int argc, char ** argv) {
 	alcCloseDevice(device);
 	alutExit();
 
->>>>>>> 9ca62382ee4162c3bba48d001c12fe8f8e87a7dc
+
 	return 1;
 }
 
